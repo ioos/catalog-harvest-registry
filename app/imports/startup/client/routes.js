@@ -1,7 +1,6 @@
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
-import '/imports/ui/pages/harvests/new.js';
 import '/imports/ui/layouts/app-body.js';
 
 FlowRouter.route('/', {
@@ -17,10 +16,3 @@ FlowRouter.notFound = {
     BlazeLayout.render('App_body', { main: 'App_notFound' });
   },
 };
-
-FlowRouter.route('/harvests/new', {
-  name: 'Harvests.new',
-  action() {
-    BlazeLayout.render('App_body', { main: 'harvestNew' });
-  },
-});
