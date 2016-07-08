@@ -42,5 +42,36 @@ RestCollection.prototype.register = function() {
     })(apiURL);
     return response;
   };
+
+  methods[this._collectionName + '.update'] = function(doc) {
+    this.unblock();
+    console.log("Updating");
+    let apiURL = urljoin(self._api, self._tableName);
+    apiURL += "?" + querystring.stringify({id: "eq." + doc.id});
+
+    let response = Meteor.wrapAsync((apiURL, callback) => {
+      let errorCode;
+      let errorMessage;
+      let myError;
+      try {
+        console.log("Should Post");
+        let response = HTTP.patch(apiURL, {data: doc});
+        callback(null, doc);
+      } catch (error) {
+        console.error(error);
+        if(error.response) {
+          errorCode = error.response.data.code;
+          errorMessage = error.response.data.message;
+        } else {
+          errorCode = 500;
+          errorMessage = "Cannot Access API";
+        }
+        myError = new Meteor.Error(errorCode, errorMessage);
+        callback(myError, null);
+      }
+    })(apiURL);
+    return response;
+  };
+
   Meteor.methods(methods);
 };

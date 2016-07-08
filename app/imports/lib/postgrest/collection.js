@@ -18,6 +18,7 @@ export class RestCollection {
     Meteor.call(this._collectionName + ".read", docId, callback);
   }
   update(doc, callback) {
+    Meteor.call(this._collectionName + ".update", doc, callback);
   }
   delete(doc, callback) {
   }

@@ -34,11 +34,21 @@ Template.organizationsEdit.helpers({
 AutoForm.hooks({
   editOrganization: {
     onSubmit: function(insertDoc, updateDoc, currentDoc) {
-      this.done();
+      var self = this;
+      this.event.preventDefault();
+      let doc = insertDoc;
+      doc.id = Session.get('organization').id;
+      Organizations.update(doc, function(error, response) {
+        self.done(error, response);
+      });
+
     },
     onSuccess: function(formType, result) {
-      this.event.preventDefault();
+      console.log(result);
       Session.set('success', true);
+    },
+    onError: function(formType, error) {
+      console.error(error);
     }
   }
 });
