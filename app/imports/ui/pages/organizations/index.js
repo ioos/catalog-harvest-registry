@@ -22,3 +22,9 @@ Template.organizationsIndex.helpers({
     return Session.get('organizations');
   }
 });
+
+Template.organizationsIndex.events({
+  'click tr'(event) {
+    FlowRouter.go('Organizations.edit', {organizationId: this.id});
+  }
+});

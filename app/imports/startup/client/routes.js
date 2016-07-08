@@ -5,6 +5,7 @@ import '/imports/ui/pages/harvests/index.js';
 import '/imports/ui/pages/harvests/show.js';
 import '/imports/ui/pages/harvests/edit.js';
 import '/imports/ui/pages/organizations/index.js';
+import '/imports/ui/pages/organizations/edit.js';
 import '/imports/ui/layouts/app-body.js';
 
 FlowRouter.route('/', {
@@ -46,5 +47,12 @@ FlowRouter.route('/organizations', {
   name: 'Organizations.index',
   action() {
     BlazeLayout.render('App_body', { main: 'organizationsIndex' });
+  }
+});
+
+FlowRouter.route('/organizations/:organizationId/edit', {
+  name: 'Organizations.edit',
+  action() {
+    BlazeLayout.render('App_body', { main: 'organizationsEdit' });
   }
 });
