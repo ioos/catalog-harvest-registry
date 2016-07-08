@@ -1,0 +1,31 @@
+<template name="harvestsIndex">
+  <div id="harvests-index" class="row">
+    <div class="col-sm-12">
+      <h2>Harvest Summaries</h2>
+      <div class="table-responsive harvests-index">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>URL</th>
+              <th>Interval</th>
+              <th>Enabled</th>
+              <th>Organization</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each harvests}}
+            <tr>
+              <td>{{id}}</td>
+              <td>{{url}}</td>
+              <td>{{harvest_interval}}</td>
+              <td>{{enabled}}</td>
+              <td>{{organization_name}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</template>
