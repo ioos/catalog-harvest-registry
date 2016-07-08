@@ -1,0 +1,20 @@
+template(name="organizationsIndex")
+  #organizations-index.row
+    .col-sm-12.col-md-8.col-md-offset-2
+      h2 Organizations
+      .table-responsive.organizations-index
+        table.table.table-hover
+          thead
+            tr
+              th.span1 #
+              th.span4 Name
+              th.span4 Description
+              th.span7 Contact URL
+          tbody
+            +each organizations
+              tr
+                td= id
+                td= name
+                td= description
+                td= contact_url
+

@@ -3,15 +3,15 @@ import './index.less';
 
 import { Meteor } from 'meteor/meteor';
 import { Session } from 'meteor/session';
+import { Harvests } from '/imports/api/harvests/harvests.js';
 
 Template.harvestsIndex.onCreated(function() {
   this.autorun(() => {
-    Meteor.call('harvests.read', (err, response) => {
-      if(err) {
-        Session.set('harvests', {error: err});
+    Harvests.read(null, (error, response) => {
+      if(error) {
+        Session.set('harvests', {error});
       } else {
         Session.set('harvests', response);
-        return response;
       }
     });
   });
@@ -25,6 +25,6 @@ Template.harvestsIndex.helpers({
 
 Template.harvestsIndex.events({
   'click tr'(event) {
-    console.log(this);
+    FlowRouter.go('Harvests.show', {harvestId: this.id});
   }
 });
