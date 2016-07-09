@@ -1,9 +1,6 @@
 {
   "public": {
   },
-  "services": {
-      "postgrest": {
-          "url": "http://localhost:3100/"
-      }
-  }
+
+  "sample": "value"
 }
