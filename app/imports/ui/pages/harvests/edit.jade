@@ -1,0 +1,12 @@
+template(name="harvestsEdit")
+  #harvests-edit.row
+    .col-sm-12.col-md-offset-2.col-md-6
+      h2 Edit Harvest
+
+      +quickForm schema=formSchema id="editHarvest" type="normal" doc=harvest
+
+      +if(success)
+        .alert.alert-success
+          Successfully Submitted
+
+

@@ -1,0 +1,53 @@
+<template name="harvestsShow">
+  <div id="harvests-show" class="row">
+    <div class="col-sm-12 col-md-offset-2 col-md-6">
+      <h2>Harvest</h2>
+      <div class="harvest-definition">
+        <!-- Each key -->
+        <div class="row">
+          <div class="col-sm-4">
+            <b>ID</b>
+          </div> <!-- .col-sm-2 -->
+          <div class="col-sm-8">
+            {{harvest.id}}
+          </div> <!-- .col-sm-4 -->
+        </div> <!-- .row -->
+        <div class="row">
+          <div class="col-sm-4">
+            <b>URL</b>
+          </div> <!-- .col-sm-2 -->
+          <div class="col-sm-8">
+            <a href="{{harvest.url}}">{{harvest.url}}</a>
+          </div> <!-- .col-sm-4 -->
+        </div> <!-- .row -->
+        <div class="row">
+          <div class="col-sm-4">
+            <b>Harvest Interval</b>
+          </div> <!-- .col-sm-2 -->
+          <div class="col-sm-8">
+            {{harvest.harvest_interval}}
+          </div> <!-- .col-sm-4 -->
+        </div> <!-- .row -->
+        <div class="row">
+          <div class="col-sm-4">
+            <b>Organization</b>
+          </div> <!-- .col-sm-2 -->
+          <div class="col-sm-8">
+            {{harvest.organization_name}}
+          </div> <!-- .col-sm-4 -->
+        </div> <!-- .row -->
+        <!-- Each key -->
+        <div class="row">
+          <div class="col-sm-12">
+            <button class="btn btn-primary" id="back">Back</button>
+          </div>
+        </div> <!-- .row -->
+      </div> <!-- .harvest-definition -->
+    </div> <!-- .col-sm-12.col-md-offset-2.col-md-6 -->
+    <div class="col-sm-12 col-md-4">
+      <div class="chart">
+        <img alt="piechart" src="{{absolutePath "images/piechart.png"}}" />
+      </div> <!-- .chart -->
+    </div> <!-- .col-sm-12.col-md-4 -->
+  </div> <!-- .row -->
+</template>

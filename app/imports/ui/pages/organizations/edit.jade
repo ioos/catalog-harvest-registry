@@ -1,0 +1,12 @@
+template(name="organizationsEdit")
+  #harvests-edit.row
+    .col-sm-12.col-md-offset-2.col-md-6
+      h2 Edit Organization
+
+      +quickForm schema=formSchema id="editOrganization" type="normal" doc=organization
+
+      +if(success)
+        .alert.alert-success
+          Successfully Submitted
+
+
