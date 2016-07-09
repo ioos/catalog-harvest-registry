@@ -1,0 +1,22 @@
+{
+  "name": "catalog-harvest-registry",
+  "version": "0.0.1",
+  "description": "Web based User Interface for registering and managing metadata harvest endpoints.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ioos/catalog-harvest-registry.git"
+  },
+  "author": "Luke Campbell",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ioos/catalog-harvest-registry/issues"
+  },
+  "homepage": "https://github.com/ioos/catalog-harvest-registry#readme",
+  "dependencies": {
+    "url-join": "^1.1.0"
+  }
+}
