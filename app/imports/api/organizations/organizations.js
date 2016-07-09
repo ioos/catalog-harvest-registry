@@ -1,7 +1,9 @@
 import { RestCollection } from '/imports/lib/postgrest/collection.js';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { Meteor } from 'meteor/meteor';
 
-export const Organizations = new RestCollection("http://localhost:3100", "organizations");
+// Since this is a backend service the client shouldn't know anything about the service.
+export const Organizations = new RestCollection(null, "organizations");
 
 Organizations.schema = new SimpleSchema({
   id: {
