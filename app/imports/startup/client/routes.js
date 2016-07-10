@@ -12,4 +12,3 @@ FlowRouter.route('/', {
     BlazeLayout.render('MasterLayout', {yield: ""});
   },
 });
-
