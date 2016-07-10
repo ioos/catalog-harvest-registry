@@ -1,18 +1,15 @@
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
-import '/imports/ui/layouts/app-body.js';
+import '/imports/ui/layouts/master-layout.js';
+
+/* begin-template-imports */
+/* end-template-imports */
 
 FlowRouter.route('/', {
   name: 'App.home',
   action() {
-    BlazeLayout.render('App_body');
+    BlazeLayout.render('MasterLayout', {yield: ""});
   },
 });
 
-// the App_notFound template is used for unknown routes
-FlowRouter.notFound = {
-  action() {
-    BlazeLayout.render('App_body', { main: 'App_notFound' });
-  },
-};
