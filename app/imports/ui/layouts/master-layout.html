@@ -1,6 +1,7 @@
 <template name="MasterLayout">
-  {{> App_banner }}
+  {{> MainBanner }}
   <div id="grid-container" class="container-fluid">
-  {{> Template.dynamic template=main}}
+  {{> Template.dynamic template=yield}}
   </div>
+  {{> MainFooter }}
 </template>
