@@ -69,17 +69,32 @@
 }
 
 .title-crumbs {
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding: 52px 8px 7px 8px;
+  padding-top: 52px;
+  padding-bottom: 7px;
+}
+
+@media (min-width: 1024px) {
+  .title-crumbs {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
 }
 
 .page-breadcrumbs {
-  display: inline-block;
-  float: right;
-  padding-top: 37px;
-  font-family: "Roboto Regular", sans-serif;
-  font-size: 14px;
-  color: #999999;
+  display:none;
+}
+
+@media (min-width: 1024px) {
+
+  .page-breadcrumbs {
+    display: inline-block;
+    float: right;
+    padding-top: 37px;
+    font-family: "Roboto Regular", sans-serif;
+    font-size: 14px;
+    color: #999999;
+  }
 }
 
 .page-title {
@@ -93,7 +108,7 @@
   letter-spacing: 1px;
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 1024px) {
   .title-crumbs {
     padding-left: 80px;
     padding-right: 80px;

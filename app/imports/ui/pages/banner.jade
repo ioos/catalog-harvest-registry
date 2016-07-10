@@ -10,8 +10,9 @@ template(name="MainBanner")
             span.sr-only Toggle navigation
             span.icon-bar
             span.icon-bar
+          .mobile-logo
           a.navbar-brand(href="#{absoluteUrl}")
-            img(src="{{absoluteUrl 'images/IOOS_Emblem_Tertiary_B_RGB.png'}}")
+            img(src="{{absoluteUrl 'images/logo-navbar.png'}}")
         #navbar.collapse.navbar-collapse
           ul.nav.navbar-nav
             li.brand
@@ -20,9 +21,9 @@ template(name="MainBanner")
             li
               a(href="#" onclick="return false;")
                 | Home
-            li.pull-right
+            li.right-item
               a(href="#" onclick="return false;") Logout
-            li.pull-right
+            li.right-item
               a(href="#" onclick="return false;") About
 
 
