@@ -103,10 +103,6 @@ header {
 }
 
 
-#main-container {
-  margin-top: 50px;
-}
-
 @media (min-width: 1280px) {
   #grid-container {
     padding-left  : 0;
@@ -133,7 +129,7 @@ header {
   }
 
   .navbar .navbar-nav {
-    width: 975px;
+    width: 100%;
   }
 
   .navbar .navbar-collapse {
@@ -147,6 +143,9 @@ header {
 
   .navbar .navbar-nav > li {
     margin-right: 3%;
+  }
+  .navbar .navbar-nav li.right-item {
+    float: right;
   }
 
   .navbar-nav > li > a {
@@ -164,6 +163,7 @@ header {
   .navbar .brand img {
     margin-top: -6px;
   }
+
 }
 
 #main-container.container > .row > .col-md-3.col-centered {

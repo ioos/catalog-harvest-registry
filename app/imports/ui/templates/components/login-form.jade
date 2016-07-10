@@ -1,0 +1,16 @@
+template(name='loginForm')
+  .login-form
+    .title-crumbs
+      .page-title
+        h2 Welcome to the IOOS Harvest Registry
+      .page-breadcrumbs
+        | / Home
+    .form-region
+      form
+        .form-group
+          input#email.form-control(type="email" placeholder="Email")
+        .form-group
+          input#password.form-control(type="password" placeholder="Password")
+        button(type="submit") Login
+
+
