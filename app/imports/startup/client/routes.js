@@ -1,11 +1,7 @@
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
-import '/imports/ui/layouts/master-layout.js';
-
-/* begin-template-imports */
-import '/imports/ui/templates/components/login-form.js';
-/* end-template-imports */
+import './templates.js';
 
 FlowRouter.route('/', {
   name: 'App.home',
@@ -13,3 +9,12 @@ FlowRouter.route('/', {
     BlazeLayout.render('MasterLayout', {yield: "loginForm"});
   },
 });
+
+
+FlowRouter.route('/harvests', {
+  name: 'harvests',
+  action() {
+    BlazeLayout.render('MasterLayout', {yield: "harvests"});
+  }
+});
+
