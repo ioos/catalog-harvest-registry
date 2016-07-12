@@ -20,6 +20,7 @@ caching-compiler@1.0.6
 caching-html-compiler@1.0.6
 callback-hook@1.0.9
 check@1.2.3
+d3js:d3@3.5.8
 ddp@1.2.5
 ddp-client@1.2.9
 ddp-common@1.2.6
@@ -83,6 +84,7 @@ mquandalle:jade-compiler@0.4.5
 msavin:jetsetter@2.0.0
 msavin:mongol@2.0.1
 npm-mongo@1.4.45
+nvd3:nvd3@1.8.2
 observe-sequence@1.0.12
 ordered-dict@1.0.8
 promise@0.7.3
