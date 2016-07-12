@@ -4,6 +4,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
 import { nv } from 'meteor/nvd3:nvd3';
+import { Harvests } from '/imports/api/harvests/harvests.js';
 
 /*****************************************************************************/
 /* harvests: Event Handlers */
@@ -11,15 +12,8 @@ import { nv } from 'meteor/nvd3:nvd3';
 Template.harvests.events({
   'click tr'() {
     const instance = Template.instance();
-    harvests = instance.state.get('harvests');
-    harvests = _.map(harvests, function(harvest) {
-      harvest.active = false;
-      if(harvest._id == this._id) {
-        harvest.active = true;
-      }
-      return harvest;
-    }, this);
-    instance.state.set('harvests', harvests);
+    console.log(this);
+    instance.state.set('active', this._id);
   }
 });
 
@@ -29,12 +23,29 @@ Template.harvests.events({
 Template.harvests.helpers({
   harvests: function() {
     const instance = Template.instance();
-    return instance.state.get('harvests');
+    let harvestId = instance.state.get('active');
+    let harvests = _.map(Harvests.find({}).fetch(), function(harvest) {
+      harvest.active = false;
+      if(harvest._id == harvestId) {
+        harvest.active = true;
+      }
+      return harvest;
+    });
+    
+    return harvests;
   },
   activeHarvest: function() {
     const instance = Template.instance();
-    harvests = instance.state.get('harvests');
-    return _.findWhere(harvests, {active: true});
+    let harvestId = instance.state.get('active');
+    console.log(harvestId);
+    console.log("Please tell me this gets called");
+    if(harvestId) {
+      console.log("Real harvestId");
+      let harvest = Harvests.findOne({_id: harvestId});
+      return harvest;
+
+    }
+    return {};
   }
 });
 
@@ -42,35 +53,15 @@ Template.harvests.helpers({
 /* harvests: Lifecycle Hooks */
 /*****************************************************************************/
 Template.harvests.onCreated(function() {
+  this.subscribe('harvests.public');
   this.state = new ReactiveDict();
-  this.state.set('harvests', [
-    {
-      _id: 1,
-      name: "THREDDS WAF",
-      organization: "MARACOOS",
-      url: "http://sos.maracoos.org/maracoos-iso/",
-      type: "WAF",
-      active: true
-    },
-    {
-      _id: 2,
-      name: "SOS WAF",
-      organization: "MARACOOS",
-      url: "http://sos.maracoos.org/maracoos-iso/",
-      type: "WAF",
-      active: false
-    },
-    {
-      _id: 3,
-      name: "GLOS CSW",
-      organization: "MARACOOS",
-      url: "http://sos.maracoos.org/maracoos-iso/",
-      type: "WAF",
-      active: false
-    },
-
-  ]);
+  this.state.set("active", null);
 });
+
+
+/*****************************************************************************/
+/* Pie Chart stuff
+/*****************************************************************************/
 var exampleData = function() {
   return  [
       { 

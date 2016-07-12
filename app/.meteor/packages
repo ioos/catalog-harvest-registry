@@ -32,3 +32,5 @@ mquandalle:jade
 fortawesome:fontawesome
 reactive-dict
 nvd3:nvd3
+nimble:restivus
+aldeed:simple-schema

@@ -1,46 +1,16 @@
 import { Meteor } from 'meteor/meteor';
-
+import { Harvests } from '/imports/api/harvests/harvests.js';
 // if the database is empty on server start, create some sample data.
-Meteor.startup(() => {
-    /*
-     *  MeteorPrinciples is an EXAMPLE collection that would have been
-     *  created in the /app/lib via:
-     *
-     *    $ maka g:collection MeteorPrinciples
-     *
-     *  Uncomment below to give this a test, after creating a
-     *  MeteorPrinciples collection
-     *
-     *
-     */
-
-    /*
-     * if (MeteorPrinciples.find().count() === 0) {
-     *  const data = [
-     *      {
-     *          items: [
-     *              'Data on the Wire',
-     *              'One Language',
-     *              'Database Everywhere',
-     *              'Latency Compensation',
-     *              'Full Stack Reactivity',
-     *              'Embrace the Ecosystem',
-     *              'Simplicity Equals Productivity'
-     *          ]
-     *      }
-     *  ];
-     *
-     *  let timestamp = (new Date()).getTime();
-     *
-     *  data.forEach((principle) => {
-     *      principle.items.forEach((text) => {
-     *          MeteorPrinciples.insert({
-     *              text,
-     *              createdAt: new Date(timestamp)
-     *          });
-     *          timestamp += 1;
-     *      });
-     *  });
-     * }
-     */
+console.log("Fixtures imported");
+Meteor.startup(function() {
+  console.log("Meteor startup called");
+  // can't use Harvests.count()??
+  if (Harvests.find().count() === 0) {
+    Harvests.insert({ name: 'test',
+                      url: 'http://frobnicatorzzz.com',
+                      org: 'foobaz',
+                      harvest_interval: 2 * 3600,
+                      harvest_type: 'WAF'});
+    console.log('Wrote a test harvest record');
+  } 
 });

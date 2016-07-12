@@ -40,20 +40,10 @@ template(name='harvests')
             +each harvests
               if active
                 tr.active
-                  td= name
-                  td= organization
-                  td 
-                    a(href="#" onclick="return null;")
-                      = url
-                  td= type
+                  +harvestRow
               else
                 tr
-                  td= name
-                  td= organization
-                  td 
-                    a(href="#" onclick="return null;")
-                      = url
-                  td= type
+                  +harvestRow
 
 
       .box.box-6
@@ -61,4 +51,10 @@ template(name='harvests')
         #chart
           svg
 
-
+template(name="harvestRow")
+  td= name
+  td= org
+  td 
+    a(href="#" onclick="return null;")
+      = url
+  td= harvest_type
