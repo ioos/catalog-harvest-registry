@@ -18,3 +18,11 @@ FlowRouter.route('/harvests', {
   }
 });
 
+
+
+FlowRouter.route('/harvests/:harvestId/edit', {
+  name: 'harvestsEdit',
+  action() {
+    BlazeLayout.render('MasterLayout', {yield: "harvestsEdit"});
+  }
+});
