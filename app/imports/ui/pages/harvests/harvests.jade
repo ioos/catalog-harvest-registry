@@ -26,7 +26,7 @@ template(name='harvests')
         h3.red
           i.fa.fa-warning
           span Errors
-          span.badge 0
+          span.badge 5
     .row
       .box.box-6.box-table
         table.table.table-hover
@@ -58,6 +58,7 @@ template(name='harvests')
 
       .box.box-6
         h3= activeHarvest.name
-        img(src="/images/piechart.png" alt="Pie Chart")
+        #chart
+          svg
 
 
