@@ -3,38 +3,27 @@
 /*****************************************************************************/
 @box-height: 454px;
 @background-gray: #F5F5F5;
+
+.harvests .box-3,
+.harvests .box-6{
+    width: 100%;
+    padding-bottom: 20px;
+}
+
 .harvests {
+    
     background-color: @background-gray;
     padding-top: 20px;
     padding-bottom: 40px;
-    height: 523px;
     font-family: "Roboto", sans-serif;
-    font-size: 15px;
     color: rgb(153, 153, 153);
+
     a {
         color: rgb(0, 147, 178);
     }
     h3 {
       font-family: "Roboto Slab", Times, serif;
       margin-bottom: 20px;
-    }
-    .row {
-        margin-left: 75px;
-        margin-right: 75px;
-        padding-bottom: 20px;
-    }
-
-    .box {
-        vertical-align: top;
-        position: relative;
-        top:0;
-        background-color: white;
-        border-radius: 5px;
-        min-height: 20px;
-        display: inline-block;
-        margin-left: 5px;
-        margin-right: 5px;
-        padding: 0 10px;
     }
     h3.blue {
         color: #52B8EE;
@@ -48,55 +37,56 @@
     h3.murple {
         color: #C74EF0;
     }
-
-    .box-3 {
-        width: calc(~"25% - 15px");
-    }
-    .box-6 {
-        width: calc(~"50% - 15px");
-    }
-
-    .list-section {
-        padding-top: 10px;
-        background-color: white;
+    .box {
+        display: inline-block;
         border-radius: 5px;
-        padding-left: 8px;
-        padding-right: 8px;
-        min-height: @box-height;
+        vertical-align: top;
+        background-color: white;
     }
+    .box-table {
+        overflow-x: auto;
+    }
+
+    // Mobile sizing
+    .row {
+        padding-bottom: 20px;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .box {
+        min-height: 20px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    // Small Desktop
+    @media (min-width: 1024px) {
+        .box {
+            padding: 0 10px;
+        }
+        .box-3 {
+            width: calc(~"25% - 15px");
+        }
+        .box-6 {
+            width: calc(~"50% - 15px");
+        }
+        table {
+            font-size: 13px;
+        }
+    }
+    // Large Desktop
+    @media (min-width: 1280px) {
+        .row {
+            margin-left: 75px;
+            margin-right: 75px;
+        }
+        table {
+            font-size: 15px;
+        }
+    }
+
     table.table-hover tbody tr {
         cursor: pointer;
-    }
-
-
-    p.name {
-        font-family: "Roboto Regular", sans-serif;
-        font-size: 26px;
-        font-weight: 200;
-    }
-    p.url {
-        font-size: 18px;
-    }
-    p.records {
-        font-family: "Georgia";
-        font-size: 18px;
-        font-weight: 200;
-        letter-spacing: 0.3px;
-    }
-    .info-section {
-        padding-top: 10px;
-        background-color: white;
-        border-radius: 5px;
-        min-height: @box-height;
-        .row {
-            padding-left: 47px;
-        }
-
-        .org-logo img {
-            max-width: 200px;
-        }
-        .piechart {
-            max-width: 100%;
-        }
     }
 }
