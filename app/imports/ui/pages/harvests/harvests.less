@@ -2,13 +2,60 @@
 /* harvests: Style */
 /*****************************************************************************/
 @box-height: 454px;
+@background-gray: #F5F5F5;
 .harvests {
+    background-color: @background-gray;
+    padding-top: 20px;
     padding-bottom: 40px;
     height: 523px;
-    .row {
-        margin-left: 0;
-        margin-right: 0;
+    font-family: "Roboto", sans-serif;
+    font-size: 15px;
+    color: rgb(153, 153, 153);
+    a {
+        color: rgb(0, 147, 178);
     }
+    h3 {
+      font-family: "Roboto Slab", Times, serif;
+      margin-bottom: 20px;
+    }
+    .row {
+        margin-left: 75px;
+        margin-right: 75px;
+        padding-bottom: 20px;
+    }
+
+    .box {
+        vertical-align: top;
+        position: relative;
+        top:0;
+        background-color: white;
+        border-radius: 5px;
+        min-height: 20px;
+        display: inline-block;
+        margin-left: 5px;
+        margin-right: 5px;
+        padding: 0 10px;
+    }
+    h3.blue {
+        color: #52B8EE;
+    }
+    h3.green {
+        color: #28C254;
+    }
+    h3.red {
+        color: #F04537;
+    }
+    h3.murple {
+        color: #C74EF0;
+    }
+
+    .box-3 {
+        width: calc(~"25% - 15px");
+    }
+    .box-6 {
+        width: calc(~"50% - 15px");
+    }
+
     .list-section {
         padding-top: 10px;
         background-color: white;

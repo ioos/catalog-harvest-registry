@@ -1,56 +1,63 @@
 template(name='harvests')
   .title-crumbs
     .page-title
-      h2 Harvests
+      h2 Harvests Dashboard
     .page-breadcrumbs
       | / Harvests
   .harvests
     .row
-      .col-md-6
-        .info-section
-          .row
-            .col-sm-6
-              p.name Main WAF
-              p.url
-                a(href="#") www.google.com
-              p.records 1,024 Records Harvested
-            .col-sm-6
-              .pull-right.org-logo
-                img(src="http://www.aoos.org/wp-content/uploads/2012/09/AOOS_logo.jpg" alt="Logo")
-          .row
-            .piechart.col-sm-12
-              img(src="/images/piechart.png")
-      .col-md-6
-        .list-section
-          table.table.table-hover
-            thead
-              tr
-                th Name
-                th Organization
-                th URL
-                th Records
-            tbody
-              tr.active
-                td Main WAF
-                td AOOS
-                td
-                  a(href="#") www.google.com
-                td 1,024
-              tr
-                td Second WAF
-                td AOOS
-                td
-                  a(href="#") www.google.com
-                td 0
-              tr
-                td Unidata
-                td AOOS
-                td
-                  a(href="#") www.google.com
-                td 0
-              tr
-                td SOS
-                td AOOS
-                td
-                  a(href="#") www.google.com
-                td 99,020
+      .box.box-3
+        h3.blue
+          i.fa.fa-database
+          span Data Sources 
+          span.badge 3
+
+      .box.box-3
+        h3.green
+          i.fa.fa-file
+          span Records
+          span.badge 25
+      .box.box-3
+        h3.murple
+          i.fa.fa-flag
+          span Notifications
+          span.badge 0
+      .box.box-3
+        h3.red
+          i.fa.fa-warning
+          span Errors
+          span.badge 0
+    .row
+      .box.box-6
+        table.table.table-hover
+          thead
+            tr
+              th Name
+              th Organization
+              th URL
+              th Type
+          tbody
+            +each harvests
+              if active
+                tr.active
+                  td= name
+                  td= organization
+                  td 
+                    a(href="#" onclick="return null;")
+                      = url
+                  td= type
+              else
+                tr
+                  td= name
+                  td= organization
+                  td 
+                    a(href="#" onclick="return null;")
+                      = url
+                  td= type
+
+
+      .box.box-6
+        h3= activeHarvest.name
+        img(src="/images/piechart.png" alt="Pie Chart")
+
+
