@@ -108,6 +108,10 @@ var addDonutChart = function() {
 
 Template.harvests.onRendered(() => {
   addDonutChart();
+  $('.row.box-header .box').hover(function() {
+    $(this).toggleClass('box-hover');
+  });
+
 });
 
 Template.harvests.onDestroyed(() => {
