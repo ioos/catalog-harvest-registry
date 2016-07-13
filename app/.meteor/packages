@@ -34,3 +34,5 @@ reactive-dict
 nvd3:nvd3
 nimble:restivus
 aldeed:simple-schema
+accounts-password
+useraccounts:core

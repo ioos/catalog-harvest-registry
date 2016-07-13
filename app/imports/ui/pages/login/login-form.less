@@ -11,7 +11,7 @@
   .form-region {
     padding-top: 40px;
     background-color: #F5F5F5;
-    height: 260px;
+    display: block;
   }
 
   form {
@@ -42,7 +42,15 @@
       padding-right: 32px;
       height: 52px;
     }
+    .form-group input.error {
+        border: 1px solid red;
+    }
+
   }
+  .alert.alert-danger {
+      display: block;
+  }
+
   @media (min-width: 568px) {
     form {
       width: 400px;

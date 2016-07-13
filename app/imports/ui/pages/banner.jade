@@ -25,6 +25,9 @@ template(name="MainBanner")
               a(href="#" onclick="return false;") Help
             li.right-item
               a(href="#" onclick="return false;") About
+            +if isLoggedIn
+              li.right-item
+                a#logout(href="#" onclick="return false;") Logout
 
 
 
