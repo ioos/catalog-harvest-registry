@@ -11,9 +11,4 @@ template(name='loginForm')
           input#email.form-control(type="email" placeholder="Email")
         .form-group
           input#password.form-control(type="password" placeholder="Password")
-        .form-group
-          +if badLogin
-            .alert.alert-danger
-              | Incorrect email or password
         button(type="submit") Login
-
