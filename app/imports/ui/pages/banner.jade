@@ -25,6 +25,21 @@ template(name="MainBanner")
               a(href="#" onclick="return false;") Help
             li.right-item
               a(href="#" onclick="return false;") About
+            +if isLoggedIn
+              li.right-item
+                a#logout(href="#" onclick="return false;") Logout
+            +if isAdmin
+              li.right-item.dropdown
+                a#admin-menu.dropdown-toggle(href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")
+                  span Admin 
+                  span.caret
+                ul.dropdown-menu(aria-labelledby="admin-menu")
+                  li
+                    a(href="{{pathTo 'users'}}") User Accounts
+                  li
+                    a(href="#" onclick="return false;") Organizations
 
 
 
+  .flash-alert
+    +flashMessages

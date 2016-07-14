@@ -4,3 +4,5 @@ import '/imports/ui/pages/harvests/harvests.js';
 
 
 import '/imports/ui/pages/harvests/edit/edit.js';
+
+import '/imports/ui/pages/users/users.js';

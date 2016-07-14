@@ -61,7 +61,6 @@ export const update = new ValidatedMethod({
           harvest_interval
         }
       };
-      console.log("Updating", updateDoc);
 
       return Harvests.update(_id, updateDoc);
     }
@@ -86,4 +85,3 @@ export const update = new ValidatedMethod({
     }
 
 */
-console.log("Update method should be registered");
