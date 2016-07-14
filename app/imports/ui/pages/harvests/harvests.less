@@ -1,6 +1,8 @@
 /*****************************************************************************/
 /* harvests: Style */
 /*****************************************************************************/
+@import "../../stylesheets/variables";
+
 @box-height: 454px;
 @background-gray: #F5F5F5;
 
@@ -26,16 +28,16 @@
       margin-bottom: 20px;
     }
     h3.blue {
-        color: #52B8EE;
+        color: @color-data-sources;
     }
     h3.green {
-        color: #28C254;
+        color: @color-records;
     }
     h3.red {
-        color: #F04537;
+        color: @color-errors;
     }
     h3.murple {
-        color: #C74EF0;
+        color: @color-notifications;
     }
     .box {
         display: inline-block;
@@ -70,7 +72,7 @@
         height: 400px;
     }
 
-    // Small Desktop
+    // Medium Desktop
     @media (min-width: 1024px) {
         .box {
             padding: 0 10px;

@@ -1,0 +1,47 @@
+template(name='users')
+  .title-crumbs
+    .page-title
+      h2 User Accounts
+    .page-breadcrumbs
+      | / Users
+  .users
+    .container
+      .row
+        .box.col-sm-12
+          h3.users-header
+            span.fa.fa-user
+            span Users
+            span.badge 1
+      .row
+        .box.col-sm-12
+          table.table.table-hover
+            thead
+              tr
+                th Name
+                th Email
+                th Admin
+                th Approved
+                th Delete Account
+            tbody
+              +each users
+                tr
+                  td= profile.name
+                  td= profile.email
+                  td
+                    if hasRole roles "admin"
+                      .disable-admin
+                        i.fa.fa-check-square-o
+                    else
+                      .enable-admin
+                        i.fa.fa-square-o
+                  td
+                    if hasRole roles "approved"
+                      .disable-approved
+                        i.fa.fa-check-square-o
+                    else
+                      .enable-approved
+                        i.fa.fa-square-o
+
+                  td.remove-account
+                    a(href="#" onclick="return false;")
+                      i.fa.fa-times

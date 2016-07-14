@@ -36,3 +36,6 @@ nimble:restivus
 aldeed:simple-schema
 accounts-password
 useraccounts:core
+alanning:roles
+mrt:flash-messages
+mizzao:bootboxjs
