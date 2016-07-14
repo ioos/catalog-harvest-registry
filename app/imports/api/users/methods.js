@@ -1,6 +1,27 @@
 import { Roles } from 'meteor/alanning:roles';
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
+import { UserSchema } from '/imports/api/users/users.js';
+import { ValidatedMethod } from 'meteor/mdg:validated-method';
+import { _ } from 'meteor/underscore';
+
+export const registerAccount = new ValidatedMethod({
+  name: "users.insert",
+  validate: UserSchema.validator({clean: true, filter: false}),
+  run(user) {
+    let insertDoc = {
+      username: user.email,
+      email: user.email,
+      password: user.password,
+      profile: {
+        name: user.name,
+        email: user.email,
+        organization: user.organization
+      }
+    };
+    Accounts.createUser(insertDoc);  
+  }
+});
 
 Meteor.methods({
   /*
@@ -37,7 +58,7 @@ Meteor.methods({
   /*
    * Adds a user to the approved role
    */
-  approveAccount: function(userId, callback) {
+  approveAccount: function(userId) {
     let currentUserId = Meteor.userId();
     if(Roles.userIsInRole(currentUserId, "admin")) {
       Roles.addUsersToRoles(userId, "approved");
@@ -48,7 +69,7 @@ Meteor.methods({
   /*
    * Removes a user from the approved role
    */
-  disapproveAccount: function(userId, callback) {
+  disapproveAccount: function(userId) {
     let currentUserId = Meteor.userId();
     if(currentUserId == userId) {
       throw new Meteor.Error(400, "You can not disapprove your own account.");
@@ -62,7 +83,7 @@ Meteor.methods({
   /*
    * Adds a user to the admin role
    */
-  enableAdmin: function(userId, callback) {
+  enableAdmin: function(userId) {
     let currentUserId = Meteor.userId();
     if(Roles.userIsInRole(currentUserId, "admin")) {
       Roles.addUsersToRoles(userId, ["admin", "approved"]);
@@ -76,7 +97,7 @@ Meteor.methods({
    * Note, you can not remove yourself, and there can never be less than one
    * admin.
    */
-  disableAdmin: function(userId, callback) {
+  disableAdmin: function(userId) {
     let currentUserId = Meteor.userId();
     if(currentUserId == userId) {
       throw new Meteor.Error(400, "You can not remove yourself from the admin role.");
@@ -96,7 +117,7 @@ Meteor.methods({
    *
    * Users can not remove their own account, even admins.
    */
-  removeAccount: function(userId, callback) {
+  removeAccount: function(userId) {
     let currentUserId = Meteor.userId();
     if(currentUserId == userId) {
       throw new Meteor.Error(400, "You can not remove your own account.");
@@ -107,6 +128,33 @@ Meteor.methods({
     } else {
       throw new Meteor.Error(401, "Unauthorized");
     }
+  },
+
+  /*
+   * Send the user a verification email.
+   */
+  sendVerificationLink: function(email) {
+    let user = Accounts.findUserByEmail(email);
+    if(!user._id) {
+      throw new Meteor.Error(404, "No such user account for " + email);
+    }
+    Accounts.sendVerificationEmail(user._id);
+  },
+
+  /*
+   * Verifies that the account is valid
+   */
+  isValidUser: function(userId) {
+    let user = Meteor.users.findOne({_id: userId});
+    let verifiedEmails = _.where(user.emails, {verified: true});
+    if(verifiedEmails.length < 1) {
+      throw new Meteor.Error(403, "Account is not verified");
+    }
+
+    if(!Roles.userIsInRole(userId, "approved")) {
+      throw new Meteor.Error(403, "Account is not approved.");
+    }
+    return true;
   }
 });
 

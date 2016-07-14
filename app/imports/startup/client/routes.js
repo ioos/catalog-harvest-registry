@@ -10,6 +10,8 @@ FlashMessages.configure({
   autoHide: true
 });
 
+
+
 FlowRouter.route('/', {
   name: 'login',
   action() {
@@ -17,15 +19,28 @@ FlowRouter.route('/', {
   },
 });
 
+function validatedRender(callback){
+  if(!Meteor.userId()) {
+    return FlowRouter.go('login');
+  }
+
+  Meteor.call('isValidUser', Meteor.userId(), (error, response) => {
+    if(error) {
+      FlashMessages.sendError(error.reason);
+      FlowRouter.go('login');
+    } else {
+      callback(null, response);
+    }
+  });
+}
+
 
 FlowRouter.route('/harvests', {
   name: 'harvests',
   action() {
-    if(Meteor.userId()) {
+    validatedRender((error, response) => {
       BlazeLayout.render('MasterLayout', {yield: "harvests"});
-    } else {
-      FlowRouter.go('login');
-    }
+    });
   }
 });
 
@@ -34,11 +49,9 @@ FlowRouter.route('/harvests', {
 FlowRouter.route('/harvests/:harvestId/edit', {
   name: 'harvestsEdit',
   action() {
-    if(Meteor.userId()) {
+    validatedRender((error, response) => {
       BlazeLayout.render('MasterLayout', {yield: "harvestsEdit"});
-    } else {
-      FlowRouter.go('login');
-    }
+    });
   }
 });
 
@@ -48,13 +61,36 @@ FlowRouter.route('/users', {
   action() {
     Meteor.call("userIsInRole", Meteor.userId(), "admin", (error, isAdmin) => {
       if(error) {
-        FlowRouter.go('login');
+        return FlowRouter.go('login');
       }
       if(isAdmin) {
         BlazeLayout.render('MasterLayout', {yield: "users"});
       } else {
         FlashMessages.sendError("You are not authorized to view this page.");
-        FlowRouter.go('harvests');
+        return FlowRouter.go('harvests');
+      }
+    });
+  }
+});
+
+
+FlowRouter.route('/users/new', {
+  name: 'usersNew',
+  action() {
+    BlazeLayout.render('MasterLayout', {yield: "usersNew"});
+  }
+});
+
+FlowRouter.route('/users/verify/:token', {
+  name: 'usersVerify',
+  action(params) {
+    Accounts.verifyEmail(params.token, (error, response) => {
+      if(error) {
+        FlashMessages.sendError(error.reason);
+        return FlowRouter.go('login');
+      } else {
+        FlashMessages.sendSuccess("Thank you! Your email has now been verified!");
+        return FlowRouter.go('harvests');
       }
     });
   }

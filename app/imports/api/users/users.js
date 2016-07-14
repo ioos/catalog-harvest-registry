@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 // Meteor already has a collection called users, we just wrap that in a
 // collection for clients to reactively observe changes.
@@ -8,6 +9,29 @@ import { Meteor } from 'meteor/meteor';
 // client's minimongo to track changes and allow views to subscribe to those
 // changes.
 //
+
+
+export const UserSchema = new SimpleSchema({
+  email: {
+    label: "Email",
+    type: String,
+    regEx: SimpleSchema.RegEx.Email
+  },
+  name: {
+    label: "Full Name",
+    type: String
+  },
+  organization: {
+    label: "Organization",
+    type: String,
+    allowedValues: ["IOOS", "MARACOOS", "GLOS"]
+  },
+  password: {
+    label: "Password",
+    type: String,
+    min: 8,
+  }
+});
 
 if(Meteor.isClient) {
   export const Users = new Meteor.Collection('reactiveUsers');

@@ -19,16 +19,20 @@ template(name="MainBanner")
               a(href="#{absoluteUrl}")
                 img(alt="IOOS logo" src="{{absoluteUrl 'images/logo-navbar.png'}}")
             li
-              a(href="#" onclick="return false;")
+              a(href="{{pathTo 'harvests'}}")
                 | Home
             li.right-item
               a(href="#" onclick="return false;") Help
             li.right-item
               a(href="#" onclick="return false;") About
-            +if isLoggedIn
+            if isLoggedIn
               li.right-item
                 a#logout(href="#" onclick="return false;") Logout
-            +if isAdmin
+            else
+              li.right-item
+                a#new-user(href="{{pathTo 'usersNew'}}") Register
+
+            if isAdmin
               li.right-item.dropdown
                 a#admin-menu.dropdown-toggle(href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")
                   span Admin 

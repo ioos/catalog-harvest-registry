@@ -4,6 +4,7 @@ import { Template } from 'meteor/templating';
 import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { FlashMessages } from 'meteor/mrt:flash-messages';
 
 
 /*****************************************************************************/
@@ -17,7 +18,13 @@ Template.loginForm.events({
     Meteor.loginWithPassword(email, password, function(error) {
       if(error) {
         instance.$('input').addClass('error');
-        instance.state.set('badLogin', true);
+        console.error(error);
+        if(error.error == 403) {
+          FlashMessages.sendError("Incorrect username or password");
+        } else {
+          FlashMessages.sendError(error.message);
+        }
+
       }
       else {
         FlowRouter.go('harvests');
@@ -33,10 +40,6 @@ Template.loginForm.events({
 Template.loginForm.helpers({
   height: function() {
     return Session.get('height');
-  },
-  badLogin: function() {
-    const instance = Template.instance();
-    return instance.state.get('badLogin');
   }
 });
 
@@ -45,7 +48,6 @@ Template.loginForm.helpers({
 /*****************************************************************************/
 Template.loginForm.onCreated(function() {
   this.state = new ReactiveDict();
-  this.state.set('badLogin', false);
 
   if(Meteor.userId()) {
     FlowRouter.go('harvests');
