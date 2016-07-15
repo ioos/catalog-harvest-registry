@@ -1,0 +1,73 @@
+/*****************************************************************************/
+/* newOrganization: Style */
+/*****************************************************************************/
+@import '../../../stylesheets/variables';
+.new-organization {
+    background-color: @background-gray;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    .form-group input {
+      border: 0;
+      border-radius: 0;
+      background-color: white;
+      color: #666;
+      margin: 4px 2px;
+      padding-left: 32px;
+      padding-right: 32px;
+      height: 52px;
+    }
+    .form-group select {
+      border: 0;
+      border-radius: 0;
+      background-color: white;
+      color: #666;
+      margin: 4px 2px;
+      padding-left: 32px;
+      padding-right: 32px;
+      height: 52px;
+    }
+
+    .note {
+      padding-top: 25px;
+    }
+
+    :root::-webkit-media-controls-panel,
+    select {
+        -webkit-appearance: textfield;
+        background-image: url("../../images/down-arrow.svg");
+        background-size: 8px 8px;
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        background-color: white;
+    }
+    .form-group select option {
+      padding-left: 32px;
+    }
+    .form-group input.error {
+      border: 1px solid red;
+    }
+    button[type="submit"] {
+      float: right;
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-right: -2px;
+    }
+    button[type="button"] {
+      background-color: #cccccc;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-right: -2px;
+    }
+}

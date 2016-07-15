@@ -95,3 +95,26 @@ FlowRouter.route('/users/verify/:token', {
     });
   }
 });
+
+
+FlowRouter.route('/organizations', {
+  name: 'organizations',
+  action() {
+    BlazeLayout.render('MasterLayout', {yield: "organizations"});
+  }
+});
+
+FlowRouter.route('/organizations/new', {
+  name: 'newOrganization',
+  action() {
+    BlazeLayout.render('MasterLayout', {yield: "newOrganization"});
+  }
+});
+
+
+FlowRouter.route('/organizations/:organizationId/edit', {
+  name: 'editOrganization',
+  action() {
+    BlazeLayout.render('MasterLayout', {yield: "editOrganization"});
+  }
+});

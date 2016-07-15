@@ -6,3 +6,5 @@ import './register-api.js';
 
 
 import './register-harvests-api.js';
+
+import './register-organizations-api.js';

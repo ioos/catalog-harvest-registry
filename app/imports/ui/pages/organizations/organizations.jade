@@ -1,0 +1,29 @@
+template(name='organizations')
+  .title-crumbs
+    .page-title
+      h2 Organizations
+        a(href="{{pathTo 'newOrganization'}}")
+          | &nbsp;&nbsp;+
+    .page-breadcrumbs
+      | / Organizations
+
+  .organizations
+    .container
+      +each organizations
+        .row
+          .box.col-sm-12
+            .row.org-box
+              .col-sm-2
+                .org-img 
+                  if logo_url
+                    img(src="#{logo_url}")
+              .col-sm-9
+                h2 
+                  a(href="{{edit _id}}")
+                    = name
+                .description
+                  p= description
+              .col-sm-1
+                .remove.pull-right
+                  a.remove-organization(href="#")
+                    i.fa.fa-times
