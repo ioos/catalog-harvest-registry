@@ -53,6 +53,21 @@ SimpleSchema.messages({
 /* usersNew: Event Handlers */
 /*****************************************************************************/
 Template.usersNew.events({
+  'click #resend-link'(event, instance) {
+    event.preventDefault();
+    bootbox.prompt("Please enter your email address", (email) => {
+      if(email === null) {
+        return;
+      }
+      Meteor.call('sendVerificationLink', email, (error, response) => {
+        if(error) {
+          FlashMessages.sendError(error.reason);
+        } else {
+          FlashMessages.sendSuccess("Email sent. Please check your email for the verification link");
+        }
+      });
+    });
+  }
 });
 
 /*****************************************************************************/
@@ -87,20 +102,12 @@ AutoForm.hooks({
           this.done(error);
           return;
         } 
-
-        Meteor.call('sendVerificationLink', insertDoc.email, (error, response) => {
-          if(error) {
-            FlashMessages.sendError(error.message);
-            this.done(error);
-            return;
-          } 
-          bootbox.alert("<p>Your user account has been created, you should see a verification email shortly.</p>" +
-                        "<p>An administrator will review your request and once your account is approved, you wil" +
-                        "l be able to log in.</p>", () => {
-                          this.done();
-                          FlowRouter.go('login');
-                        });
-        });
+        bootbox.alert("<p>Your user account has been created, you should see a verification email shortly.</p>" +
+                      "<p>An administrator will review your request and once your account is approved, you wil" +
+                      "l be able to log in.</p>", () => {
+                        this.done();
+                        FlowRouter.go('login');
+                      });
       });
     }
   }

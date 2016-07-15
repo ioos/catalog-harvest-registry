@@ -90,7 +90,7 @@ FlowRouter.route('/users/verify/:token', {
         return FlowRouter.go('login');
       } else {
         FlashMessages.sendSuccess("Thank you! Your email has now been verified!");
-        return FlowRouter.go('harvests');
+        return FlowRouter.go('login');
       }
     });
   }
