@@ -173,6 +173,9 @@ function insertOrganizations() {
     url: "http://usgs.gov/",
     logo_url: "http://catalog.ioos.us/static/img/np/usgs-logo-color.jpg"
   });
+  Organizations.insert({
+    name: "Other"
+  });
 }
 
 // if the database is empty on server start, create some sample data.
