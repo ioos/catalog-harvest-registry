@@ -5,10 +5,10 @@ import { Roles } from 'meteor/alanning:roles';
 // if the database is empty on server start, create some sample data.
 Meteor.startup(function() {
   if (Harvests.find().count() === 0) {
-    Harvests.insert({ name: 'test',
-                      url: 'http://frobnicatorzzz.com',
-                      org: 'foobaz',
-                      harvest_interval: 2 * 3600,
+    Harvests.insert({ name: 'Example WAF',
+                      url: 'http://sos.maracoos.org/maracoos-iso/',
+                      org: 'MARACOOS',
+                      harvest_interval: 1,
                       harvest_type: 'WAF'});
   } 
 
@@ -51,8 +51,8 @@ Meteor.startup(function() {
 
 
 Meteor.startup(function() {
-  if(Meteor.settings.mail_url) {
-    process.env.MAIL_URL = process.env.MAIL_URL || Meteor.settings.mail_url
+  if(Meteor.settings.email.mail_url) {
+    process.env.MAIL_URL = process.env.MAIL_URL || Meteor.settings.email.mail_url;
   }
 
   Accounts.emailTemplates.siteName = "IOOS Harvest Registry";

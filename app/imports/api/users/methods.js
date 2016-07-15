@@ -4,6 +4,30 @@ import { Accounts } from 'meteor/accounts-base';
 import { UserSchema } from '/imports/api/users/users.js';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { _ } from 'meteor/underscore';
+import { Email } from 'meteor/email';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+
+
+sendNotificationEmail = function(user) {
+  let template = "A new user has registered for an account:\n" +
+    "\n" +
+    "Email: " + user.email + "\n" +
+    "Name: " + user.name + "\n" +
+    "Organization: " + user.organization + "\n" +
+    "\n" + 
+    "You can approve the account by logging in and visiting " + 
+    Meteor.absoluteUrl("users") +
+    "\n" +
+    "Thanks!\n" +
+    "ioos.us Admin";
+  Email.send({
+    from: "ioos.us Administrator <admin@ioos.us>",
+    to: Meteor.settings.email.notification_list,
+    subject: "ioos.us New Registered User",
+    text: template
+  });
+};
+
 
 export const registerAccount = new ValidatedMethod({
   name: "users.insert",
@@ -20,6 +44,10 @@ export const registerAccount = new ValidatedMethod({
       }
     };
     Accounts.createUser(insertDoc);  
+
+    let registeredUser = Accounts.findUserByEmail(user.email);
+    Accounts.sendVerificationEmail(registeredUser._id);
+    sendNotificationEmail(user);
   }
 });
 
@@ -135,7 +163,7 @@ Meteor.methods({
    */
   sendVerificationLink: function(email) {
     let user = Accounts.findUserByEmail(email);
-    if(!user._id) {
+    if(_.isEmpty(user) || _.isEmpty(user._id)) {
       throw new Meteor.Error(404, "No such user account for " + email);
     }
     Accounts.sendVerificationEmail(user._id);
