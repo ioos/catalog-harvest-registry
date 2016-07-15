@@ -8,7 +8,7 @@ import { Organizations } from '/imports/api/organizations/organizations.js';
 function insertHarvests() {
   Harvests.insert({name: 'Example WAF',
                    url: 'http://sos.maracoos.org/maracoos-iso/',
-                   org: 'MARACOOS',
+                   organization: 'MARACOOS',
                    harvest_interval: 1,
                    harvest_type: 'WAF'});
 }
