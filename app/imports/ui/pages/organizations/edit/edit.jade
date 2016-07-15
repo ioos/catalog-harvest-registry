@@ -1,0 +1,17 @@
+template(name='editOrganization')
+  .title-crumbs
+    .page-title
+      h2 Edit Organization
+    .page-breadcrumbs
+      | / Organizations / Edit
+
+  .edit-organization
+    .container
+      .row
+        .col-md-offset-3.col-md-6.col-sm-12
+          +autoForm id="editOrganization" collection=organizationsCollection type="method-update" meteormethod="organizations.update" singleMethodArgument=true doc=organization
+            +afQuickFields
+            .button-group
+              button.btn.btn-primary(type="submit") Submit
+            .button-group
+              button#cancel-btn.btn.btn-default(type="button") Cancel

@@ -1,0 +1,75 @@
+/*****************************************************************************/
+/* organizations: Style */
+/*****************************************************************************/
+@import '../../stylesheets/variables';
+
+.organizations {
+    background-color: @background-gray;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-family: "Roboto Regular", sans-serif;
+
+    .box {
+        background-color: white;
+        margin: 5px 5px;
+        border-radius: 5px;
+    }
+
+    .org-box {
+      padding: 10px 0px 10px 10px;
+      h2 {
+        margin-top: 13px;
+      }
+      margin-bottom: 10px;
+    }
+
+    .org-img {
+      top: 50%;
+      left: 50%;
+      position: relative;
+    }
+
+    .org-img img {
+      max-width: 100%;
+      max-height: 100%;
+      position: relative;p
+      margin-top:-50%;
+      margin-left:-50%;
+    }
+
+    .remove {
+      font-size: 16px;
+        a {
+            color: red;
+        }
+        a:hover, a:active {
+            text-decoration: none;
+        }
+    }
+
+    // Mobile
+    .container {
+        width: 100%;
+        .row {
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+    }
+    // Small
+    @media (min-width: 768px) {
+    }
+
+    // Medium Desktop
+    @media (min-width: 1024px) {
+        .container {
+            width: inherit;
+        }
+    }
+    // Large Desktop
+    @media (min-width: 1280px) {
+        .container {
+            width: 91%;
+        }
+    }
+
+}
