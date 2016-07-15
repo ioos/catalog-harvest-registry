@@ -18,6 +18,8 @@ import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod, ValidationError } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
+import { Roles } from 'meteor/alanning:roles';
+import { Accounts } from 'meteor/accounts-base';
 import { _ } from 'meteor/underscore';
 
 import { Organizations } from './organizations.js';
@@ -26,6 +28,12 @@ export const insert = new ValidatedMethod({
   name: 'organizations.insert',
   validate: Organizations.schema.validator(),
   run(doc) {
+
+    let currentUserId = Meteor.userId();
+    if(!Roles.userIsInRole(currentUserId, "admin")) {
+      throw new Meteor.Error(401, "Unauthorized");
+    }
+
     return Organizations.insert(
       doc
     );
@@ -38,6 +46,10 @@ export const update = new ValidatedMethod({
     Organizations.schema.validator()(modifier.$set);
   },
   run({_id, modifier}) {
+    let currentUserId = Meteor.userId();
+    if(!Roles.userIsInRole(currentUserId, "admin")) {
+      throw new Meteor.Error(401, "Unauthorized");
+    }
     Organizations.update({_id}, modifier);
   }
 });
@@ -46,12 +58,18 @@ export const remove = new ValidatedMethod({
   name: 'organizations.remove',
   validate: null,
   run(organizationId) {
+    let currentUserId = Meteor.userId();
+    if(!Roles.userIsInRole(currentUserId, "admin")) {
+      throw new Meteor.Error(401, "Unauthorized");
+    }
     Organizations.remove({_id: organizationId});
   }
 });
 
 const RATE_LIMITED_METHODS = _.pluck([
-  insert
+  insert,
+  update,
+  remove
 ], 'name');
 
 if (Meteor.isServer) {
