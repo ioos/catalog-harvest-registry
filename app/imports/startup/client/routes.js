@@ -100,14 +100,34 @@ FlowRouter.route('/users/verify/:token', {
 FlowRouter.route('/organizations', {
   name: 'organizations',
   action() {
-    BlazeLayout.render('MasterLayout', {yield: "organizations"});
+    Meteor.call("userIsInRole", Meteor.userId(), "admin", (error, isAdmin) => {
+      if(error) {
+        return FlowRouter.go('login');
+      }
+      if(isAdmin) {
+        BlazeLayout.render('MasterLayout', {yield: "organizations"});
+      } else {
+        FlashMessages.sendError("You are not authorized to view this page.");
+        return FlowRouter.go('harvests');
+      }
+    });
   }
 });
 
 FlowRouter.route('/organizations/new', {
   name: 'newOrganization',
   action() {
-    BlazeLayout.render('MasterLayout', {yield: "newOrganization"});
+    Meteor.call("userIsInRole", Meteor.userId(), "admin", (error, isAdmin) => {
+      if(error) {
+        return FlowRouter.go('login');
+      }
+      if(isAdmin) {
+        BlazeLayout.render('MasterLayout', {yield: "newOrganization"});
+      } else {
+        FlashMessages.sendError("You are not authorized to view this page.");
+        return FlowRouter.go('harvests');
+      }
+    });
   }
 });
 
@@ -115,6 +135,16 @@ FlowRouter.route('/organizations/new', {
 FlowRouter.route('/organizations/:organizationId/edit', {
   name: 'editOrganization',
   action() {
-    BlazeLayout.render('MasterLayout', {yield: "editOrganization"});
+    Meteor.call("userIsInRole", Meteor.userId(), "admin", (error, isAdmin) => {
+      if(error) {
+        return FlowRouter.go('login');
+      }
+      if(isAdmin) {
+        BlazeLayout.render('MasterLayout', {yield: "editOrganization"});
+      } else {
+        FlashMessages.sendError("You are not authorized to view this page.");
+        return FlowRouter.go('harvests');
+      }
+    });
   }
 });
