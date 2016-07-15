@@ -55,7 +55,7 @@ Harvests.publicFields = {
   _id: 1,
   name: 1,
   url: 1,
-  org: 1,
+  organization: 1,
   last_harvest_dt: 1,
   harvest_interval: 1,
   harvest_type: 1
