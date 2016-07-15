@@ -5,45 +5,50 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { AutoForm } from 'meteor/aldeed:autoform';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { FlashMessages } from 'meteor/mrt:flash-messages';
+import { Organizations } from '/imports/api/organizations/organizations.js';
+import { _ } from 'meteor/underscore';
 import 'meteor/mizzao:bootboxjs';
 
-let formSchema = new SimpleSchema({
-  email: {
-    label: "Email",
-    type: String,
-    regEx: SimpleSchema.RegEx.Email
-  },
-  name: {
-    label: "Full Name",
-    type: String
-  },
-  organization: {
-    label: "Organization",
-    type: String,
-    allowedValues: ["IOOS", "MARACOOS", "GLOS"]
-  },
-  password: {
-    label: "Password",
-    type: String,
-    min: 8,
-    autoform: {
+
+let formSchema = function(organizations) {
+  return new SimpleSchema({
+    email: {
+      label: "Email",
+      type: String,
+      regEx: SimpleSchema.RegEx.Email
+    },
+    name: {
+      label: "Full Name",
+      type: String
+    },
+    organization: {
+      label: "Organization",
+      type: String,
+      allowedValues: organizations
+    },
+    password: {
       label: "Password",
-      type: "password"
-    }
-  },
-  password_confirm: {
-    label: "Password Confirm",
-    type: String,
-    custom: function() {
-      if(this.value !== this.field('password').value) {
-        return 'passwordMismatch';
+      type: String,
+      min: 8,
+      autoform: {
+        label: "Password",
+        type: "password"
       }
     },
-    autoform: {
-      type: "password"
+    password_confirm: {
+      label: "Password Confirm",
+      type: String,
+      custom: function() {
+        if(this.value !== this.field('password').value) {
+          return 'passwordMismatch';
+        }
+      },
+      autoform: {
+        type: "password"
+      }
     }
-  }
-});
+  });
+};
 
 SimpleSchema.messages({
   passwordMismatch: "Passwords do not match"
@@ -75,14 +80,17 @@ Template.usersNew.events({
 /*****************************************************************************/
 Template.usersNew.helpers({
   formSchema() {
-    return formSchema;
+    let orgs = Organizations.find({}, {name: 1}).fetch();
+    orgs = _.pluck(orgs, 'name');
+    return formSchema(orgs);
   }
 });
 
 /*****************************************************************************/
 /* usersNew: Lifecycle Hooks */
 /*****************************************************************************/
-Template.usersNew.onCreated(() => {
+Template.usersNew.onCreated(function() {
+  this.subscribe("organizations");
 });
 
 Template.usersNew.onRendered(() => {

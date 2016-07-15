@@ -19,6 +19,7 @@ template(name='users')
               tr
                 th Name
                 th Email
+                th Organization
                 th Admin
                 th Approved
                 th Delete Account
@@ -27,6 +28,7 @@ template(name='users')
                 tr
                   td= profile.name
                   td= profile.email
+                  td= profile.organization
                   td
                     if hasRole roles "admin"
                       .disable-admin
