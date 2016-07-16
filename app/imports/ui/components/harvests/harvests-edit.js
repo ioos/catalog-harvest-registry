@@ -1,18 +1,28 @@
 import './harvests-edit.jade';
 import { Template } from 'meteor/templating';
 import { Harvests } from '/imports/api/harvests/harvests.js';
+import { Organizations } from '/imports/api/organizations/organizations.js';
 import { AutoForm } from 'meteor/aldeed:autoform';
+import { Roles } from 'meteor/alanning:roles';
+import { _ } from 'meteor/underscore';
 import 'meteor/mizzao:bootboxjs';
 
 let formSchema = function() {
   let user = Meteor.user();
-  let userOrg = user.profile.organization;
+  let organizations = [user.profile.organization];
+  if(Roles.userIsInRole(user._id, ['admin'])) {
+    console.log("User is admin");
+    organizations = _.map(Organizations.find({}, {name: 1}).fetch(), (org)=> {
+      return org.name;
+    });
+    console.log(organizations);
+  }
 
   return new SimpleSchema([Harvests.schema.pick(["name", "url", "harvest_interval", "harvest_type", "publish"]), {
     organization: {
       type: String,
-      allowedValues: [userOrg],
-      defaultValue: userOrg
+      allowedValues: organizations,
+      defaultValue: organizations[0]
     }
   }]);
 };
@@ -65,6 +75,7 @@ Template.harvestsEdit.helpers({
 /* harvestsEdit: Lifecycle Hooks */
 /*****************************************************************************/
 Template.harvestsEdit.onCreated(function() {
+  this.subscribe("organizations");
 });
 
 Template.harvestsEdit.onRendered(function() {
