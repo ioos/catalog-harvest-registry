@@ -1,8 +1,11 @@
 template(name="harvestsEdit")
   .harvest-edit-form
     if update
+      .pull-right
+        a#remove-harvest(href="#")
+          i.fa.fa-times
       h2 Edit Harvest
-      +autoForm id="harvestEdit" schema=formSchema type="method-update" meteormethod="harvests.update" doc=doc
+      +autoForm id="harvestEdit" schema=formSchema type="method-update" singleMethodArgument=true meteormethod="harvests.update" doc=doc
         +afQuickFields
         .button-group
           button.btn.btn-primary(type="submit") Update

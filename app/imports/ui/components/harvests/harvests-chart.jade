@@ -1,4 +1,7 @@
 template(name="harvestsChart")
-  h3= activeHarvest.name
-  #chart
-    svg
+  if activeHarvest
+    h3= activeHarvest.name
+    #chart
+      svg
+  else
+    h3 Please select a data source

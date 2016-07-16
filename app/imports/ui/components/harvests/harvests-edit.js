@@ -2,6 +2,7 @@ import './harvests-edit.jade';
 import { Template } from 'meteor/templating';
 import { Harvests } from '/imports/api/harvests/harvests.js';
 import { AutoForm } from 'meteor/aldeed:autoform';
+import 'meteor/mizzao:bootboxjs';
 
 let formSchema = function() {
   let user = Meteor.user();
@@ -23,6 +24,20 @@ let formSchema = function() {
 Template.harvestsEdit.events({
   'click #cancel-btn'(event, instance) {
     instance.state.set('editMode', false);
+  },
+  'click #remove-harvest'(event, instance) {
+    bootbox.confirm(
+      "This action can not be reversed, the <b class='warning'>harvest will be permanently removed</b>.<br>Are you sure?",
+      (response) => {
+        Meteor.call('harvests.remove', instance.state.get('doc')._id, (error, response) => {
+          if(error) {
+            FlashMessages.sendError(error.message);
+          } else {
+            FlashMessages.sendSuccess("Harvest deleted");
+          }
+        });
+      }
+    );
   }
 });
 
