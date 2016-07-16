@@ -2,59 +2,20 @@ template(name='harvests')
   .title-crumbs
     .page-title
       h2 Harvests Dashboard
+        a#new-harvest(href="#")
+          | &nbsp;&nbsp;+
     .page-breadcrumbs
       | / Harvests
   .harvests
-    .row.box-header
-      .box.box-3
-        h3.blue
-          i.fa.fa-database
-          span Data Sources 
-          span.badge 3
-
-      .box.box-3
-        h3.green
-          i.fa.fa-file
-          span Records
-          span.badge 25
-      .box.box-3
-        h3.murple
-          i.fa.fa-flag
-          span Notifications
-          span.badge 0
-      .box.box-3
-        h3.red
-          i.fa.fa-warning
-          span Errors
-          span.badge 5
+    +dashboardHeading
     .row
       .box.box-6.box-table
-        table.table.table-hover
-          thead
-            tr
-              th Name
-              th Organization
-              th URL
-              th Type
-          tbody
-            +each harvests
-              if active
-                tr.active
-                  +harvestRow
-              else
-                tr
-                  +harvestRow
-
+        +harvestsTable
 
       .box.box-6
-        h3= activeHarvest.name
-        #chart
-          svg
+        if editMode
+          +harvestsEdit
+        else
+          +harvestsChart
 
-template(name="harvestRow")
-  td= name
-  td= org
-  td 
-    a(href="#" onclick="return null;")
-      = url
-  td= harvest_type
+

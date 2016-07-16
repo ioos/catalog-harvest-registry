@@ -1,0 +1,24 @@
+template(name="dashboardHeading")
+  .row.box-header
+    .box.box-3
+      h3.blue
+        i.fa.fa-database
+        span Data Sources 
+        span.badge= dataSources
+
+    .box.box-3
+      h3.green
+        i.fa.fa-file
+        span Records
+        span.badge= records
+    .box.box-3
+      h3.murple
+        i.fa.fa-flag
+        span Notifications
+        span.badge= notifications
+    .box.box-3
+      h3.red
+        i.fa.fa-warning
+        span Errors
+        span.badge= errors
+

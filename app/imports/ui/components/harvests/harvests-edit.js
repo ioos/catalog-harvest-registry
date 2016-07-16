@@ -1,51 +1,59 @@
-import './edit.jade';
-import './edit.less';
+import './harvests-edit.jade';
 import { Template } from 'meteor/templating';
-import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Harvests } from '/imports/api/harvests/harvests.js';
 import { AutoForm } from 'meteor/aldeed:autoform';
+
+let formSchema = function() {
+  let user = Meteor.user();
+  let userOrg = user.profile.organization;
+
+  return new SimpleSchema([Harvests.schema.pick(["name", "url", "harvest_interval", "harvest_type"]), {
+    organization: {
+      type: String,
+      allowedValues: [userOrg],
+      defaultValue: userOrg
+    }
+  }]);
+};
+
 
 /*****************************************************************************/
 /* harvestsEdit: Event Handlers */
 /*****************************************************************************/
 Template.harvestsEdit.events({
+  'click #cancel-btn'(event, instance) {
+    instance.state.set('editMode', false);
+  }
 });
 
 /*****************************************************************************/
 /* harvestsEdit: Helpers */
 /*****************************************************************************/
 Template.harvestsEdit.helpers({
-  harvest() {
-    let shouldFind = Harvests.findOne(FlowRouter.getParam('harvestId'));
-    return shouldFind;
-  },
   formSchema() {
-    return Harvests.schema.pick(['name', 'org', 'url', 'harvest_type', 'harvest_interval']);
+    return formSchema();
+  },
+  update() {
+    let instance = Template.instance();
+    let retval = instance.state.get('doc') !== null;
+    return retval;
+  },
+  doc() {
+    let instance = Template.instance();
+    return instance.state.get('doc');
   }
 });
 
 /*****************************************************************************/
 /* harvestsEdit: Lifecycle Hooks */
 /*****************************************************************************/
-Template.harvestsEdit.onCreated(function () {
-  this.subscribe('harvests.public');
+Template.harvestsEdit.onCreated(function() {
 });
 
-Template.harvestsEdit.onRendered(() => {
+Template.harvestsEdit.onRendered(function() {
 });
 
-Template.harvestsEdit.onDestroyed(() => {
+Template.harvestsEdit.onDestroyed(function() {
 });
 
-AutoForm.debug();
-AutoForm.hooks({
-  editHarvest: {
-    onSubmit: function(insertDoc, updateDoc, currentDoc) {
-      this.event.preventDefault(); 
-      console.log("calling harvests.update");
-      insertDoc._id = currentDoc._id;
-      Meteor.call('harvests.update', insertDoc);
-      this.done();
-    } 
-  }
-}); 
+

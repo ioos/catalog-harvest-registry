@@ -28,9 +28,10 @@ import { Harvests } from './harvests.js';
 
 export const insert = new ValidatedMethod({
     name: 'harvests.insert',
-    validate: Harvests.simpleSchema().pick(['name', 'org', 'url', 'harvest_type', 'harvest_interval']).validator({clean: true, filter: false}),
+    validate: Harvests.simpleSchema().pick(['name', 'organization', 'url', 'harvest_type', 'harvest_interval']).validator({clean: true, filter: false}),
     run(harvest) {
-        return Harvests.insert(harvest);
+      console.log(harvest);
+      return Harvests.insert(harvest);
     }
 });
 

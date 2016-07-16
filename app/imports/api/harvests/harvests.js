@@ -32,8 +32,7 @@ const HarvestSchema = new SimpleSchema({
     type: String
   },
   name: {
-    type: String,
-    optional: true
+    type: String
   },
   url: {
     type: String,
@@ -41,13 +40,26 @@ const HarvestSchema = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Url,
     label: "URL"
   },
-  org: {type: String,
-        label: "Organization"},
+  organization: {
+    type: String,
+    label: "Organization"
+  },
   /* harvest interval in seconds.  Initialize to null to indicate no harvest
    * made */
-  last_harvest_dt: {type: Date, optional: true},
-  harvest_interval: {type: Number},
-  harvest_type: {type: String, allowedValues: ['WAF', 'CSW']}
+  last_harvest_dt: {
+    type: Date,
+    optional: true
+  },
+  harvest_interval: {
+    type: Number,
+    optional: true,
+    defaultValue: 1
+  },
+  harvest_type: {
+    type: String,
+    allowedValues: ['WAF', 'CSW'],
+    defaultValue: 'WAF'
+  }
 });
 Harvests.schema = HarvestSchema;
 
@@ -56,7 +68,7 @@ Harvests.publicFields = {
   _id: 1,
   name: 1,
   url: 1,
-  org: 1,
+  organization: 1,
   last_harvest_dt: 1,
   harvest_interval: 1,
   harvest_type: 1

@@ -1,0 +1,24 @@
+template(name="harvestsTable")
+  table.table.table-hover
+    thead
+      tr
+        th Name
+        th Organization
+        th URL
+        th Type
+    tbody
+      +each harvests
+        if active
+          tr.active
+            +harvestRow
+        else
+          tr
+            +harvestRow
+
+template(name="harvestRow")
+  td= name
+  td= organization
+  td 
+    a(href="#{url}" target="_blank")
+      = url
+  td= harvest_type
