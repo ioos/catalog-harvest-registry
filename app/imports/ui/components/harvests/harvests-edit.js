@@ -34,6 +34,8 @@ Template.harvestsEdit.events({
             FlashMessages.sendError(error.message);
           } else {
             FlashMessages.sendSuccess("Harvest deleted");
+            instance.state.set('doc', null);
+            instance.state.set('editMode', false);
           }
         });
       }
