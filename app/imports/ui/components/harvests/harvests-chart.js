@@ -66,7 +66,9 @@ Template.harvestsChart.renderChart = function() {
 };
 
 Template.harvestsChart.onRendered(function() {
-  Template.harvestsChart.renderChart();
+  if(this.state.get('doc') !== null) {
+    Template.harvestsChart.renderChart();
+  }
 });
 
 Template.harvestsChart.onDestroyed(function() {
