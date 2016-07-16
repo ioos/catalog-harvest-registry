@@ -1,6 +1,10 @@
 template(name="harvestsChart")
   if activeHarvest
-    h3= activeHarvest.name
+    h3
+      = activeHarvest.name
+      .pull-right
+        = harvestDate
+        
     #chart
       svg
   else

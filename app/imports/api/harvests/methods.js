@@ -22,6 +22,7 @@ import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
+import { Roles } from 'meteor/alanning:roles';
 import { _ } from 'meteor/underscore';
 
 import { Harvests } from './harvests.js';
@@ -66,6 +67,9 @@ export const remove = new ValidatedMethod({
       let originalHarvest = Harvests.findOne({_id: harvestId});
       if(!originalHarvest) {
         throw new Meteor.Error(404, "Not Found");
+      }
+      if(Roles.userIsInRole(user._id, ["admin"])) {
+        return Harvests.remove({_id: harvestId});
       }
       if(!user || user.profile.organization != originalHarvest.organization) {
         throw new Meteor.Error(401, "Unauthorized");

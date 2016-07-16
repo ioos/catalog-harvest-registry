@@ -2,6 +2,7 @@ import './harvests-chart.jade';
 import { Template } from 'meteor/templating';
 import { Harvests } from '/imports/api/harvests/harvests.js';
 import { nv } from 'meteor/nvd3:nvd3';
+import { moment } from 'meteor/momentjs:moment';
 
 /*****************************************************************************/
 /* harvestsChart: Event Handlers */
@@ -13,9 +14,17 @@ Template.harvestsChart.events({
 /* harvestsChart: Helpers */
 /*****************************************************************************/
 Template.harvestsChart.helpers({
-  activeHarvest: function() {
+  activeHarvest() {
     let instance = Template.instance();
     return instance.state.get('doc');
+  },
+  harvestDate() {
+    let instance = Template.instance();
+    let doc = instance.state.get('doc');
+    if(doc === null || !doc.last_harvest_dt) {
+      return "Never";
+    }
+    return moment(doc.last_harvest_dt).fromNow();
   }
 });
 
