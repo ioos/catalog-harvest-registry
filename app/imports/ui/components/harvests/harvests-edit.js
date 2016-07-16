@@ -8,7 +8,7 @@ let formSchema = function() {
   let user = Meteor.user();
   let userOrg = user.profile.organization;
 
-  return new SimpleSchema([Harvests.schema.pick(["name", "url", "harvest_interval", "harvest_type"]), {
+  return new SimpleSchema([Harvests.schema.pick(["name", "url", "harvest_interval", "harvest_type", "publish"]), {
     organization: {
       type: String,
       allowedValues: [userOrg],

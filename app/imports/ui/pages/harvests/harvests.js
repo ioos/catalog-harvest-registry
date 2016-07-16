@@ -68,10 +68,6 @@ AutoForm.hooks({
     onSuccess: function(formType, result) {
       FlashMessages.sendSuccess("Harvest was successfully added");
       pageState.set('editMode', false);
-    },
-    onError: function(formType, error) {
-      FlashMessages.sendError(error.reason);
-      pageState.set('editMode', false);
     }
   }
 });

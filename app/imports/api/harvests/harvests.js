@@ -59,6 +59,11 @@ const HarvestSchema = new SimpleSchema({
     type: String,
     allowedValues: ['WAF', 'CSW'],
     defaultValue: 'WAF'
+  },
+  publish: {
+    type: Boolean,
+    defaultValue: false,
+    label: "Publish this source?"
   }
 });
 Harvests.schema = HarvestSchema;
@@ -71,7 +76,8 @@ Harvests.publicFields = {
   organization: 1,
   last_harvest_dt: 1,
   harvest_interval: 1,
-  harvest_type: 1
+  harvest_type: 1,
+  publish: 1
 };
 
 Harvests.attachSchema(HarvestSchema);
