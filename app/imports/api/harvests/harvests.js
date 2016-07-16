@@ -40,13 +40,26 @@ const HarvestSchema = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Url,
     label: "URL"
   },
-  organization: {type: String,
-        label: "Organization"},
+  organization: {
+    type: String,
+    label: "Organization"
+  },
   /* harvest interval in seconds.  Initialize to null to indicate no harvest
    * made */
-  last_harvest_dt: {type: Date, optional: true},
-  harvest_interval: {type: Number, optional: true, defaultValue: 1},
-  harvest_type: {type: String, allowedValues: ['WAF', 'CSW']}
+  last_harvest_dt: {
+    type: Date,
+    optional: true
+  },
+  harvest_interval: {
+    type: Number,
+    optional: true,
+    defaultValue: 1
+  },
+  harvest_type: {
+    type: String,
+    allowedValues: ['WAF', 'CSW'],
+    defaultValue: 'WAF'
+  }
 });
 Harvests.schema = HarvestSchema;
 

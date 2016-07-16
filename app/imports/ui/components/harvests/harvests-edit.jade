@@ -1,0 +1,16 @@
+template(name="harvestsEdit")
+  .harvest-edit-form
+    if update
+      h2 Edit Harvest
+      +autoForm id="harvestEdit" schema=formSchema type="method-update" meteormethod="harvests.update" doc=doc
+        +afQuickFields
+        .button-group
+          button.btn.btn-primary(type="submit") Update
+          button#cancel-btn.btn.btn-default(type="button") Cancel
+    else
+      h2 New Harvest
+      +autoForm id="harvestEdit" schema=formSchema type="method" meteormethod="harvests.insert"
+        +afQuickFields
+        .button-group
+          button.btn.btn-primary(type="submit") Submit
+          button#cancel-btn.btn.btn-default(type="button") Cancel
