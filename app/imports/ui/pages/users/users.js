@@ -45,13 +45,15 @@ Template.users.events({
     bootbox.confirm(
       "This action can not be reversed, the <b class='warning'>account will be permanently removed</b>.<br>Are you sure?",
       (response) => {
-        Meteor.call('removeAccount', this._id, (error, response) => {
-          if(error) {
-            FlashMessages.sendError(error.message);
-          } else {
-            FlashMessages.sendSuccess("Account deleted");
-          }
-        });
+        if(response) {
+          Meteor.call('removeAccount', this._id, (error, response) => {
+            if(error) {
+              FlashMessages.sendError(error.message);
+            } else {
+              FlashMessages.sendSuccess("Account deleted");
+            }
+          });
+        }
     });
   }
 });
