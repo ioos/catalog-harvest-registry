@@ -28,7 +28,7 @@ import { Harvests } from './harvests.js';
 
 export const insert = new ValidatedMethod({
     name: 'harvests.insert',
-    validate: Harvests.simpleSchema().pick(['name', 'organization', 'url', 'harvest_type', 'harvest_interval']).validator({clean: true, filter: false}),
+    validate: Harvests.simpleSchema().pick(['name', 'organization', 'url', 'harvest_type', 'harvest_interval', 'publish']).validator({clean: true, filter: false}),
     run(harvest) {
       let userId = Meteor.userId();
       if(!userId) {
@@ -42,7 +42,7 @@ export const insert = new ValidatedMethod({
 export const update = new ValidatedMethod({
     name: 'harvests.update',
     validate({_id, modifier}){
-      Harvests.schema.pick(["name", "url", "harvest_interval", "harvest_type", "organization"]).validator()(modifier.$set);
+      Harvests.schema.pick(["name", "url", "harvest_interval", "harvest_type", "organization", "publish"]).validator()(modifier.$set);
     },
     run({_id, modifier}) {
       let user = Meteor.user();
