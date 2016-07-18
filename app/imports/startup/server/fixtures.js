@@ -18,7 +18,7 @@ function insertUsers() {
   Accounts.createUser({
     username: "admin",
     email: "admin@ioos.us",
-    password: "testadmin",
+    password: Meteor.settings.adminPassword || "testadmin",
     profile:{
       name: "Admin",
       email: "admin@ioos.us",
