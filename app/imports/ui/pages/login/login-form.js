@@ -18,7 +18,7 @@ Template.loginForm.events({
       if(email === null) {
         return;
       }
-      Meteor.call('users.resetPassword', {email}, (error, response) => {
+      Meteor.call('users.sendReset', {email}, (error, response) => {
         if(error) { 
           FlashMessages.sendError(error.reason);
           return;

@@ -56,8 +56,8 @@ export const registerAccount = new ValidatedMethod({
 });
 
 
-export const resetPassword = new ValidatedMethod({
-  name: 'users.resetPassword',
+export const sendReset = new ValidatedMethod({
+  name: 'users.sendReset',
   validate: new SimpleSchema({
     email: {
       type: String,
@@ -72,6 +72,7 @@ export const resetPassword = new ValidatedMethod({
     Accounts.sendResetPasswordEmail(user._id);
   }
 });
+
 
 Meteor.methods({
   /*

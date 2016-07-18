@@ -1,0 +1,70 @@
+/*****************************************************************************/
+/* users-reset */
+/*****************************************************************************/
+.users-reset {
+  .center {
+    text-align: center;
+  }
+
+  .form-region {
+    padding-top: 40px;
+    background-color: #F5F5F5;
+    display: block;
+    height: 400px;
+  }
+
+  form {
+    float: left;
+    position: relative;
+    padding-left: 8px;
+    width: 300px;
+
+    button {
+      float: right;
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-right: -2px;
+    }
+    .forgot-password {
+      padding-left: 2px;
+    }
+    .form-group input {
+      border: 0;
+      border-radius: 0;
+      background-color: white;
+      color: #666;
+      margin: 4px 2px;
+      padding-left: 32px;
+      padding-right: 32px;
+      height: 52px;
+    }
+    .form-group input.error {
+        border: 1px solid red;
+    }
+
+  }
+  .alert.alert-danger {
+      display: block;
+  }
+
+  @media (min-width: 568px) {
+    form {
+      width: 400px;
+      left: 10%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    form {
+      left: 37%;
+      padding-left: inherit;
+      width: 432px;
+    }
+  }
+}

@@ -10,6 +10,7 @@ import '/imports/ui/pages/harvests/harvests.js';
 /* Users */
 import '/imports/ui/pages/users/users.js';
 import '/imports/ui/pages/users/new/new.js';
+import '/imports/ui/pages/users/reset/users-reset.js';
 
 /* Organizations */
 import '/imports/ui/pages/organizations/organizations.js';
