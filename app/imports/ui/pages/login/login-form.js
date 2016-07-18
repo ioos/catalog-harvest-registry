@@ -5,12 +5,28 @@ import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { FlashMessages } from 'meteor/mrt:flash-messages';
+import 'meteor/mizzao:bootboxjs';
 
 
 /*****************************************************************************/
 /* loginForm: Event Handlers */
 /*****************************************************************************/
 Template.loginForm.events({
+  'click a.forgot-password'(event, instance) {
+    event.preventDefault();
+    bootbox.prompt("Please enter the email address of the account.", (email) => {
+      if(email === null) {
+        return;
+      }
+      Meteor.call('users.resetPassword', {email}, (error, response) => {
+        if(error) { 
+          FlashMessages.sendError(error.reason);
+          return;
+        }
+        FlashMessages.sendSuccess("We have sent a password reset to your email");
+      });
+    });
+  },
   'submit'(event, instance) {
     event.preventDefault();
     let email = instance.$('#email').val();

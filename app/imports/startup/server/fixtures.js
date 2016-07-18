@@ -204,7 +204,8 @@ Meteor.startup(function() {
   Accounts.emailTemplates.from = "ioos.us Administrator <admin@ioos.us>";
   Accounts.emailTemplates.verifyEmail = {
     subject() {
-      return "Please verify your email address";
+      let siteName = Accounts.emailTemplates.siteName;
+      return `Welcome to ${siteName}`;
     },
     text(user, url) {
       let emailAddress   = user.emails[0].address,
@@ -215,6 +216,18 @@ Meteor.startup(function() {
     return emailBody;
     }
   };
+  Accounts.emailTemplates.resetPassword = {
+    subject() {
+      let siteName = Accounts.emailTemplates.siteName;
+      return `${siteName} Password Reset`;
+    },
+    text(user, url) {
+      let urlWithoutHash = url.replace( '#/reset-password', 'users/reset' ),
+      emailBody = `Someone has requested a password reset for this account.\n\nPlease proceed to ${urlWithoutHash} to reset your user account password.`;
+      return emailBody;
+    }
+  };
+
 
 });
 
