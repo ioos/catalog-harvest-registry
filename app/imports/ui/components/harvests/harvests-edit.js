@@ -39,6 +39,9 @@ Template.harvestsEdit.events({
     bootbox.confirm(
       "This action can not be reversed, the <b class='warning'>harvest will be permanently removed</b>.<br>Are you sure?",
       (response) => {
+        if(response === false) {
+          return;
+        }
         Meteor.call('harvests.remove', instance.state.get('doc')._id, (error, response) => {
           if(error) {
             FlashMessages.sendError(error.message);
