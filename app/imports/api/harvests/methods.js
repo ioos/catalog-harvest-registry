@@ -48,9 +48,16 @@ export const update = new ValidatedMethod({
     run({_id, modifier}) {
       let user = Meteor.user();
       let originalHarvest = Harvests.findOne({_id: _id});
+      // Check if the harvest actually exists
       if(!originalHarvest) {
         throw new Meteor.Error(404, "Not Found");
       }
+      // Let admins do whatever they want
+      if(Roles.userIsInRole(user._id, ["admin"])) {
+        return Harvests.update({_id}, modifier);
+      }
+      // Only users of the same organization can update that organization's
+      // harvests
       if(!user || user.profile.organization != originalHarvest.organization) {
         throw new Meteor.Error(401, "Unauthorized");
       }
