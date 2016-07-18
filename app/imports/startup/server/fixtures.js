@@ -196,7 +196,7 @@ Meteor.startup(function() {
 
 
 Meteor.startup(function() {
-  if(Meteor.settings.email.mail_url) {
+  if(Meteor.settings.email && Meteor.settings.email.mail_url) {
     process.env.MAIL_URL = process.env.MAIL_URL || Meteor.settings.email.mail_url;
   }
 

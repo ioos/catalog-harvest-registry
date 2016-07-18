@@ -9,6 +9,9 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 
 
 sendNotificationEmail = function(user) {
+  if(!Meteor.settings.email || !Meteor.settings.notification_list) {
+    return;
+  }
   let template = "A new user has registered for an account:\n" +
     "\n" +
     "Email: " + user.email + "\n" +
