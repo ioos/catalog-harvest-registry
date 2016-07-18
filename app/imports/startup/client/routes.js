@@ -34,6 +34,9 @@ function validatedRender(callback){
   });
 }
 
+/****************************************/
+/* Harvests */
+/****************************************/
 
 FlowRouter.route('/harvests', {
   name: 'harvests',
@@ -43,6 +46,10 @@ FlowRouter.route('/harvests', {
     });
   }
 });
+
+/****************************************/
+/* Users */
+/****************************************/
 
 
 FlowRouter.route('/users', {
@@ -85,6 +92,17 @@ FlowRouter.route('/users/verify/:token', {
   }
 });
 
+
+FlowRouter.route('/users/reset/:token', {
+  name: 'usersReset',
+  action() {
+    BlazeLayout.render('MasterLayout', {yield: "usersReset"});
+  }
+});
+
+/****************************************/
+/* Organizations */
+/****************************************/
 
 FlowRouter.route('/organizations', {
   name: 'organizations',

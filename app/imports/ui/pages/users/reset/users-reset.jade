@@ -1,0 +1,14 @@
+template(name='usersReset')
+  .title-crumbs
+    .page-title
+      h2 User Password Reset
+    .page-breadcrumbs
+      | / Users / Reset
+  .users-reset
+    .form-region
+      form
+        .form-group
+          input#password.form-control(type="password" placeholder="New Password")
+        .form-group
+          input#password-confirm.form-control(type="password" placeholder="Confirm New Password")
+        button(type="submit") Submit

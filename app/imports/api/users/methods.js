@@ -6,6 +6,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { _ } from 'meteor/underscore';
 import { Email } from 'meteor/email';
 import { FlowRouter } from 'meteor/kadira:flow-router';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 
 sendNotificationEmail = function(user) {
@@ -53,6 +54,25 @@ export const registerAccount = new ValidatedMethod({
     sendNotificationEmail(user);
   }
 });
+
+
+export const sendReset = new ValidatedMethod({
+  name: 'users.sendReset',
+  validate: new SimpleSchema({
+    email: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Email
+    }
+  }).validator(),
+  run({email}) {
+    let user = Accounts.findUserByEmail(email);
+    if(_.isEmpty(user) || _.isEmpty(user._id)) {
+      throw new Meteor.Error(404, "No such user account for " + email);
+    }
+    Accounts.sendResetPasswordEmail(user._id);
+  }
+});
+
 
 Meteor.methods({
   /*
