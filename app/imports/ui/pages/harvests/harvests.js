@@ -32,7 +32,7 @@ Template.harvestsEdit.onCreated(function() {
 Template.harvests.events({
   'click #new-harvest'() {
     pageState.set('editMode', true);
-    pageState.set('doc', null);
+    pageState.set('harvestId', null);
   }
 });
 
@@ -40,14 +40,24 @@ Template.harvests.helpers({
   editMode() {
     let instance = Template.instance();
     return instance.state.get('editMode');
+  },
+  activeHarvest() {
+    let instance = Template.instance();
+    let harvestId = instance.state.get('harvestId');
+    return Harvests.findOne({_id: harvestId});
   }
 });
 
 Template.harvests.onCreated(function() {
   this.state = pageState;
   this.subscribe('harvests.public');
-  this.state.set("doc", null);
+  // This is the referenced doc for the reset of the page. It gets set when a
+  // user selects certain elements, like a row in a table of harvests.
+  this.state.set("harvestId", null);
+  // This flag causes the edit form to appear
   this.state.set('editMode', false);
+  // This list contains the documents that are actively being harvested
+  this.state.set('harvesting', []);
 });
 
 Template.harvests.onRendered(() => {

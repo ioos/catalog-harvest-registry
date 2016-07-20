@@ -7,8 +7,7 @@ import { Harvests } from '/imports/api/harvests/harvests.js';
 /*****************************************************************************/
 Template.harvestsTable.events({
   'click tr'(event, instance) {
-    instance.state.set('doc', this);
-    Template.harvestsChart.renderChart();
+    instance.state.set('harvestId', this._id);
   }
 });
 
@@ -18,10 +17,10 @@ Template.harvestsTable.events({
 Template.harvestsTable.helpers({
   harvests: function() {
     let instance = Template.instance();
-    let activeHarvest = instance.state.get('doc');
+    let activeHarvest = instance.state.get('harvestId');
     let harvests = _.map(Harvests.find({}).fetch(), function(harvest) {
       harvest.active = false;
-      if(activeHarvest && harvest._id == activeHarvest._id) {
+      if(activeHarvest && harvest._id == activeHarvest) {
         harvest.active = true;
       }
       return harvest;

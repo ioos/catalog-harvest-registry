@@ -1,12 +1,17 @@
 template(name="harvestsChart")
-  if activeHarvest
-    h3
-      = activeHarvest.name
-      .pull-right
-        = harvestDate
-        
-    p.fake-notice This is a fake chart, in the future this will show harvest success metrics.
-    #chart
-      svg
-  else
-    h3 Please select a data source
+  .harvests-chart
+    if _id
+      h3
+        a#edit-harvest(href='#')= name
+        .pull-right
+          if harvesting
+            i.fa.fa-spinner.fa-spin
+          else
+            a#harvest-now(href='#')= harvestDate
+          
+      p.fake-notice This is a fake chart, in the future this will show harvest success metrics.
+      #chart
+        svg
+      +drawChart
+    else
+      h3 Please select a data source

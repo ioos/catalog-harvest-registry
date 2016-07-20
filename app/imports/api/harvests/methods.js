@@ -24,8 +24,10 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import { Roles } from 'meteor/alanning:roles';
 import { _ } from 'meteor/underscore';
+import { HTTP } from 'meteor/http';
 
 import { Harvests } from './harvests.js';
+import urljoin from 'url-join';
 
 export const insert = new ValidatedMethod({
     name: 'harvests.insert',
@@ -82,6 +84,51 @@ export const remove = new ValidatedMethod({
         throw new Meteor.Error(401, "Unauthorized");
       }
       return Harvests.remove({_id: harvestId});
+  }
+});
+
+
+export const activate = new ValidatedMethod({
+  name: 'harvests.activate',
+  validate: null,
+  run(harvestId) {
+      let user = Meteor.user();
+      let originalHarvest = Harvests.findOne({_id: harvestId});
+      let isAdmin = Roles.userIsInRole(user._id, ["admin"]);
+      if(!originalHarvest) {
+        throw new Meteor.Error(404, "Not Found");
+      }
+      if(!isAdmin && (!user || user.profile.organization != originalHarvest.organization)) {
+        throw new Meteor.Error(401, "Unauthorized");
+      }
+
+      if(!Meteor.settings.services || !Meteor.settings.services.harvestAPI) {
+        throw new Meteor.Error(500, "Harvest API Not Defined");
+      }
+
+      let apiURL = urljoin(Meteor.settings.services.harvestAPI, harvestId);
+
+      let response = Meteor.wrapAsync((apiURL, callback) => {
+        let errorCode;
+        let errorMessage;
+        let myError;
+        try {
+          let response = HTTP.get(apiURL);
+          callback(null, response);
+        } catch (error) {
+          if(error.response) {
+            errorCode = error.response.data.code;
+            errorMessage = error.response.data.message;
+          } else {
+            errorCode = 500;
+            errorMessage = "Cannot Access API";
+          }
+          myError = new Meteor.Error(errorCode, errorMessage);
+          callback(myError, null);
+        }
+
+      })(apiURL);
+      return response;
   }
 });
 

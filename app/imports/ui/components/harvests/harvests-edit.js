@@ -11,11 +11,9 @@ let formSchema = function() {
   let user = Meteor.user();
   let organizations = [user.profile.organization];
   if(Roles.userIsInRole(user._id, ['admin'])) {
-    console.log("User is admin");
     organizations = _.map(Organizations.find({}, {name: 1}).fetch(), (org)=> {
       return org.name;
     });
-    console.log(organizations);
   }
 
   return new SimpleSchema([Harvests.schema.pick(["name", "url", "harvest_interval", "harvest_type", "publish"]), {
@@ -42,12 +40,12 @@ Template.harvestsEdit.events({
         if(response === false) {
           return;
         }
-        Meteor.call('harvests.remove', instance.state.get('doc')._id, (error, response) => {
+        Meteor.call('harvests.remove', instance.state.get('harvestId'), (error, response) => {
           if(error) {
             FlashMessages.sendError(error.message);
           } else {
             FlashMessages.sendSuccess("Harvest deleted");
-            instance.state.set('doc', null);
+            instance.state.set('harvestId', null);
             instance.state.set('editMode', false);
           }
         });
@@ -64,13 +62,10 @@ Template.harvestsEdit.helpers({
     return formSchema();
   },
   update() {
-    let instance = Template.instance();
-    let retval = instance.state.get('doc') !== null;
-    return retval;
+    return !_.isEmpty(Harvests.findOne({_id: Template.instance().state.get('harvestId')}));
   },
   doc() {
-    let instance = Template.instance();
-    return instance.state.get('doc');
+    return Harvests.findOne({_id: Template.instance().state.get('harvestId')});
   }
 });
 
@@ -86,5 +81,4 @@ Template.harvestsEdit.onRendered(function() {
 
 Template.harvestsEdit.onDestroyed(function() {
 });
-
 
