@@ -1,6 +1,8 @@
 import './dashboard-heading.jade';
 import { Template } from 'meteor/templating';
 import { Harvests } from '/imports/api/harvests/harvests.js';
+import { Attempts } from '/imports/api/attempts/attempts.js';
+import { _ } from 'meteor/underscore';
 
 Template.dashboardHeading.events({
 });
@@ -9,21 +11,26 @@ Template.dashboardHeading.helpers({
   dataSources() {
     return Harvests.find({}).count();
   },
-  recoreds() {
+  records() {
     // For now, we don't have a collection, so just return a number
-    return Math.floor(Math.random() * 10);
+    let attempt = Attempts.findOne({parent_harvest: this._id}, {sort: {date: -1}});
+    if(!attempt) {
+      return;
+    }
+    return attempt.num_records;
   },
-  notifications() {
+  attempts() {
     // For now, we don't have a collection, so just return a number
-    return Math.floor(Math.random() * 10);
+    return Attempts.find({parent_harvest: this._id}).count() || null;
   },
   errors() {
     // For now, we don't have a collection, so just return a number
-    return Math.floor(Math.random() * 10);
+    return Attempts.find({parent_harvest: this._id, successful: false}).count() || null;
   }
 });
 
 Template.dashboardHeading.onCreated(function() {
+  this.subscribe('attempts.public');
 });
 
 

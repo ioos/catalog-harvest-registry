@@ -7,7 +7,7 @@ template(name='harvests')
     .page-breadcrumbs
       | / Harvests
   .harvests
-    +dashboardHeading
+    +Template.dynamic template="dashboardHeading" data=activeHarvest
     .row
       .box.box-6.box-table
         +harvestsTable
@@ -16,6 +16,6 @@ template(name='harvests')
         if editMode
           +harvestsEdit
         else
-          +harvestsChart
+          +Template.dynamic template="harvestsChart" data=activeHarvest
 
 
