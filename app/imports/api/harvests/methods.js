@@ -23,6 +23,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import { Roles } from 'meteor/alanning:roles';
+import { Attempts } from '/imports/api/attempts/attempts.js';
 import { _ } from 'meteor/underscore';
 import { HTTP } from 'meteor/http';
 
@@ -74,15 +75,15 @@ export const remove = new ValidatedMethod({
   run(harvestId) {
       let user = Meteor.user();
       let originalHarvest = Harvests.findOne({_id: harvestId});
+      let isAdmin = Roles.userIsInRole(user._id, ["admin"]);
       if(!originalHarvest) {
         throw new Meteor.Error(404, "Not Found");
       }
-      if(Roles.userIsInRole(user._id, ["admin"])) {
-        return Harvests.remove({_id: harvestId});
-      }
-      if(!user || user.profile.organization != originalHarvest.organization) {
+      if(!isAdmin && (!user || user.profile.organization != originalHarvest.organization)) {
         throw new Meteor.Error(401, "Unauthorized");
       }
+
+      Attempts.remove({parent_harvest: harvestId});
       return Harvests.remove({_id: harvestId});
   }
 });
