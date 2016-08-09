@@ -155,3 +155,21 @@ FlowRouter.route('/organizations/:organizationId/edit', {
     });
   }
 });
+
+
+FlowRouter.route('/records/:harvestId', {
+  name: 'records',
+  action() {
+    Meteor.call("userIsInRole", Meteor.userId(), "admin", (error, isAdmin) => {
+      if(error) {
+        return FlowRouter.go('login');
+      }
+      if(isAdmin) {
+        BlazeLayout.render('MasterLayout', {yield: "records"});
+      } else {
+        FlashMessages.sendError("You are not authorized to view this page.");
+        return FlowRouter.go('harvests');
+      }
+    });
+  }
+});

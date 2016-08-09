@@ -16,3 +16,6 @@ import '/imports/ui/pages/users/reset/users-reset.js';
 import '/imports/ui/pages/organizations/organizations.js';
 import '/imports/ui/pages/organizations/new/new.js';
 import '/imports/ui/pages/organizations/edit/edit.js';
+
+/* Records */
+import '/imports/ui/pages/records/records.js';

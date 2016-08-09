@@ -1,0 +1,41 @@
+template(name='records')
+  .title-crumbs
+    .page-title
+      h2 Records
+    .page-breadcrumbs
+      | / Records
+  .records.resource
+    .container
+      .row
+        .box.col-md-3.col-xs-12
+          h3.green
+            i.fa.fa-file
+            span Records
+            span.badge 12
+        .box.col-md-3.col-xs-12
+          h3.murple
+            i.fa.fa-cloud
+            span Services
+            span.badge 12
+        .box.col-md-3.col-xs-12
+          h3.red
+            i.fa.fa-warning
+            span Errors
+            span.badge 6
+      .row
+        .box.col-xs-12
+          .record-container
+            h1 Title
+              .pull-right
+                i.fa.fa-link
+            p Description of dataset goes here
+            p
+              b
+                a(href='#' onclick='return null;') Errors +
+                ul
+                  li Error1
+                  li Something else is wrong
+                  li Blah
+
+          hr
+          .record-container

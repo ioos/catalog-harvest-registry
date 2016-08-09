@@ -1,0 +1,51 @@
+/*****************************************************************************/
+/* This file is a sort of template or default styles for creating resource */
+/* pages */
+/*****************************************************************************/
+@import "variables";
+
+@box-margin: 10px;
+
+.generate-columns(@n, @i: 1) when (@i =< @n) {
+  .box.col-md-@{i} {
+    width: calc(percentage(@i / @n) ~"-" @box-margin);
+  }
+  .generate-columns(@n, (@i + 1));
+}
+
+.resource {
+  background-color: @background-gray;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  font-family: "Roboto", sans-serif;
+  color: rgb(153, 153, 153);
+  .box {
+      display: inline-block;
+      border-radius: 5px;
+      vertical-align: top;
+      background-color: white;
+      margin: 5px;
+  }
+  h3 {
+    font-family: "Roboto Slab", Times, serif;
+    margin-bottom: 20px;
+  }
+  h3.blue {
+      color: @color-data-sources;
+  }
+  h3.green {
+      color: @color-records;
+  }
+  h3.red {
+      color: @color-errors;
+  }
+  h3.murple {
+      color: @color-notifications;
+  }
+  @media (min-width: 992px) {
+    .box {
+      margin: 0 5px 10px 5px;
+    }
+    .generate-columns(12);
+  }
+}
