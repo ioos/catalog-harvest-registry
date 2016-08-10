@@ -2,9 +2,15 @@ import './dashboard-heading.jade';
 import { Template } from 'meteor/templating';
 import { Harvests } from '/imports/api/harvests/harvests.js';
 import { Attempts } from '/imports/api/attempts/attempts.js';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import { _ } from 'meteor/underscore';
 
 Template.dashboardHeading.events({
+  'click #records'() {
+    if(!_.isUndefined(this._id)) {
+      FlowRouter.go('records', {harvestId: this._id});
+    }
+  }
 });
 
 Template.dashboardHeading.helpers({

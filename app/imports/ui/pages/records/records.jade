@@ -1,0 +1,58 @@
+template(name='records')
+  .title-crumbs
+    .page-title
+      h2 Records
+    .page-breadcrumbs
+      | / Records
+  .records.resource
+    .container
+      .row
+        .box.col-md-3.col-xs-12
+          h3.green
+            i.fa.fa-file
+            span Records
+            span.badge= recordsCount
+        .box.col-md-3.col-xs-12
+          h3.murple
+            i.fa.fa-cloud
+            span Services
+            span.badge= servicesCount
+        .box.col-md-3.col-xs-12
+          h3.red
+            i.fa.fa-warning
+            span Errors
+            span.badge= errorCount
+      .row
+        .box.box-tabular.col-xs-12
+          +tabular selector=selector table=recordsTable class="table table-striped"
+
+template(name="recordsServicesCell")
+  a.collapse-services(href='#')
+    = recordServices
+    | Services
+  .services.collapse
+    ul
+      each services
+        li
+          a(href=service_url)= service_type
+
+template(name="recordsErrorCell")
+  a.collapse-errors(href='#')
+    = recordErrors
+    | Errors
+  .errors.collapse
+    ul
+      each validation_errors
+        li
+          = line_number
+          |:
+          = error
+
+template(name="recordsLink")
+  a(href=url target="_blank")
+    i.fa.fa-file
+
+
+template(name="recordsCKANLink")
+  a(href="{{getCatalogURL title}}")
+    img.ckan-logo(alt="CKAN Logo" src="{{absoluteUrl 'images/logo-ckan.svg'}}")

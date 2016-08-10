@@ -54,20 +54,9 @@ Template.harvestsChart.events({
 /* harvestsChart: Helpers */
 /*****************************************************************************/
 Template.harvestsChart.helpers({
-  harvestDate() {
-    if(_.isNull(this.last_harvest_dt) || _.isUndefined(this.last_harvest_dt)) {
-      return "Never";
-    }
-
-    return moment(this.last_harvest_dt).fromNow();
-  },
   drawChart() {
     Template.harvestsChart.renderChart.call(Template.instance());
     return null;
-  },
-  harvesting() {
-    let harvesting = Template.instance().state.get('harvesting');
-    return _.contains(harvesting, this._id);
   }
 });
 
@@ -88,7 +77,7 @@ var addDonutChart = function(selector, data) {
         .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
         ;
 
-      d3.select(selector)
+        d3.select(selector)
           .datum(data())
           .transition().duration(350)
           .call(chart);
@@ -129,10 +118,25 @@ Template.harvestsChart.renderChart = function() {
 };
 
 Template.harvestsChart.onRendered(function() {
-  if(this.state.get('harvestId') !== null) {
-    Template.harvestsChart.renderChart();
-  }
 });
 
 Template.harvestsChart.onDestroyed(function() {
+});
+
+Template.harvestSummary.helpers({
+  harvestDate() {
+    if(_.isNull(this.last_harvest_dt) || _.isUndefined(this.last_harvest_dt)) {
+      return "Never";
+    }
+
+    return moment(this.last_harvest_dt).fromNow();
+  },
+  harvesting() {
+    let harvesting = Template.instance().state.get('harvesting');
+    return _.contains(harvesting, this._id);
+  }
+});
+
+Template.harvestSummary.onRendered(function() {
+  this.$('#edit-harvest').tooltip();
 });

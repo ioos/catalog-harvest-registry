@@ -1,21 +1,49 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { Tabular } from 'meteor/aldeed:tabular';
+import { Template } from 'meteor/templating';
 
 export const Records = new Mongo.Collection('Records');
 
-const ServicesSchema = new SimpleSchema({
-    name: { type: String },
-    endpoint_url: { type: String, regEx: SimpleSchema.RegEx.Url },
-    endpoint_type: { type: String }
+export const RecordsTable = new Tabular.Table({
+  name: "Records",
+  collection: Records,
+  columns: [
+    {
+      title: "Title",
+      data: "title",
+      render: function(val, type, doc) {
+        if(val.length > 40) {
+          val = val.substr(0, 40) + "...";
+        }
+        return val;
+      }
+    },
+    {
+      title: "Description",
+      data: "description",
+      render: function(val, type, doc) {
+        return val ||"No description provided";
+      }
+    },
+    {
+      title: "Services",
+      data: "services",
+      tmpl: Meteor.isClient && Template.recordsServicesCell
+    },
+    {
+      title: "Errors",
+      data: "validation_errors",
+      tmpl: Meteor.isClient && Template.recordsErrorCell
+    },
+    {
+      title: "XML",
+      data: "url",
+      tmpl: Meteor.isClient && Template.recordsLink
+    },
+    {
+      title: "CKAN",
+      tmpl: Meteor.isClient && Template.recordsCKANLink
+    }
+  ]
 });
-
-
-const RecordsSchema = new SimpleSchema({
-    parent_attempt: { type: String, regEx: SimpleSchema.RegEx.Id },
-    title: { type: String },
-    summary: { type: String, optional: true },
-    services: { type: [ServicesSchema]}
-});
-
-Records.schema = RecordsSchema;
-Records.attachSchema(RecordsSchema);
