@@ -24,6 +24,10 @@ Template.harvestsChart.onCreated(function() {
   this.state = pageState;
 });
 
+Template.harvestSummary.onCreated(function() {
+  this.state = pageState;
+});
+
 Template.harvestsEdit.onCreated(function() {
   this.state = pageState;
 });

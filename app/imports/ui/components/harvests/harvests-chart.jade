@@ -1,16 +1,19 @@
 template(name="harvestsChart")
   .harvests-chart
     if _id
-      h3
-        a#edit-harvest(href='#')= name
-        .pull-right
-          if harvesting
-            i.fa.fa-spinner.fa-spin
-          else
-            a#harvest-now(href='#')= harvestDate
-          
+      +harvestSummary
       #chart
         svg
       +drawChart
     else
       h3 Please select a data source
+
+template(name="harvestSummary")
+  h3
+    a#edit-harvest(href='#' data-toggle="tooltip" data-placement="top" title="Edit this harvest")= name
+    .pull-right
+      if harvesting
+        i.fa.fa-spinner.fa-spin
+      else
+        a#harvest-now(href='#')= harvestDate
+          

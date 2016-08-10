@@ -18,9 +18,10 @@ template(name="MainBanner")
             li.brand
               a(href="#{absoluteUrl}")
                 img(alt="IOOS logo" src="{{absoluteUrl 'images/logo-navbar.png'}}")
-            li
-              a(href="{{pathTo 'harvests'}}")
-                | Home
+            if isLoggedIn
+              li
+                a(href="{{pathTo 'harvests'}}")
+                  | Harvests
             li.right-item
               a(href="#" onclick="return false;") Help
             li.right-item

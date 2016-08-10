@@ -6,8 +6,5 @@
 
 
 import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
 import { Records } from '../records.js';
-
-Meteor.publish('records.inHarvest', function(harvestId) {
-  return Records.find({harvest_id: harvestId});
-});

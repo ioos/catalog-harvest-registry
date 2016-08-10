@@ -4,8 +4,6 @@
 /*****************************************************************************/
 @import "variables";
 
-@box-margin: 10px;
-
 .generate-columns(@n, @i: 1) when (@i =< @n) {
   .box.col-md-@{i} {
     width: calc(percentage(@i / @n) ~"-" @box-margin);

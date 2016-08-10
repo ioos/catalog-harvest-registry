@@ -11,31 +11,48 @@ template(name='records')
           h3.green
             i.fa.fa-file
             span Records
-            span.badge 12
+            span.badge= recordsCount
         .box.col-md-3.col-xs-12
           h3.murple
             i.fa.fa-cloud
             span Services
-            span.badge 12
+            span.badge= servicesCount
         .box.col-md-3.col-xs-12
           h3.red
             i.fa.fa-warning
             span Errors
-            span.badge 6
+            span.badge= errorCount
       .row
-        .box.col-xs-12
-          .record-container
-            h1 Title
-              .pull-right
-                i.fa.fa-link
-            p Description of dataset goes here
-            p
-              b
-                a(href='#' onclick='return null;') Errors +
-                ul
-                  li Error1
-                  li Something else is wrong
-                  li Blah
+        .box.box-tabular.col-xs-12
+          +tabular selector=selector table=recordsTable class="table table-striped"
 
-          hr
-          .record-container
+template(name="recordsServicesCell")
+  a.collapse-services(href='#')
+    = recordServices
+    | Services
+  .services.collapse
+    ul
+      each services
+        li
+          a(href=service_url)= service_type
+
+template(name="recordsErrorCell")
+  a.collapse-errors(href='#')
+    = recordErrors
+    | Errors
+  .errors.collapse
+    ul
+      each validation_errors
+        li
+          = line_number
+          |:
+          = error
+
+template(name="recordsLink")
+  a(href=url target="_blank")
+    i.fa.fa-file
+
+
+template(name="recordsCKANLink")
+  a(href="{{getCatalogURL title}}")
+    img.ckan-logo(alt="CKAN Logo" src="{{absoluteUrl 'images/logo-ckan.svg'}}")
