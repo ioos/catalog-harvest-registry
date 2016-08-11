@@ -45,3 +45,4 @@ random@1.0.10
 momentjs:moment
 http@1.2.8
 aldeed:tabular
+session

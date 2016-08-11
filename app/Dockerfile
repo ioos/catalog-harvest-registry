@@ -1,4 +1,4 @@
-FROM lukecampbell/meteord:base
+FROM lukecampbell/meteord:latest
 MAINTAINER Benjamin Adams <Ben.Adams@rpsgroup.com>
 
 COPY ./ /app
