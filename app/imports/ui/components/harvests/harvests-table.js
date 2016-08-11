@@ -7,7 +7,11 @@ import { Harvests } from '/imports/api/harvests/harvests.js';
 /*****************************************************************************/
 Template.harvestsTable.events({
   'click tr'(event, instance) {
-    instance.state.set('harvestId', this._id);
+    $('#harvests-table').removeClass('box-12').addClass('box-6');
+    $('#sources-box').removeClass('box-12').addClass('box-3');
+    Meteor.setTimeout(() => {
+      instance.state.set('harvestId', this._id);
+    }, 500);
   }
 });
 

@@ -9,13 +9,16 @@ template(name='harvests')
   .harvests
     +Template.dynamic template="dashboardHeading" data=activeHarvest
     .row
-      .box.box-6.box-table
-        +harvestsTable
+      if harvestSelected
+        .box.box-6.box-table#harvests-table
+          +harvestsTable
 
-      .box.box-6
-        if editMode
-          +harvestsEdit
-        else
-          +Template.dynamic template="harvestsChart" data=activeHarvest
-
+        .box.box-6
+          if editMode
+            +harvestsEdit
+          else
+            +Template.dynamic template="harvestsChart" data=activeHarvest
+      else
+        .box.box-12.box-table#harvests-table
+          +harvestsTable
 

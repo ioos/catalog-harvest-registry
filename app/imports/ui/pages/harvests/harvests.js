@@ -49,6 +49,11 @@ Template.harvests.helpers({
     let instance = Template.instance();
     let harvestId = instance.state.get('harvestId');
     return Harvests.findOne({_id: harvestId});
+  },
+  harvestSelected() {
+    let somethingSelected = Template.instance().state.get('harvestId') !== null;
+    let editMode = Template.instance().state.get('editMode');
+    return somethingSelected || editMode;
   }
 });
 

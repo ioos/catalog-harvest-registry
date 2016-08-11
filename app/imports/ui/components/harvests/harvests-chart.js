@@ -12,6 +12,23 @@ import { _ } from 'meteor/underscore';
 /* harvestsChart: Event Handlers */
 /*****************************************************************************/
 
+let activateHarvest = function(harvest) {
+    addHarvesting.call(this, harvest._id);
+    Meteor.setTimeout(() => {
+      removeHarvesting.call(this, harvest._id);
+    }, 60000);
+
+    Meteor.call('harvests.activate', harvest._id, (error, response) => {
+      if(error) {
+        FlashMessages.sendError(error.reason);
+        removeHarvesting.call(this, harvest._id);
+        return;
+      }
+      FlashMessages.sendSuccess("Successfully Harvested");
+      removeHarvesting.call(this, harvest._id);
+    });
+};
+
 let addHarvesting = function(harvestId) {
   let harvesting = this.state.get('harvesting');
   harvesting.push(harvestId);
@@ -28,27 +45,46 @@ let removeHarvesting = function(harvestId) {
 };
 
 Template.harvestsChart.events({
+  'click #edit-harvest-btn'(event, instance) {
+    event.preventDefault();
+    instance.state.set('editMode', true);
+  },
+  'click #activate-harvest-btn'(event, instance) {
+    event.preventDefault();
+    activateHarvest.call(instance, this);
+  },
+  'click #view-records-btn'(event, instance) {
+    FlowRouter.go('records', {harvestId: this._id});
+  },
+  'click #delete-harvest-btn'(event, instance) {
+    bootbox.confirm(
+      "This action can not be reversed, the <b class='warning'>harvest will be permanently removed</b>.<br>Are you sure?",
+      (response) => {
+        if(response === false) {
+          return;
+        }
+        Meteor.call('harvests.remove', instance.state.get('harvestId'), (error, response) => {
+          if(error) {
+            FlashMessages.sendError(error.message);
+          } else {
+            FlashMessages.sendSuccess("Harvest deleted");
+            instance.state.set('harvestId', null);
+            instance.state.set('editMode', false);
+          }
+        });
+      }
+    );
+  },
   'click #edit-harvest'(event, instance) {
     instance.state.set('editMode', true);
   },
   'click #harvest-now'(event, instance) {
-    addHarvesting.call(instance, this._id);
-    Meteor.setTimeout(() => {
-      removeHarvesting.call(instance, this._id);
-    }, 60000);
-
-    Meteor.call('harvests.activate', this._id, (error, response) => {
-      if(error) {
-        FlashMessages.sendError(error.reason);
-        removeHarvesting.call(instance, this._id);
-        return;
-      }
-      FlashMessages.sendSuccess("Successfully Harvested");
-      removeHarvesting.call(instance, this._id);
-    });
-
+    activateHarvest.call(instance, this);
   }
 });
+
+Template.harvestsChart.activateHarvest = function() {
+};
 
 /*****************************************************************************/
 /* harvestsChart: Helpers */
@@ -139,4 +175,5 @@ Template.harvestSummary.helpers({
 
 Template.harvestSummary.onRendered(function() {
   this.$('#edit-harvest').tooltip();
+  this.$('#harvest-now').tooltip();
 });

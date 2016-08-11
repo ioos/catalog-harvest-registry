@@ -83,13 +83,19 @@
     }
 
     .box {
+        padding: 0px 10px;
         min-height: 20px;
         margin-left: 5px;
         margin-right: 5px;
+        width: 100%;
     }
     #chart {
         width: 400px;
         height: 400px;
+    }
+
+    .btn-group {
+      padding-bottom: 20px;
     }
 
     .harvest-edit-form {
@@ -172,17 +178,23 @@
     @media (min-width: 1024px) {
         .box {
             padding: 0 10px;
+            -webkit-transition: width 500ms;
+            transition: width 500ms;
         }
         .box-3 {
             width: calc(~"25% - 15px");
         }
         .box-6 {
-            width: calc(~"50% - 15px");
+            width: calc(~"50% - 20px");
+        }
+        .box-12 {
+          width: calc(~"100% - 20px");
         }
         table {
             font-size: 13px;
         }
         #chart {
+            margin-left: 23%;
             width: 300px;
             height: 300px;
         }
