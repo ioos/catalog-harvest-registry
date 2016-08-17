@@ -121,6 +121,6 @@ Template.recordsCKANLink.helpers({
     return Meteor.absoluteUrl(path);
   },
   getCatalogURL: function(title) {
-    return "http://dev-catalog.ioos.us/dataset?" + $.param({q: title});
+    return "http://dev-catalog.ioos.us/dataset?" + $.param({q: '"' + title + '"'});
   }
 });
