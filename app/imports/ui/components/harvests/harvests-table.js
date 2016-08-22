@@ -33,6 +33,12 @@ Template.harvestsTable.events({
 /*****************************************************************************/
 Template.harvestsTable.helpers({
   harvestsTable: function() {
+    let instance = Template.instance();
+    HarvestsTable.options.createdRow = function(row, data, dataIndex) {
+      if(instance.state.get('harvestId') == data._id) {
+        $(row).addClass('active');
+      }
+    };
     return HarvestsTable;
   }
 });
