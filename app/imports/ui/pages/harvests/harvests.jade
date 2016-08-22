@@ -10,7 +10,7 @@ template(name='harvests')
     +Template.dynamic template="dashboardHeading" data=activeHarvest
     .row
       if harvestSelected
-        .box.box-6.box-table#harvests-table
+        .box.box-6.box-table.box-table-sm#harvests-table
           +harvestsTable
 
         .box.box-6
@@ -22,3 +22,18 @@ template(name='harvests')
         .box.box-12.box-table#harvests-table
           +harvestsTable
 
+
+template(name="harvestLink")
+  a(href=url)
+    {{parseUrl url}}
+
+template(name="harvestPublished")
+  if publish
+    i.fa.fa-check-square-o
+  else
+    i.fa.fa-square-o
+
+template(name="harvestCKANLink")
+  if ckan_harvest_url
+    a(href=ckan_harvest_url)
+      img.ckan-logo(alt="CKAN Logo" src="{{absoluteUrl 'images/logo-ckan.svg'}}")

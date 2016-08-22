@@ -1,4 +1,6 @@
 import { Mongo } from 'meteor/mongo';
+import { Tabular } from 'meteor/aldeed:tabular';
+import { Template } from 'meteor/templating';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 // ✅ import { SimpleSchema } from 'meteor/aldeed:simple-schema
 
@@ -27,6 +29,45 @@ class HarvestsCollection extends Mongo.Collection {
 
 export const Harvests = new Mongo.Collection('Harvests');
 
+export const HarvestsTable = new Tabular.Table({
+  name: "Harvests",
+  collection: Harvests,
+  columns: [
+    {
+      title: "Name",
+      data: "name"
+    },
+    {
+      title: "Organization",
+      data: "organization"
+    },
+    {
+      title: "URL",
+      data: "url",
+      tmpl: Meteor.isClient && Template.harvestLink
+    },
+    {
+      title: "Type",
+      data: "harvest_type"
+    },
+    {
+      title: "Published?",
+      data: "publish",
+      tmpl: Meteor.isClient && Template.harvestPublished
+    },
+    {
+      title: "Records",
+      data: "last_record_count"
+    },
+    {
+      title: "CKAN Harvest URL",
+      data: "ckan_harvest_url",
+      tmpl: Meteor.isClient && Template.harvestCKANLink
+    }
+  ],
+  extraFields: ['last_harvest_dt', 'harvest_interval']
+});
+
 const HarvestSchema = new SimpleSchema({
   _id: {
     type: String
@@ -39,6 +80,12 @@ const HarvestSchema = new SimpleSchema({
     unique: true,
     regEx: SimpleSchema.RegEx.Url,
     label: "URL"
+  },
+  ckan_harvest_url: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Url,
+    optional: true,
+    label: "CKAN Harvest URL"
   },
   organization: {
     type: String,
@@ -73,6 +120,7 @@ Harvests.publicFields = {
   _id: 1,
   name: 1,
   url: 1,
+  ckan_harvest_url: 1,
   organization: 1,
   last_harvest_dt: 1,
   harvest_interval: 1,
@@ -81,6 +129,7 @@ Harvests.publicFields = {
 };
 
 Harvests.attachSchema(HarvestSchema);
+
 
 if (Meteor.isClient) {
   Harvests.allow({

@@ -90,3 +90,20 @@ AutoForm.hooks({
     }
   }
 });
+
+/*****************************************************************************/
+/* Tabular Templates
+/*****************************************************************************/
+
+Template.harvestLink.helpers({
+  parseUrl(url) {
+    let tokens = url.split("//");
+    return tokens[1].split("/")[0];
+  }
+});
+
+Template.harvestCKANLink.helpers({
+  absoluteUrl(path) {
+    return Meteor.absoluteUrl(path);
+  },
+});
