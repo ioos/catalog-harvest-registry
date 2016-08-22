@@ -24,7 +24,7 @@ let activateHarvest = function(harvest) {
         removeHarvesting.call(this, harvest._id);
         return;
       }
-      FlashMessages.sendSuccess("Successfully Harvested");
+      FlashMessages.sendSuccess("Harvest Job Queued");
       removeHarvesting.call(this, harvest._id);
     });
 };
