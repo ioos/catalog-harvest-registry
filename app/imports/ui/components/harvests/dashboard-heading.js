@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 import { Harvests } from '/imports/api/harvests/harvests.js';
 import { Attempts } from '/imports/api/attempts/attempts.js';
 import { FlowRouter } from 'meteor/kadira:flow-router';
+import { ReactiveDict } from 'meteor/reactive-dict';
 import { _ } from 'meteor/underscore';
 
 Template.dashboardHeading.events({
@@ -15,28 +16,29 @@ Template.dashboardHeading.events({
 
 Template.dashboardHeading.helpers({
   dataSources() {
-    return Harvests.find({}).count();
+    return Template.instance().state.get('harvests.count');
   },
   records() {
-    // For now, we don't have a collection, so just return a number
-    let attempt = Attempts.findOne({parent_harvest: this._id}, {sort: {date: -1}});
-    if(!attempt) {
-      return;
-    }
-    return attempt.num_records;
+    return this.last_record_count;
   },
   attempts() {
-    // For now, we don't have a collection, so just return a number
-    return Attempts.find({parent_harvest: this._id}).count() || null;
+    return 0;
   },
   errors() {
-    // For now, we don't have a collection, so just return a number
-    return Attempts.find({parent_harvest: this._id, successful: false}).count() || null;
+    return this.last_bad_count;
   }
 });
 
 Template.dashboardHeading.onCreated(function() {
-  this.subscribe('attempts.public');
+  this.state = new ReactiveDict();
+  this.state.set('harvests.count', null);
+  Meteor.call('harvests.count', (err, res) => {
+    if(err) {
+      console.error(err);
+    } else {
+      this.state.set('harvests.count', res);
+    }
+  });
 });
 
 
