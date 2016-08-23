@@ -133,6 +133,13 @@ export const activate = new ValidatedMethod({
   }
 });
 
+
+Meteor.methods({
+  'harvests.count'() {
+    return Harvests.find({}).count();
+  }
+});
+
 /*
 const RATE_LIMITED_METHODS = _.pluck([insert, update], 'name');
 if (Meteor.isServer) {

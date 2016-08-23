@@ -111,6 +111,7 @@ var addDonutChart = function(selector, data) {
         .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
         .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
         .donutRatio(0.35)     //Configure how big you want the donut hole size to be.
+        .valueFormat(d3.format(",.0d"))
         ;
 
         d3.select(selector)
@@ -130,15 +131,8 @@ Template.harvestsChart.onCreated(function() {
 
 Template.harvestsChart.renderChart = function() {
   let harvest = this.data;
-  let good = 0;
-  let bad = 0;
-  let attempts = Attempts.find({parent_harvest: harvest._id}).forEach((attempt) => {
-    if(attempt.successful) {
-      good += 1;
-    } else {
-      bad += 1;
-    }
-  });
+  let good = this.data.last_good_count;
+  let bad = this.data.last_bad_count;
   addDonutChart("#chart svg", () => {
     return  [
         { 
@@ -160,12 +154,17 @@ Template.harvestsChart.onDestroyed(function() {
 });
 
 Template.harvestSummary.helpers({
+  isHarvesting() {
+    return this.last_harvest_dt == "harvesting";
+  },
   harvestDate() {
     if(_.isNull(this.last_harvest_dt) || _.isUndefined(this.last_harvest_dt)) {
       return "Never";
     }
-
-    return moment(this.last_harvest_dt).fromNow();
+    if(this.last_harvest_dt instanceof Date) {
+      return moment(this.last_harvest_dt).fromNow();
+    }
+    return this.last_harvest_dt;
   },
   harvesting() {
     let harvesting = Template.instance().state.get('harvesting');

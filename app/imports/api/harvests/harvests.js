@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 import { Tabular } from 'meteor/aldeed:tabular';
+import { moment } from 'meteor/momentjs:moment';
 import { Template } from 'meteor/templating';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 // ✅ import { SimpleSchema } from 'meteor/aldeed:simple-schema
@@ -63,9 +64,19 @@ export const HarvestsTable = new Tabular.Table({
       title: "CKAN Harvest URL",
       data: "ckan_harvest_url",
       tmpl: Meteor.isClient && Template.harvestCKANLink
+    },
+    {
+      title: "Last Harvest",
+      data: "last_harvest_dt",
+      render: function(val, type, doc) {
+        if(val instanceof Date) {
+          return moment(val).fromNow();
+        }
+        return val;
+      }
     }
   ],
-  extraFields: ['last_harvest_dt', 'harvest_interval']
+  extraFields: ['harvest_interval', 'last_good_count', 'last_bad_count']
 });
 
 const HarvestSchema = new SimpleSchema({

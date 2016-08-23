@@ -7,16 +7,15 @@ template(name="harvestsChart")
 
     .btn-group.pull-right
       button.btn.btn-default#edit-harvest-btn Edit Harvest
-      button.btn.btn-default#activate-harvest-btn Activate Harvest
+      button.btn.btn-default#activate-harvest-btn Reharvest
       button.btn.btn-default#view-records-btn View Records
       button.btn.btn-danger#delete-harvest-btn Delete Harvest
 
 template(name="harvestSummary")
   h3
-    a#edit-harvest(href='#' data-toggle="tooltip" data-placement="top" title="Edit this harvest")= name
+    = name
     .pull-right
-      if harvesting
+      if isHarvesting
         i.fa.fa-spinner.fa-spin
       else
-        a#harvest-now(href='#' data-toggle="tooltip" data-placement="top" title="Activate this harvest now")= harvestDate
-          
+        = harvestDate
