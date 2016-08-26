@@ -62,7 +62,6 @@ export const HarvestsTable = new Tabular.Table({
     },
     {
       title: "CKAN Harvest URL",
-      data: "ckan_harvest_url",
       tmpl: Meteor.isClient && Template.harvestCKANLink
     },
     {
@@ -91,12 +90,6 @@ const HarvestSchema = new SimpleSchema({
     unique: true,
     regEx: SimpleSchema.RegEx.Url,
     label: "URL"
-  },
-  ckan_harvest_url: {
-    type: String,
-    regEx: SimpleSchema.RegEx.Url,
-    optional: true,
-    label: "CKAN Harvest URL"
   },
   organization: {
     type: String,
@@ -131,7 +124,6 @@ Harvests.publicFields = {
   _id: 1,
   name: 1,
   url: 1,
-  ckan_harvest_url: 1,
   organization: 1,
   last_harvest_dt: 1,
   harvest_interval: 1,

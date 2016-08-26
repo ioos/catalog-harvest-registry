@@ -59,7 +59,10 @@ Template.harvests.helpers({
 
 Template.harvests.onCreated(function() {
   this.state = pageState;
-  this.subscribe('harvests.public');
+  this.autorun(() => {
+    this.subscribe('harvests.public');
+    this.subscribe('organizations');
+  });
   // This is the referenced doc for the reset of the page. It gets set when a
   // user selects certain elements, like a row in a table of harvests.
   this.state.set("harvestId", null);
@@ -89,8 +92,20 @@ Template.harvestLink.helpers({
   }
 });
 
+Template.harvestCKANLink.events({
+  'click'(event, instance) {
+    event.stopPropagation();
+  }
+});
+
 Template.harvestCKANLink.helpers({
   absoluteUrl(path) {
     return Meteor.absoluteUrl(path);
   },
+  ckanHarvestURL() {
+    let org = Organizations.findOne({name: this.organization});
+    if(org) {
+      return org.ckan_harvest_url;
+    }
+  }
 });

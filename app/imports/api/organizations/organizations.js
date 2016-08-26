@@ -23,6 +23,12 @@ Organizations.schema = new SimpleSchema({
     optional: true,
     regEx: SimpleSchema.RegEx.Url,
     label: "URL to Organization Logo"
+  },
+  ckan_harvest_url: {
+    type: String,
+    optional: true,
+    regEx: SimpleSchema.RegEx.Url,
+    label: "URL to the CKAN Harvest"
   }
 });
 

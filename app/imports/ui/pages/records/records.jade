@@ -56,3 +56,13 @@ template(name="recordsLink")
 template(name="recordsCKANLink")
   a(href="{{getCatalogURL title}}")
     img.ckan-logo(alt="CKAN Logo" src="{{absoluteUrl 'images/logo-ckan.svg'}}")
+
+
+template(name="recordsDescription")
+  if expanded
+    = description
+  else
+    = shortDescription
+    if needsExpand
+      .pull-right
+        a(href="#" onclick="return null;") (Full)

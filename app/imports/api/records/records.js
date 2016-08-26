@@ -13,7 +13,8 @@ export const RecordsTable = new Tabular.Table({
       title: "Title",
       data: "title",
       render: function(val, type, doc) {
-        if(val.length > 40) {
+        val = val || "No title provided";
+        if(val && val.length > 40) {
           val = val.substr(0, 40) + "...";
         }
         return val;
@@ -22,9 +23,7 @@ export const RecordsTable = new Tabular.Table({
     {
       title: "Description",
       data: "description",
-      render: function(val, type, doc) {
-        return val ||"No description provided";
-      }
+      tmpl: Meteor.isClient && Template.recordsDescription
     },
     {
       title: "Services",
