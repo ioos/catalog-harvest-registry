@@ -4,6 +4,7 @@ import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Records, RecordsTable } from '/imports/api/records/records.js';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { _ } from 'meteor/underscore';
 
 
 /*****************************************************************************/
@@ -120,8 +121,11 @@ Template.recordsCKANLink.helpers({
   absoluteUrl(path) {
     return Meteor.absoluteUrl(path);
   },
-  getCatalogURL: function(title) {
-    return "http://dev-catalog.ioos.us/dataset?" + $.param({q: '"' + title + '"'});
+  getCatalogURL: function() {
+    if(!_.isEmpty(this.file_id)) {
+      return "http://dev-catalog.ioos.us/dataset?" + $.param({q: 'guid:"' + this.file_id + '"'});
+    }
+    return "http://dev-catalog.ioos.us/dataset?" + $.param({q: '"' + this.title + '"'});
   }
 });
 

@@ -44,5 +44,6 @@ export const RecordsTable = new Tabular.Table({
       title: "CKAN",
       tmpl: Meteor.isClient && Template.recordsCKANLink
     }
-  ]
+  ],
+  extraFields: ['file_id']
 });
