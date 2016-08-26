@@ -8,6 +8,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Harvests } from '../harvests.js';
 
-Meteor.publish('harvests.public', function makasFunction() {
+Meteor.publish('harvests.public', function() {
   return Harvests.find({});
 });
