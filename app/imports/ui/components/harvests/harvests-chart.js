@@ -125,7 +125,9 @@ var addDonutChart = function(selector, data) {
 
 
 Template.harvestsChart.onCreated(function() {
-  this.subscribe('attempts.public');
+  this.autorun(() => {
+    this.subscribe('harvests.public');
+  });
 });
 
 
