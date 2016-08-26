@@ -5,6 +5,7 @@ import { Organizations } from '/imports/api/organizations/organizations.js';
 import { AutoForm } from 'meteor/aldeed:autoform';
 import { Roles } from 'meteor/alanning:roles';
 import { _ } from 'meteor/underscore';
+import { pageState } from '../../pages/harvests/harvests.js';
 import 'meteor/mizzao:bootboxjs';
 
 let formSchema = function() {
@@ -73,7 +74,9 @@ Template.harvestsEdit.helpers({
 /* harvestsEdit: Lifecycle Hooks */
 /*****************************************************************************/
 Template.harvestsEdit.onCreated(function() {
-  this.subscribe("organizations");
+  this.autorun(() => {
+    this.subscribe("organizations");
+  });
 });
 
 Template.harvestsEdit.onRendered(function() {
@@ -82,3 +85,66 @@ Template.harvestsEdit.onRendered(function() {
 Template.harvestsEdit.onDestroyed(function() {
 });
 
+
+/*****************************************************************************/
+/* AutoForm hooks
+/*****************************************************************************/
+
+/*
+ * Inserts a new harvest record. If publish is set, it will immediately trigger
+ * a harvest job. This will also flash a status message.
+ */
+let createHarvest = function(insertDoc) {
+  Meteor.call('harvests.insert', insertDoc, (error, harvestId) => {
+    if(error) {
+      FlashMessages.sendError(error.message);
+      this.done(error);
+      return;
+    } 
+    if(insertDoc.publish) {
+      Meteor.call('harvests.activate', harvestId, (error, response) => {
+        if(error) {
+          FlashMessages.sendError(error.reason);
+          return;
+        }
+        FlashMessages.sendSuccess("Harvest Job Queued");
+      });
+    }
+    FlashMessages.sendSuccess("Harvest Created");
+    pageState.set('harvestId', harvestId);
+    pageState.set('editMode', false);
+    this.done(harvestId);
+  });
+};
+
+/*
+ * Updates a harvest record and sets a flash message with the update status
+ */
+let updateHarvest = function(updateDoc, currentDoc) {
+  Meteor.call('harvests.update', {
+    _id: currentDoc._id,
+    modifier: updateDoc
+  }, (error, response) => {
+    if(error) {
+      FlashMessages.sendError(error.message);
+      this.done(error);
+      return;
+    } 
+
+    FlashMessages.sendSuccess("Harvest Updated");
+    this.done(currentDoc._id);
+  });
+};
+
+AutoForm.hooks({
+  harvestEdit: {
+    onSubmit: function(insertDoc, updateDoc, currentDoc) {
+      this.event.preventDefault();
+      if(_.isUndefined(currentDoc)) { /* New */
+        createHarvest.call(this, insertDoc);
+      } else { /* Update */
+        updateHarvest.call(this, updateDoc, currentDoc);
+      }
+    }
+  }
+});

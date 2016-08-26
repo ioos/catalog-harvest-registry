@@ -5,14 +5,14 @@ template(name="harvestsEdit")
         a#remove-harvest(href="#")
           i.fa.fa-times
       h2 Edit Harvest
-      +autoForm id="harvestEdit" schema=formSchema type="method-update" singleMethodArgument=true meteormethod="harvests.update" doc=doc
+      +autoForm id="harvestEdit" schema=formSchema type="normal" doc=doc
         +afQuickFields
         .button-group
           button.btn.btn-primary(type="submit") Update
           button#cancel-btn.btn.btn-default(type="button") Cancel
     else
       h2 New Harvest
-      +autoForm id="harvestEdit" schema=formSchema type="method" meteormethod="harvests.insert"
+      +autoForm id="harvestEdit" schema=formSchema type="normal"
         +afQuickFields
         .button-group
           button.btn.btn-primary(type="submit") Submit
