@@ -39,6 +39,7 @@ Template.harvestsTable.helpers({
         $(row).addClass('active');
       }
     };
+    HarvestsTable.options.stateSave = true;
     return HarvestsTable;
   }
 });
