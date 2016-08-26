@@ -111,9 +111,7 @@ let createHarvest = function(insertDoc) {
       });
     }
     FlashMessages.sendSuccess("Harvest Created");
-    pageState.set('harvestId', harvestId);
-    pageState.set('editMode', false);
-    this.done(harvestId);
+    this.done(null, harvestId);
   });
 };
 
@@ -132,7 +130,7 @@ let updateHarvest = function(updateDoc, currentDoc) {
     } 
 
     FlashMessages.sendSuccess("Harvest Updated");
-    this.done(currentDoc._id);
+    this.done(null, currentDoc._id);
   });
 };
 
@@ -145,6 +143,10 @@ AutoForm.hooks({
       } else { /* Update */
         updateHarvest.call(this, updateDoc, currentDoc);
       }
+    },
+    onSuccess: function(formType, result) {
+      pageState.set('harvestId', result);
+      pageState.set('editMode', false);
     }
   }
 });
