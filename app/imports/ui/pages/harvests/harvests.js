@@ -13,7 +13,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { FlashMessages } from 'meteor/mrt:flash-messages';
 import { AutoForm } from 'meteor/aldeed:autoform';
 
-const pageState = new ReactiveDict();
+export const pageState = new ReactiveDict();
 
 /* Bind page state to other templates */
 Template.harvestsTable.onCreated(function() {
@@ -76,19 +76,6 @@ Template.harvests.onRendered(() => {
 });
 
 Template.harvests.onDestroyed(() => {
-});
-
-/*****************************************************************************/
-/* Form hooks
-/*****************************************************************************/
-
-AutoForm.hooks({
-  harvestEdit: {
-    onSuccess: function(formType, result) {
-      FlashMessages.sendSuccess("Harvest was successfully added");
-      pageState.set('editMode', false);
-    }
-  }
 });
 
 /*****************************************************************************/
