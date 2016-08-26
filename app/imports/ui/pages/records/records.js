@@ -124,3 +124,43 @@ Template.recordsCKANLink.helpers({
     return "http://dev-catalog.ioos.us/dataset?" + $.param({q: '"' + title + '"'});
   }
 });
+
+/*****************************************************************************/
+/* recordsDescription: Event Handlers */
+/*****************************************************************************/
+
+Template.recordsDescription.events({
+  'click a'(event, instance) {
+    Template.instance().state.set('expanded', true);
+  }
+});
+
+/*****************************************************************************/
+/* recordsDescription: Helpers */
+/*****************************************************************************/
+
+Template.recordsDescription.helpers({
+  expanded() {
+    return Template.instance().state.get('expanded');
+  },
+  shortDescription() {
+    let description = this.description || "No Description Available";
+    if(description.length > 200) {
+      description = description.substr(0, 200) + "...";
+    }
+    return description;
+  },
+  needsExpand() {
+    return this.description && this.description.length > 200;
+  }
+});
+
+/*****************************************************************************/
+/* recordsDescription: Life Cycle */
+/*****************************************************************************/
+
+
+Template.recordsDescription.onCreated(function() {
+  this.state = new ReactiveDict();
+  this.state.set('expanded', false);
+});

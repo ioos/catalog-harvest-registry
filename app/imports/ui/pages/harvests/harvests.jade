@@ -34,6 +34,6 @@ template(name="harvestPublished")
     i.fa.fa-square-o
 
 template(name="harvestCKANLink")
-  if ckan_harvest_url
-    a(href=ckan_harvest_url)
+  if ckanHarvestURL
+    a(href=ckanHarvestURL)
       img.ckan-logo(alt="CKAN Logo" src="{{absoluteUrl 'images/logo-ckan.svg'}}")
