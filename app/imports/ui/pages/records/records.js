@@ -4,6 +4,7 @@ import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Records, RecordsTable } from '/imports/api/records/records.js';
 import { ReactiveDict } from 'meteor/reactive-dict';
+import { Harvests } from '/imports/api/harvests/harvests.js';
 import { _ } from 'meteor/underscore';
 
 
@@ -17,6 +18,12 @@ Template.records.events({
 /* records: Helpers */
 /*****************************************************************************/
 Template.records.helpers({
+  harvestUrl: function() {
+    return FlowRouter.path('harvests', {harvestId: FlowRouter.getParam('harvestId')});
+  },
+  harvest: function() {
+    return Harvests.findOne({_id: Template.instance().harvestId});
+  },
   recordsTable: function() {
     return RecordsTable;
   },
@@ -39,10 +46,13 @@ Template.records.helpers({
 /*****************************************************************************/
 Template.records.onCreated(function() {
   this.state = new ReactiveDict();
+  this.state.set('errorCount', 0);
+  this.state.set('servicesCount', 0);
+  this.state.set('recordsCount', 0);
   this.harvestId = FlowRouter.getParam('harvestId');
-});
-
-Template.records.onRendered(function() {
+  this.autorun(() => {
+    this.subscribe('harvests.public');
+  });
   Meteor.call('records.errorCount', {harvestId: this.harvestId}, (err, res) => {
     if(err) {
       console.error(err);
@@ -64,6 +74,9 @@ Template.records.onRendered(function() {
       this.state.set('recordsCount', res);
     }
   });
+});
+
+Template.records.onRendered(function() {
 });
 
 Template.records.onDestroyed(function() {

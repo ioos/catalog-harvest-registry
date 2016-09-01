@@ -18,4 +18,8 @@ template(name="harvestSummary")
       if isHarvesting
         i.fa.fa-spinner.fa-spin
       else
+        | Last Harvest: 
         = harvestDate
+   p
+     a(href=url target="_blank")= url
+

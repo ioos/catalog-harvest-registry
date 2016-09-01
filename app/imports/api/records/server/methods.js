@@ -10,7 +10,10 @@ Meteor.methods({
   'records.errorCount'({harvestId}) {
     check(harvestId, String);
     let errorCount = 0;
-    Records.find({harvest_id: harvestId}, {validation_errors: 1}).forEach((record)=> {
+    Records.find({
+      harvest_id: harvestId, 
+      validation_errors: {$exists: true, $ne: []}
+    }, {validation_errors: 1}).forEach((record)=> {
       errorCount += record.validation_errors.length;
     });
     return errorCount;
@@ -18,7 +21,10 @@ Meteor.methods({
   'records.servicesCount'({harvestId}) {
     let count = 0;
     check(harvestId, String);
-    Records.find({harvest_id: harvestId}, {services: 1}).forEach(function(record) {
+    Records.find({
+      harvest_id: harvestId,
+      services: {$exists: true, $ne: []}
+    }, {services: 1}).forEach(function(record) {
       count += record.services.length;
     });
     return count;

@@ -1,8 +1,15 @@
 template(name='records')
   .title-crumbs
     .page-title
-      h2 Records
+      h2 
+        a(href="#{harvestUrl}")
+          i.fa.fa-caret-left
+        | Records for
+        = harvest.name
     .page-breadcrumbs
+      | / 
+      a(href="#{harvestUrl}")
+        = harvest.name
       | / Records
   .records.resource
     .container
@@ -34,7 +41,7 @@ template(name="recordsServicesCell")
     ul
       each services
         li
-          a(href=service_url)= service_type
+          a(href=service_url target='_blank')= service_type
 
 template(name="recordsErrorCell")
   a.collapse-errors(href='#')
@@ -54,7 +61,7 @@ template(name="recordsLink")
 
 
 template(name="recordsCKANLink")
-  a(href="{{getCatalogURL}}")
+  a(href="{{getCatalogURL}}" target="_blank")
     img.ckan-logo(alt="CKAN Logo" src="{{absoluteUrl 'images/logo-ckan.svg'}}")
 
 

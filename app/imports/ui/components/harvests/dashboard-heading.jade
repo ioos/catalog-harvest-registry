@@ -1,30 +1,23 @@
 template(name="dashboardHeading")
-  .row.box-header
-    if _id
-      .box.box-3#sources-box
-        h3.blue
-          i.fa.fa-database
-          span Data Sources 
-          span.badge= dataSources
-
-      .box.box-3#records
-        h3.green
-          i.fa.fa-file
-          span Records
-          span.badge= records
-      .box.box-3
-        h3.murple
-          i.fa.fa-cloud-download
-          span Attempts
-          span.badge= attempts
-      .box.box-3
-        h3.red
-          i.fa.fa-warning
-          span Errors
-          span.badge= errors
-    else
-      .box.box-12#sources-box
-        h3.blue
-          i.fa.fa-database
-          span Data Sources 
-          span.badge= dataSources
+  if _id
+    .box.col-md-6
+      h3.blue
+        i.fa.fa-database
+        span Data Sources 
+        span.badge= dataSources
+    .box.col-md-3#records
+      h3.green
+        i.fa.fa-file
+        span Total Records
+        span.badge= records
+    .box.col-md-3#errors
+      h3.red
+        i.fa.fa-warning
+        span Bad Records
+        span.badge= errors
+  else
+    .box.col-md-12#sources-box
+      h3.blue
+        i.fa.fa-database
+        span Data Sources 
+        span.badge= dataSources

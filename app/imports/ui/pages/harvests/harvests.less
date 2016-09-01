@@ -1,54 +1,24 @@
 /*****************************************************************************/
 /* harvests: Style */
 /*****************************************************************************/
+@import "../../stylesheets/resource";
 @import "../../stylesheets/variables";
 
 @box-height: 454px;
 @background-gray: #F5F5F5;
 
-.harvests .box-3,
-.harvests .box-6{
-    width: 100%;
-    padding-bottom: 20px;
-}
-
 .harvests {
     
-    background-color: @background-gray;
-    padding-top: 20px;
-    padding-bottom: 40px;
-    font-family: "Roboto", sans-serif;
-    color: rgb(153, 153, 153);
-
     a {
         color: rgb(0, 147, 178);
-    }
-    h3 {
-      font-family: "Roboto Slab", Times, serif;
-      margin-bottom: 20px;
-    }
-    h3.blue {
-        color: @color-data-sources;
-    }
-    h3.green {
-        color: @color-records;
-    }
-    h3.red {
-        color: @color-errors;
-    }
-    h3.murple {
-        color: @color-notifications;
-    }
-    .box {
-        display: inline-block;
-        border-radius: 5px;
-        vertical-align: top;
-        background-color: white;
     }
     .box-header .box {
         cursor: default;
     }
     .box-header .box#records {
+        cursor: pointer;
+    }
+    .box-header .box#errors {
         cursor: pointer;
     }
     .box.box-hover {
@@ -80,19 +50,7 @@
     }
 
     // Mobile sizing
-    .row {
-        padding-bottom: 20px;
-        margin-left: 0;
-        margin-right: 0;
-    }
 
-    .box {
-        padding: 0px 10px;
-        min-height: 20px;
-        margin-left: 5px;
-        margin-right: 5px;
-        width: 100%;
-    }
     #chart {
         width: 400px;
         height: 400px;

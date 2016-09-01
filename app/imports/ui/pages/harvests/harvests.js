@@ -51,7 +51,15 @@ Template.harvests.helpers({
     return Harvests.findOne({_id: harvestId});
   },
   harvestSelected() {
-    let somethingSelected = Template.instance().state.get('harvestId') !== null;
+    /*
+     * If the subscription hasn't finished, getting a harvest will return
+     * undefined. This helper will be triggered again by the invalidation once
+     * the subscription is done, at that point findOne will return a
+     * dictionary of the harvest object.
+     */
+    let harvestId = Template.instance().state.get('harvestId');
+    let somethingSelected = harvestId !== null && 
+                            !_.isEmpty(Harvests.findOne({_id: harvestId}));
     let editMode = Template.instance().state.get('editMode');
     return somethingSelected || editMode;
   }
@@ -63,9 +71,10 @@ Template.harvests.onCreated(function() {
     this.subscribe('harvests.public');
     this.subscribe('organizations');
   });
+  let harvestId = FlowRouter.getParam('harvestId') || null;
   // This is the referenced doc for the reset of the page. It gets set when a
   // user selects certain elements, like a row in a table of harvests.
-  this.state.set("harvestId", null);
+  this.state.set("harvestId", harvestId);
   // This flag causes the edit form to appear
   this.state.set('editMode', false);
   // This list contains the documents that are actively being harvested

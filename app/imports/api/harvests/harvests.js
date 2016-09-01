@@ -48,11 +48,7 @@ export const HarvestsTable = new Tabular.Table({
       tmpl: Meteor.isClient && Template.harvestLink
     },
     {
-      title: "Type",
-      data: "harvest_type"
-    },
-    {
-      title: "Published?",
+      title: "Online",
       data: "publish",
       tmpl: Meteor.isClient && Template.harvestPublished
     },
@@ -75,7 +71,7 @@ export const HarvestsTable = new Tabular.Table({
       }
     }
   ],
-  extraFields: ['harvest_interval', 'last_good_count', 'last_bad_count']
+  extraFields: ['harvest_type', 'harvest_interval', 'last_good_count', 'last_bad_count']
 });
 
 const HarvestSchema = new SimpleSchema({
