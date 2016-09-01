@@ -7,6 +7,11 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { _ } from 'meteor/underscore';
 
 Template.dashboardHeading.events({
+  'click #errors'(){
+    if(!_.isUndefined(this._id)) {
+      FlowRouter.go('records', {harvestId: this._id});
+    }
+  },
   'click #records'() {
     if(!_.isUndefined(this._id)) {
       FlowRouter.go('records', {harvestId: this._id});

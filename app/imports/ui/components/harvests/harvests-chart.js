@@ -119,6 +119,9 @@ var addDonutChart = function(selector, data) {
           .transition().duration(350)
           .call(chart);
 
+    for(var property in chart.legend.dispatch) {
+      chart.legend.dispatch[property] = function() {};
+    }
     return chart;
   });
 };
@@ -138,11 +141,11 @@ Template.harvestsChart.renderChart = function() {
   addDonutChart("#chart svg", () => {
     return  [
         { 
-          "label": "Good",
+          "label": "Clean Records",
           "value" : good
         } , 
         { 
-          "label": "Errors",
+          "label": "Bad Records",
           "value" : bad
         }
       ];

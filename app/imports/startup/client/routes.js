@@ -47,6 +47,15 @@ FlowRouter.route('/harvests', {
   }
 });
 
+FlowRouter.route('/harvests/:harvestId', {
+  name: 'harvests',
+  action() {
+    validatedRender((error, response) => {
+      BlazeLayout.render('MasterLayout', {yield: "harvests"});
+    });
+  }
+});
+
 /****************************************/
 /* Users */
 /****************************************/

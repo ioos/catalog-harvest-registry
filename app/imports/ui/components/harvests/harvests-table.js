@@ -6,21 +6,24 @@ import { Harvests, HarvestsTable } from '/imports/api/harvests/harvests.js';
 /* harvestsTable: Event Handlers */
 /*****************************************************************************/
 Template.harvestsTable.events({
+  'click a'(event, instance) {
+    event.stopPropagation();
+  },
   'click tr'(event, instance) {
     let dataTable = $(event.target).closest('table').DataTable();
     let table = $(event.target).closest('table');
     $(table).find('tr').removeClass('active');
     let rowData = dataTable.row(event.currentTarget).data();
     if (!rowData) {
-      $('#harvests-table').removeClass('box-6').addClass('box-12');
-      $('#sources-box').removeClass('box-3').addClass('box-12');
+      $('#harvests-table-box').removeClass('col-md-6').addClass('col-md-12');
+      $('#sources-box').removeClass('col-md-6').addClass('box-12');
       Meteor.setTimeout(() => {
         instance.state.set('harvestId', null);
       }, 500);
     } else {
       $(event.target).closest('tr').addClass('active');
-      $('#harvests-table').removeClass('box-12').addClass('box-6');
-      $('#sources-box').removeClass('box-12').addClass('box-3');
+      $('#harvests-table-box').removeClass('col-md-12').addClass('col-md-6');
+      $('#sources-box').removeClass('col-md-12').addClass('col-md-6');
       Meteor.setTimeout(() => {
         instance.state.set('harvestId', rowData._id);
       }, 500);

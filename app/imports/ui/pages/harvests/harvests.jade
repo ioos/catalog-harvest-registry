@@ -6,25 +6,28 @@ template(name='harvests')
           | &nbsp;&nbsp;+
     .page-breadcrumbs
       | / Harvests
-  .harvests
-    +Template.dynamic template="dashboardHeading" data=activeHarvest
-    .row
-      if harvestSelected
-        .box.box-6.box-table.box-table-sm#harvests-table
-          +harvestsTable
+  .harvests.resource
+    .container.stretch
+      .row
+        .box-header
+          +Template.dynamic template="dashboardHeading" data=activeHarvest
+      .row
+        if harvestSelected
+          .box.box-table.col-md-6.col-xs-12#harvests-table-box
+            +harvestsTable
 
-        .box.box-6
-          if editMode
-            +harvestsEdit
-          else
-            +Template.dynamic template="harvestsChart" data=activeHarvest
-      else
-        .box.box-12.box-table#harvests-table
-          +harvestsTable
+          .box.col-md-6.col-xs-12
+            if editMode
+              +harvestsEdit
+            else
+              +Template.dynamic template="harvestsChart" data=activeHarvest
+        else
+          .box.box-table.col-md-12.col-xs-12#harvests-table-box
+            +harvestsTable
 
 
 template(name="harvestLink")
-  a(href=url)
+  a(href=url target="_blank")
     {{parseUrl url}}
 
 template(name="harvestPublished")
@@ -35,5 +38,5 @@ template(name="harvestPublished")
 
 template(name="harvestCKANLink")
   if ckanHarvestURL
-    a(href=ckanHarvestURL)
+    a(href=ckanHarvestURL target="_blank")
       img.ckan-logo(alt="CKAN Logo" src="{{absoluteUrl 'images/logo-ckan.svg'}}")
