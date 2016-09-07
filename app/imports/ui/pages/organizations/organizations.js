@@ -29,7 +29,7 @@ Template.organizations.events({
 /*****************************************************************************/
 Template.organizations.helpers({
   organizations() {
-    return Organizations.find({});
+    return Organizations.find({}, {sort: {name:1}});
   },
   pathTo(name) {
     return FlowRouter.path(name);
