@@ -15,19 +15,19 @@ Organizations.schema = new SimpleSchema({
   url: {
     type: String,
     optional: true,
-    regEx: SimpleSchema.RegEx.Url,
+    regEx: /(https?|ftp):\/\/[^\s/$.?#].[^\s]*/,
     label: "URL",
   },
   logo_url: {
     type: String,
     optional: true,
-    regEx: SimpleSchema.RegEx.Url,
+    regEx: /(https?|ftp):\/\/[^\s/$.?#].[^\s]*/,
     label: "URL to Organization Logo"
   },
   ckan_harvest_url: {
     type: String,
     optional: true,
-    regEx: SimpleSchema.RegEx.Url,
+    regEx: /(https?|ftp):\/\/[^\s/$.?#].[^\s]*/,
     label: "URL to the CKAN Harvest"
   }
 });
