@@ -23,6 +23,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { _ } from 'meteor/underscore';
 
 import { Organizations } from './organizations.js';
+import { Harvests } from '../harvests/harvests.js';
 
 export const insert = new ValidatedMethod({
   name: 'organizations.insert',
@@ -50,7 +51,15 @@ export const update = new ValidatedMethod({
     if(!Roles.userIsInRole(currentUserId, "admin")) {
       throw new Meteor.Error(401, "Unauthorized");
     }
+    let organization = Organizations.findOne({_id});
+    if(_.isUndefined(organization)) {
+      throw new Meteor.Error(404, "Not Found");
+    }
     Organizations.update({_id}, modifier);
+    if(_.has(modifier, "$set") && _.has(modifier.$set, "name")) {
+      let nameUpdate = modifier.$set.name;
+      Harvests.update({organization: organization.name}, {$set: {organization: nameUpdate}});
+    }
   }
 });
 
