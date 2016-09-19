@@ -154,7 +154,7 @@ function insertOrganizations() {
     name: "PacIOOS",
     description: "PacIOOS is one of eleven regional observing programs in the U.S. that are supporting the emergence of the U.S. Integrated Ocean Observing System (IOOS) under the National Oceanographic Partnership Program (NOPP). The PacIOOS region includes the U.S. Pacific Region (Hawaii, Guam, American Samoa, Commonwealth of the Northern Mariana Islands), the Pacific nations in Free Association with the U.S. (Republic of the Marshall Islands, Federated States of Micronesia, Republic of Palau), and the U.S. Minor Outlying Islands (Howland, Baker, Johnston, Jarvis, Kingman, Palmyra, Midway, Wake).",
     url: "http://pacioos.org/",
-    logo_url: "http://catalog.ioos.us/static/img/ra/pacioos.jpg"
+    logo_url: "http://www.pacioos.hawaii.edu/wp-content/uploads/2016/06/PacIOOS-logo-landscape-large.jpg"
   });
   Organizations.insert({
     name: "OceanSITES",
