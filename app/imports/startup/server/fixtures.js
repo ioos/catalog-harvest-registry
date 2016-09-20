@@ -210,7 +210,7 @@ Meteor.startup(function() {
     text(user, url) {
       let emailAddress   = user.emails[0].address,
       urlWithoutHash = url.replace( '#/verify-email', 'users/verify' ),
-      supportEmail   = "lcampbell@ioos.us",
+      supportEmail   = (Meteor.settings.email && Meteor.settings.email.support_email) || "admin@ioos.us",
       emailBody      = `To verify your email address (${emailAddress}) visit the following link:\n\n${urlWithoutHash}\n\n If you did not request this verification, please ignore this email. If you feel something is wrong, please contact our support team: ${supportEmail}.`;
 
     return emailBody;

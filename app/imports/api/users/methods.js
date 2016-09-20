@@ -10,7 +10,8 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 
 sendNotificationEmail = function(user) {
-  if(!Meteor.settings.email || !Meteor.settings.notification_list) {
+  if(_.isEmpty(Meteor.settings.email) || _.isEmpty(Meteor.settings.email.notification_list)) {
+    console.error("Notification list is not configured");
     return;
   }
   let template = "A new user has registered for an account:\n" +
@@ -23,11 +24,11 @@ sendNotificationEmail = function(user) {
     Meteor.absoluteUrl("users") +
     "\n" +
     "Thanks!\n" +
-    "ioos.us Admin";
+    "IOOS Registry";
   Email.send({
     from: "ioos.us Administrator <admin@ioos.us>",
     to: Meteor.settings.email.notification_list,
-    subject: "ioos.us New Registered User",
+    subject: "IOOS Registry New Registered User",
     text: template
   });
 };
