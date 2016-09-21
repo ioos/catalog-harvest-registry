@@ -23,9 +23,9 @@ template(name="MainBanner")
                 a(href="{{pathTo 'harvests'}}")
                   | Harvests
             li.right-item
-              a(href="#" onclick="return false;") Help
+              a(href="//ioos.github.io/catalog/") Help
             li.right-item
-              a(href="#" onclick="return false;") About
+              a(href="{{pathTo 'about'}}") About
             if isLoggedIn
               li.right-item
                 a#logout(href="#" onclick="return false;") Logout
