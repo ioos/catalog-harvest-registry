@@ -6,11 +6,26 @@ import { Restivus } from 'meteor/nimble:restivus';
 
 import { Harvests } from './harvests.js';
 
-let ApiV1 = new Restivus({
-    version: 'v1',
-    useDefaultAuth: true,
-    prettyJson: (Meteor.isDevelopment) ? true : false
-});
+if (Meteor.isServer) {
+
+  let ApiV1 = new Restivus({
+      version: 'v1',
+      useDefaultAuth: true,
+      prettyJson: (Meteor.isDevelopment) ? true : false
+  });
+
+  ApiV1.addCollection(Harvests, {
+    excludedEndpoints: [
+      "put",
+      "post",
+      "delete"
+    ],
+    routeOptions: {
+      authRequired: false
+    }
+  });
+
+}
 
 // Representational State (REST) endpoints disabled by default.
 // Uncommenting below will expose ALL routes for Harvests

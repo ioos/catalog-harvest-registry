@@ -21,6 +21,11 @@ template(name='about')
 
             h2 Current Harvest Sources
 
+            p We also have a public
+              a(href="{{absoluteUrl 'api/v1/Harvests'}}" target="_blank")
+                | API
+              | for all of our harvests.
+
             +currentHarvestsTable data=harvests
 
 template(name='currentHarvestsTable')

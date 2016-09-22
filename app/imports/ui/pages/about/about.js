@@ -16,7 +16,10 @@ Template.about.helpers({
   harvests() {
     console.log(Harvests.find({}).count());
     return Harvests.find({}, {sort: {organization:1}});
-  }
+  },
+  absoluteUrl(path) {
+    return Meteor.absoluteUrl(path);
+  },
 });
 
 /*****************************************************************************/
