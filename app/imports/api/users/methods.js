@@ -9,7 +9,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 
-sendNotificationEmail = function(user) {
+const sendNotificationEmail = function(user) {
   if(_.isEmpty(Meteor.settings.email) || _.isEmpty(Meteor.settings.email.notification_list)) {
     console.error("Notification list is not configured");
     return;
@@ -29,6 +29,21 @@ sendNotificationEmail = function(user) {
     from: "ioos.us Administrator <admin@ioos.us>",
     to: Meteor.settings.email.notification_list,
     subject: "IOOS Registry New Registered User",
+    text: template
+  });
+};
+
+const sendAccountApprovedEmail = function(user) {
+  let template = "Your user account has been approved by an administrator and you can now start using your account!\n" +
+    Meteor.absoluteUrl() + 
+    "\n" +
+    "Thanks!\n" + 
+    "IOOS Registry";
+
+  Email.send({
+    from: "ioos.us Administrator <admin@ioos.us>",
+    to: user.profile.email,
+    subject: "IOOS Registry - Welcome Aboard!",
     text: template
   });
 };
@@ -112,8 +127,17 @@ Meteor.methods({
    */
   approveAccount: function(userId) {
     let currentUserId = Meteor.userId();
+    let user = Meteor.users.findOne({_id: userId});
     if(Roles.userIsInRole(currentUserId, "admin")) {
       Roles.addUsersToRoles(userId, "approved");
+      if(user.services.approvalNotice !== true) {
+        sendAccountApprovedEmail(user);
+        Meteor.users.update({_id: userId}, {
+          $set: {
+            "services.approvalNotice": true
+          }
+        });
+      }
     } else {
       throw new Meteor.Error(401, "Unauthorized");
     }
@@ -200,11 +224,11 @@ Meteor.methods({
     let user = Meteor.users.findOne({_id: userId});
     let verifiedEmails = _.where(user.emails, {verified: true});
     if(verifiedEmails.length < 1) {
-      throw new Meteor.Error(403, "Account is not verified");
+      throw new Meteor.Error(403, "Please check your email for your verification email.");
     }
 
     if(!Roles.userIsInRole(userId, "approved")) {
-      throw new Meteor.Error(403, "Account is not approved.");
+      throw new Meteor.Error(403, "Your account is pending an approval from an administrator.");
     }
     return true;
   }
