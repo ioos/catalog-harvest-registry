@@ -19,3 +19,6 @@ import '/imports/ui/pages/organizations/edit/edit.js';
 
 /* Records */
 import '/imports/ui/pages/records/records.js';
+
+/* About */
+import '/imports/ui/pages/about/about.js';

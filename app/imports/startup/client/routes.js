@@ -182,3 +182,11 @@ FlowRouter.route('/records/:harvestId', {
     });
   }
 });
+
+
+FlowRouter.route('/about', {
+  name: 'about',
+  action() {
+    BlazeLayout.render('MasterLayout', {yield: "about"});
+  }
+});
