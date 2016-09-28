@@ -9,7 +9,7 @@ import { _ } from 'meteor/underscore';
 Template.dashboardHeading.events({
   'click #errors'(){
     if(!_.isUndefined(this._id)) {
-      FlowRouter.go('records', {harvestId: this._id});
+      FlowRouter.go('records', {harvestId: this._id}, {"sort": "errors"});
     }
   },
   'click #records'() {

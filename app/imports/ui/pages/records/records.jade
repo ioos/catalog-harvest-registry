@@ -31,7 +31,7 @@ template(name='records')
             span.badge= errorCount
       .row
         .box.box-tabular.col-xs-12
-          +tabular selector=selector table=recordsTable class="table table-striped"
+          +tabular id="records-table" selector=selector table=recordsTable class="table table-striped"
 
 template(name="recordsServicesCell")
   a.collapse-services(href='#')

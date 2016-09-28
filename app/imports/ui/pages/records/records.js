@@ -77,6 +77,11 @@ Template.records.onCreated(function() {
 });
 
 Template.records.onRendered(function() {
+  let sorting = FlowRouter.getQueryParam("sort");
+  let dt = this.$('#records-table').DataTable();
+  if (sorting == "errors") {
+    dt.column(3).order('desc').draw();
+  }
 });
 
 Template.records.onDestroyed(function() {
