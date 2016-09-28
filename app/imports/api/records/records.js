@@ -36,9 +36,14 @@ export const RecordsTable = new Tabular.Table({
       tmpl: Meteor.isClient && Template.recordsErrorCell
     },
     {
-      title: "XML",
+      title: "XML Source",
       data: "url",
       tmpl: Meteor.isClient && Template.recordsLink
+    },
+    {
+      title: "XML Published",
+      data: "record_url",
+      tmpl: Meteor.isClient && Template.recordsWAFLink
     },
     {
       title: "CKAN",
