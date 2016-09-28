@@ -5,6 +5,7 @@ import { Attempts } from '/imports/api/attempts/attempts.js';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { _ } from 'meteor/underscore';
+import { pageState } from '../../pages/harvests/harvests.js';
 
 Template.dashboardHeading.events({
   'click #errors'(){
@@ -16,6 +17,12 @@ Template.dashboardHeading.events({
     if(!_.isUndefined(this._id)) {
       FlowRouter.go('records', {harvestId: this._id});
     }
+  },
+  'click button'(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    pageState.set('editMode', true);
+    pageState.set('harvestId', null);
   }
 });
 

@@ -82,6 +82,7 @@ Template.harvests.onCreated(function() {
 });
 
 Template.harvests.onRendered(() => {
+  this.$('#new-harvest').tooltip();
   $('.row.box-header .box').hover(function() {
     $(this).toggleClass('box-hover');
   });
