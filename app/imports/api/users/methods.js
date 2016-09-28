@@ -161,8 +161,17 @@ Meteor.methods({
    */
   enableAdmin: function(userId) {
     let currentUserId = Meteor.userId();
+    let user = Meteor.users.findOne({_id: userId});
     if(Roles.userIsInRole(currentUserId, "admin")) {
       Roles.addUsersToRoles(userId, ["admin", "approved"]);
+      if(user.services.approvalNotice !== true) {
+        sendAccountApprovedEmail(user);
+        Meteor.users.update({_id: userId}, {
+          $set: {
+            "services.approvalNotice": true
+          }
+        });
+      }
     } else {
       throw new Meteor.Error(401, "Unauthorized");
     }
