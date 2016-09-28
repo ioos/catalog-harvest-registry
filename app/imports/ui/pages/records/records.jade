@@ -57,12 +57,24 @@ template(name="recordsErrorCell")
 
 template(name="recordsLink")
   a(href=url target="_blank")
-    i.fa.fa-file
+    i.fa.fa-file(title="Link to the original document")
 
 
 template(name="recordsCKANLink")
-  a(href="{{getCatalogURL}}" target="_blank")
-    img.ckan-logo(alt="CKAN Logo" src="{{absoluteUrl 'images/logo-ckan.svg'}}")
+  if record_url
+    a(href="{{getCatalogURL}}" target="_blank")
+      img.ckan-logo(alt="CKAN Logo" src="{{absoluteUrl 'images/logo-ckan.svg'}}" title="Link to the CKAN record")
+  else
+    i.fa.fa-exclamation(title="There was an error processing this record")
+
+
+template(name="recordsWAFLink")
+  if record_url
+    a(href=record_url target="_blank")
+      i.fa.fa-file-code-o(title="Link to the record in the central WAF")
+  else
+    i.fa.fa-exclamation(title="There was an error processing this record")
+
 
 
 template(name="recordsDescription")
