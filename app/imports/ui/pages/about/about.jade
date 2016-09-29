@@ -7,26 +7,27 @@ template(name='about')
   .about.resource
     .content.container
       .row
-        .box.col-xs-12
-          .content-area
-            h2 About IOOS Harvest Registry
-            p The Harvest Registry is a web-based system that allows IOOS partners to
-              | add or update content in the IOOS Data Catalog.  It is the entry point for
-              | publishing data sets and services in the IOOS Catalog. The Registry
-              | maintains a list of web-accessible folders (WAFs) from which the Catalog
-              | will harvest ISO 19115-2 compatible XML metadata records.  It also provides
-              | a mechanism for viewing the status of individual metadata record inclusion
-              | in the Catalog and will show the results of any validation/compliance
-              | scoring once these optional capabilities have been added.
+        .box.col-xs-12.col-md-12
+          .row.content-area
+            .col-xs-12
+              h2 About IOOS Harvest Registry
+              p The Harvest Registry is a web-based system that allows IOOS partners to
+                | add or update content in the IOOS Data Catalog.  It is the entry point for
+                | publishing data sets and services in the IOOS Catalog. The Registry
+                | maintains a list of web-accessible folders (WAFs) from which the Catalog
+                | will harvest ISO 19115-2 compatible XML metadata records.  It also provides
+                | a mechanism for viewing the status of individual metadata record inclusion
+                | in the Catalog and will show the results of any validation/compliance
+                | scoring once these optional capabilities have been added.
 
-            h2 Current Harvest Sources
+              h2 Current Harvest Sources
 
-            p We also have a public
-              a(href="{{absoluteUrl 'api/v1/Harvests'}}" target="_blank")
-                | API
-              | for all of our harvests.
+              p We also have a public
+                a(href="{{absoluteUrl 'api/v1/Harvests'}}" target="_blank")
+                  | API
+                | for all of our harvests.
 
-            +currentHarvestsTable data=harvests
+              +currentHarvestsTable data=harvests
 
 template(name='currentHarvestsTable')
   table.table
@@ -41,7 +42,7 @@ template(name='currentHarvestsTable')
           td= organization
           td
             a(href=url)
-              {{parseUrl url}}
+              = url
           td= last_record_count
 
 
