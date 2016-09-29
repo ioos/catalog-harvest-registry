@@ -34,10 +34,6 @@ Template.harvestsEdit.onCreated(function() {
 
 
 Template.harvests.events({
-  'click #new-harvest'() {
-    pageState.set('editMode', true);
-    pageState.set('harvestId', null);
-  }
 });
 
 Template.harvests.helpers({
