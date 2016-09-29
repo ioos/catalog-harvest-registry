@@ -38,8 +38,4 @@ Template.about.onDestroyed(function() {
 });
 
 Template.currentHarvestsTable.helpers({
-  parseUrl(url) {
-    let tokens = url.split("//");
-    return tokens[1].split("/")[0];
-  }
 });
