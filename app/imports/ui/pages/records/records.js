@@ -82,6 +82,7 @@ Template.records.onRendered(function() {
   if (sorting == "errors") {
     dt.column(3).order('desc').draw();
   }
+  this.$('th span').tooltip();
 });
 
 Template.records.onDestroyed(function() {
