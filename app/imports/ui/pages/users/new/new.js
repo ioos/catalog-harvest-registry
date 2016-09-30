@@ -10,7 +10,7 @@ import { _ } from 'meteor/underscore';
 import 'meteor/mizzao:bootboxjs';
 
 
-let formSchema = function(organizations) {
+export let formSchema = function(organizations) {
   return new SimpleSchema({
     email: {
       label: "Email",
@@ -90,7 +90,9 @@ Template.usersNew.helpers({
 /* usersNew: Lifecycle Hooks */
 /*****************************************************************************/
 Template.usersNew.onCreated(function() {
-  this.subscribe("organizations");
+  this.autorun(()=> {
+    this.subscribe("organizations");
+  });
 });
 
 Template.usersNew.onRendered(() => {
@@ -106,7 +108,11 @@ AutoForm.hooks({
       delete insertDoc.password_confirm;
       Meteor.call('users.insert', insertDoc, (error, repsonse) => {
         if(error) {
-          FlashMessages.sendError(error.message);
+          if(error.reason) {
+            FlashMessages.sendError(error.reason);
+          } else {
+            FlashMessages.sendError(error.message);
+          }
           this.done(error);
           return;
         } 

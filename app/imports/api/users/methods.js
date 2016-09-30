@@ -71,21 +71,69 @@ export const registerAccount = new ValidatedMethod({
   }
 });
 
+export const updateAccount = new ValidatedMethod({
+  name: "users.update",
+  validate(user) {
+    let schema = new SimpleSchema([UserSchema.pick(['email', 'name', 'organization']), {
+      current_password: {
+        label: "Current Password",
+        type: String,
+      },
+      password: {
+        label: "Password",
+        type: String,
+        min: 8,
+        optional: true
+      }
+    }]);
+    schema.validator()(user);
+  },
+  run(user) {
+    let currentUserId = Meteor.userId();
+    let currentUser = Meteor.user();
+    let foundUser = Meteor.users.findOne({'emails.address': user.email, _id: {$ne: currentUserId}});
+    if(foundUser) {
+      throw new Meteor.Error(400, "Email Already Exists");
+    }
+    let passwordCheck = Accounts._checkPassword(currentUser, {digest: user.current_password, algorithm: 'sha-256'});
+    if(!_.isUndefined(passwordCheck.error)) {
+      throw new Meteor.Error(401, "Invalid Credentials");
+    }
+
+    Meteor.users.update(currentUserId, {
+      $set: {
+        username: user.email,
+        email: user.email,
+        "profile.name": user.name,
+        "profile.email": user.email
+      }
+    });
+    if(!_.isUndefined(user.password)) {
+      Accounts.setPassword(currentUserId, user.password, {logout: false});
+    }
+  }
+});
+
 
 export const sendReset = new ValidatedMethod({
   name: 'users.sendReset',
   validate: new SimpleSchema({
     email: {
       type: String,
+      optional: true,
       regEx: SimpleSchema.RegEx.Email
     }
   }).validator(),
   run({email}) {
-    let user = Accounts.findUserByEmail(email);
-    if(_.isEmpty(user) || _.isEmpty(user._id)) {
-      throw new Meteor.Error(404, "No such user account for " + email);
+    if(Meteor.userId()) {
+      Accounts.sendResetPasswordEmail(Meteor.userId());
+    } else {
+      let user = Accounts.findUserByEmail(email);
+      if(_.isEmpty(user) || _.isEmpty(user._id)) {
+        throw new Meteor.Error(404, "No such user account for " + email);
+      }
+      Accounts.sendResetPasswordEmail(user._id);
     }
-    Accounts.sendResetPasswordEmail(user._id);
   }
 });
 

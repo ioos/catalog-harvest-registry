@@ -33,16 +33,19 @@ template(name="MainBanner")
               li.right-item
                 a#new-user(href="{{pathTo 'usersNew'}}") Register
 
-            if isAdmin
+            if isLoggedIn
               li.right-item.dropdown
                 a#admin-menu.dropdown-toggle(href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false")
                   span Admin 
                   span.caret
                 ul.dropdown-menu(aria-labelledby="admin-menu")
+                  if isAdmin
+                    li
+                      a(href="{{pathTo 'users'}}") User Accounts
+                    li
+                      a(href="{{pathTo 'organizations'}}") Organizations
                   li
-                    a(href="{{pathTo 'users'}}") User Accounts
-                  li
-                    a(href="{{pathTo 'organizations'}}") Organizations
+                    a(href="{{pathTo 'usersEdit'}}") Edit User
 
 
 

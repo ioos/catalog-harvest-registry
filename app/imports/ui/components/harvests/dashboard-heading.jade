@@ -1,8 +1,8 @@
 template(name="dashboardHeading")
   if _id
-    +expandedDashboard dataSources=dataSources records=records attempts=attempts errors=errors
+    +expandedDashboard dataSources=dataSources records=records attempts=attempts errors=errors _id=_id
   else
-    +normalDashboard dataSources=dataSources
+    +normalDashboard dataSources=dataSources _id=_id
 
 template(name="expandedDashboard")
   .box.col-md-6
