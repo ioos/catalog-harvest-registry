@@ -1,27 +1,33 @@
 template(name="dashboardHeading")
   if _id
-    .box.col-md-6
-      h3.blue
-        i.fa.fa-database
-        span Data Sources 
-        span.badge= dataSources
-
-        button.btn.btn-info Add Harvest
-    .box.col-md-3#records
-      h3.green
-        i.fa.fa-file
-        span Total Records
-        span.badge= records
-    .box.col-md-3#errors
-      h3.red
-        i.fa.fa-warning
-        span Bad Records
-        span.badge= errors
+    +expandedDashboard dataSources=dataSources records=records attempts=attempts errors=errors
   else
-    .box.col-md-12#sources-box
-      h3.blue
-        i.fa.fa-database
-        span Data Sources 
-        span.badge= dataSources
+    +normalDashboard dataSources=dataSources
 
-        button.btn.btn-info Add Harvest
+template(name="expandedDashboard")
+  .box.col-md-6
+    h3.blue
+      i.fa.fa-database
+      span.showtip(title="Number of registered data sources") Data Sources 
+      span.badge= dataSources
+
+      button.btn.btn-info Add Harvest
+  .box.col-md-3#records
+    h3.green
+      i.fa.fa-file
+      span.showtip(title="Total number of harvested records belonging to this data source") Total Records
+      span.badge= records
+  .box.col-md-3#errors
+    h3.red
+      i.fa.fa-warning
+      span.showtip(title="A 'Bad Record' is a record with at least one error") Bad Records
+      span.badge= errors
+
+template(name="normalDashboard")
+  .box.col-md-12#sources-box
+    h3.blue
+      i.fa.fa-database
+      span.showtip(title="Number of registered data sources") Data Sources 
+      span.badge= dataSources
+
+      button.btn.btn-info Add Harvest
