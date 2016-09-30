@@ -12,12 +12,18 @@ import { _ } from 'meteor/underscore';
 /* harvestsChart: Event Handlers */
 /*****************************************************************************/
 
-let activateHarvest = function(harvest) {
-    addHarvesting.call(this, harvest._id);
-    Meteor.setTimeout(() => {
-      removeHarvesting.call(this, harvest._id);
-    }, 60000);
-
+/**
+ * Creates a new harvest job for the harvest passed in. If the harvest does not
+ * have publishing enabled, a bootbox prompt will confirm.
+ *
+ * @param {harvest} harvest - An item from the Harvests collection
+ * @param {Boolean} ignorePublish - If false and the harvest does not have
+ *                                  publish set to true, a prompt will display,
+ *                                  asking the user to confirm that he/she
+ *                                  wants to harvest.
+ */
+let activateHarvest = function(harvest, ignorePublish=false) {
+  if(ignorePublish || harvest.publish) {
     Meteor.call('harvests.activate', harvest._id, (error, response) => {
       if(error) {
         FlashMessages.sendError(error.reason);
@@ -27,22 +33,19 @@ let activateHarvest = function(harvest) {
       FlashMessages.sendSuccess("Harvest Job Queued");
       removeHarvesting.call(this, harvest._id);
     });
-};
-
-let addHarvesting = function(harvestId) {
-  let harvesting = this.state.get('harvesting');
-  harvesting.push(harvestId);
-  this.state.set('harvesting', harvesting);
-};
-
-let removeHarvesting = function(harvestId) {
-  let harvesting = this.state.get('harvesting');
-  let i = harvesting.indexOf(harvestId);
-  if(i > -1) {
-    harvesting.splice(i, 1);
-    this.state.set('harvesting', harvesting);
+  } else {
+    bootbox.confirm(
+      "This harvest is not set to publish. Publish anyway?",
+      (response) => {
+        if(response === false) {
+          return;
+        }
+        activateHarvest(harvest, true);
+      }
+    );
   }
 };
+
 
 Template.harvestsChart.events({
   'click #edit-harvest-btn'(event, instance) {
