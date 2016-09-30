@@ -7,7 +7,8 @@ import { FlashMessages } from 'meteor/mrt:flash-messages';
 import './templates.js';
 
 FlashMessages.configure({
-  autoHide: true
+  autoHide: true,
+  autoScroll: false
 });
 
 
