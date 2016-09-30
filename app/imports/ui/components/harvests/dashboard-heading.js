@@ -54,3 +54,10 @@ Template.dashboardHeading.onCreated(function() {
 });
 
 
+Template.expandedDashboard.onRendered(function() {
+  this.$('.showtip').tooltip();
+});
+
+Template.normalDashboard.onRendered(function() {
+  this.$('.showtip').tooltip();
+});
