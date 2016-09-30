@@ -7,7 +7,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { _ } from 'meteor/underscore';
 import { pageState } from '../../pages/harvests/harvests.js';
 
-Template.dashboardHeading.events({
+Template.expandedDashboard.events({
   'click #errors'(){
     if(!_.isUndefined(this._id)) {
       FlowRouter.go('records', {harvestId: this._id}, {"sort": "errors"});
@@ -18,6 +18,15 @@ Template.dashboardHeading.events({
       FlowRouter.go('records', {harvestId: this._id});
     }
   },
+  'click button'(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    pageState.set('editMode', true);
+    pageState.set('harvestId', null);
+  }
+});
+
+Template.normalDashboard.events({
   'click button'(event) {
     event.preventDefault();
     event.stopPropagation();

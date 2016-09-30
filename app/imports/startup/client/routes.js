@@ -102,6 +102,15 @@ FlowRouter.route('/users/verify/:token', {
   }
 });
 
+FlowRouter.route('/users/edit', {
+  name: 'usersEdit',
+  action() {
+    validatedRender((error, response) => {
+      BlazeLayout.render('MasterLayout', {yield: "usersEdit"});
+    });
+  }
+});
+
 
 FlowRouter.route('/users/reset/:token', {
   name: 'usersReset',
@@ -170,16 +179,8 @@ FlowRouter.route('/organizations/:organizationId/edit', {
 FlowRouter.route('/records/:harvestId', {
   name: 'records',
   action() {
-    Meteor.call("userIsInRole", Meteor.userId(), "admin", (error, isAdmin) => {
-      if(error) {
-        return FlowRouter.go('login');
-      }
-      if(isAdmin) {
+    validatedRender((error, response) => {
         BlazeLayout.render('MasterLayout', {yield: "records"});
-      } else {
-        FlashMessages.sendError("You are not authorized to view this page.");
-        return FlowRouter.go('harvests');
-      }
     });
   }
 });
@@ -191,3 +192,5 @@ FlowRouter.route('/about', {
     BlazeLayout.render('MasterLayout', {yield: "about"});
   }
 });
+
+

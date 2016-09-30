@@ -22,3 +22,6 @@ import '/imports/ui/pages/records/records.js';
 
 /* About */
 import '/imports/ui/pages/about/about.js';
+
+
+import '/imports/ui/pages/users/edit/edit.js';
