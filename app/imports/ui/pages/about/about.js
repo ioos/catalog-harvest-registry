@@ -20,6 +20,13 @@ Template.about.helpers({
   absoluteUrl(path) {
     return Meteor.absoluteUrl(path);
   },
+  recordCount() {
+    let count = 0;
+    Harvests.find({last_record_count: {$gt: 0}}).forEach(function(harvest) {
+      count += harvest.last_record_count;
+    });
+    return count;
+  }
 });
 
 /*****************************************************************************/

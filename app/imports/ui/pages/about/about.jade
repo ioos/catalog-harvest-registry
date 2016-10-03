@@ -27,6 +27,10 @@ template(name='about')
                   | API
                 | for all of our harvests.
 
+              h3
+                = recordCount
+                | Total Records
+
               +currentHarvestsTable data=harvests
 
 template(name='currentHarvestsTable')
