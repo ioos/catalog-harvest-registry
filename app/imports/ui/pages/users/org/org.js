@@ -37,7 +37,6 @@ Template.usersOrgEdit.helpers({
   currentUser() {
     let user = Users.findOne({_id: FlowRouter.getParam("userId")});
     if(user) {
-      console.log(user.profile.organization);
       return {
         organization: user.profile.organization
       };
