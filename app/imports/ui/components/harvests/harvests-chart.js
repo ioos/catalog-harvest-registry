@@ -27,11 +27,9 @@ let activateHarvest = function(harvest, ignorePublish=false) {
     Meteor.call('harvests.activate', harvest._id, (error, response) => {
       if(error) {
         FlashMessages.sendError(error.reason);
-        removeHarvesting.call(this, harvest._id);
         return;
       }
       FlashMessages.sendSuccess("Harvest Job Queued");
-      removeHarvesting.call(this, harvest._id);
     });
   } else {
     bootbox.confirm(

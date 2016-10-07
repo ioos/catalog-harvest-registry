@@ -22,9 +22,12 @@ export let formSchema = function(organizations) {
       type: String
     },
     organization: {
-      label: "Organization",
-      type: String,
-      allowedValues: organizations
+      label: "Organizations",
+      type: [String],
+      allowedValues: organizations,
+      autoform: {
+        type: "select-multiple"
+      }
     },
     password: {
       label: "Password",

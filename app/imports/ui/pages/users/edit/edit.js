@@ -2,7 +2,6 @@ import './edit.jade';
 import './edit.less';
 import { Template } from 'meteor/templating';
 import { formSchema } from '../new/new.js';
-import { Organizations } from '/imports/api/organizations/organizations.js';
 import { SHA256 } from 'meteor/sha';
 
 /*****************************************************************************/
@@ -30,8 +29,7 @@ Template.usersEdit.helpers({
     let user = Meteor.user();
     return {
       email: user.profile.email,
-      name: user.profile.name,
-      organization: user.profile.organization
+      name: user.profile.name
     };
   },
   /**
@@ -39,13 +37,9 @@ Template.usersEdit.helpers({
    * passwords are optional and the labels are modified.
    */
   formSchema() {
-    // Get the organization names for the organizations dropdown.
-    let orgs = Organizations.find({}, {name: 1}).fetch();
-    orgs = _.pluck(orgs, 'name');
-    // Build the form schema with the right orgs.
-    let fullSchema = formSchema(orgs);
+    let fullSchema = formSchema();
     // Set the password to optional and update the label to "New Password"
-    let modifiedSchema = new SimpleSchema([fullSchema.pick(["email", "name", "organization"]), {
+    let modifiedSchema = new SimpleSchema([fullSchema.pick(["email", "name"]), {
       current_password: {
         label: "Current Password",
         type: String,
@@ -85,7 +79,6 @@ Template.usersEdit.helpers({
 /*****************************************************************************/
 Template.usersEdit.onCreated(function() {
   this.autorun(()=> {
-    this.subscribe("organizations");
     this.subscribe("reactiveUsers");
   });
 });
