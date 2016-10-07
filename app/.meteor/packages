@@ -47,3 +47,5 @@ http@1.2.9
 aldeed:tabular
 session@1.1.6
 shell-server
+aldeed:autoform-select2
+zimme:select2-bootstrap3-css

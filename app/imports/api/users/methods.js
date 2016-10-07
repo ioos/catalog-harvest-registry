@@ -137,6 +137,36 @@ export const sendReset = new ValidatedMethod({
   }
 });
 
+export const updateOrganization = new ValidatedMethod({
+  name: "users.set_organization",
+  validate: new SimpleSchema({
+    organization: {
+      label: "Organization",
+      type: [String]
+    },
+    user_id: {
+      type: String
+    }
+  }).validator(),
+  run({user_id, organization}) {
+    let currentUserId = Meteor.userId();
+    let user = Meteor.users.findOne({_id: user_id});
+    if(_.isUndefined(user)) {
+      throw new Meteor.Error(404, "Not Found");
+    }
+    if(Roles.userIsInRole(currentUserId, "admin")) {
+      Meteor.users.update(user_id, {
+        $set: {
+          "profile.organization": organization
+        }
+      });
+    } else {
+      throw new Meteor.Error(401, "Unauthorized");
+    }
+    
+  }
+});
+
 
 Meteor.methods({
   /*

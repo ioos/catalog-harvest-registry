@@ -25,3 +25,6 @@ import '/imports/ui/pages/about/about.js';
 
 
 import '/imports/ui/pages/users/edit/edit.js';
+
+
+import '/imports/ui/pages/users/org/org.js';

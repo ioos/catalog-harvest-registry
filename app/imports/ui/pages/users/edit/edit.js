@@ -3,6 +3,7 @@ import './edit.less';
 import { Template } from 'meteor/templating';
 import { formSchema } from '../new/new.js';
 import { SHA256 } from 'meteor/sha';
+import { FlashMessages } from 'meteor/mrt:flash-messages';
 
 /*****************************************************************************/
 /* usersEdit: Event Handlers */

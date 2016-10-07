@@ -15,22 +15,22 @@ Template.MainBanner.events({
   }
 });
 
-Template.MainBanner.helpers({
-  absoluteUrl(path) {
+Template.registerHelper('absoluteUrl', (path) => {
     return Meteor.absoluteUrl(path);
-  },
-  pathTo(route) {
+});
+
+Template.registerHelper('pathTo', (route) => {
     return FlowRouter.path(route);
-  },
-  isLoggedIn() {
+});
+
+Template.registerHelper('isLoggedIn', () => {
     return Boolean(Meteor.userId());
-  },
-  isAdmin() {
+});
+
+Template.registerHelper('isAdmin', () => {
     let userId = Meteor.userId();
     if(!userId) {
       return false;
     }
     return Roles.userIsInRole(userId, ['admin']);
-  }
 });
-

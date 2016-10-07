@@ -90,5 +90,8 @@ Template.userRow.helpers({
   },
   organization() {
     return this.profile.organization.join(", ");
+  },
+  editUserOrgPath() {
+    return FlowRouter.path("usersOrgEdit", {userId: this._id});
   }
 });

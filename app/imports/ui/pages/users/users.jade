@@ -31,7 +31,8 @@ template(name='userRow')
   tr
     td= profile.name
     td= profile.email
-    td= organization
+    td
+      a(href=editUserOrgPath)= organization
     td
       if hasRole roles "admin"
         .disable-admin
