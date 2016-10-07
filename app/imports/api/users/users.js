@@ -23,7 +23,7 @@ export const UserSchema = new SimpleSchema({
   },
   organization: {
     label: "Organization",
-    type: String
+    type: [String]
   },
   password: {
     label: "Password",

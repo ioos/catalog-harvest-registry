@@ -10,7 +10,7 @@ import 'meteor/mizzao:bootboxjs';
 
 let formSchema = function() {
   let user = Meteor.user();
-  let organizations = [user.profile.organization];
+  let organizations = user.profile.organization;
   if(Roles.userIsInRole(user._id, ['admin'])) {
     organizations = _.map(Organizations.find({}, {name: 1}).fetch(), (org)=> {
       return org.name;

@@ -65,9 +65,6 @@ Template.users.helpers({
   users() {
     return Users.find({});
   },
-  hasRole(roles, role) {
-    return _.contains(roles, role);
-  }
 });
 
 /*****************************************************************************/
@@ -81,4 +78,20 @@ Template.users.onRendered(function() {
 });
 
 Template.users.onDestroyed(() => {
+});
+
+
+/*****************************************************************************/
+/* userRow: Helpers */
+/*****************************************************************************/
+Template.userRow.helpers({
+  hasRole(roles, role) {
+    return _.contains(roles, role);
+  },
+  organization() {
+    return this.profile.organization.join(", ");
+  },
+  editUserOrgPath() {
+    return FlowRouter.path("usersOrgEdit", {userId: this._id});
+  }
 });

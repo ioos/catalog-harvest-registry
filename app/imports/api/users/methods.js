@@ -18,7 +18,7 @@ const sendNotificationEmail = function(user) {
     "\n" +
     "Email: " + user.email + "\n" +
     "Name: " + user.name + "\n" +
-    "Organization: " + user.organization + "\n" +
+    "Organization(s): " + user.organization.join(", ") + "\n" +
     "\n" + 
     "You can approve the account by logging in and visiting " + 
     Meteor.absoluteUrl("users") +
@@ -74,7 +74,7 @@ export const registerAccount = new ValidatedMethod({
 export const updateAccount = new ValidatedMethod({
   name: "users.update",
   validate(user) {
-    let schema = new SimpleSchema([UserSchema.pick(['email', 'name', 'organization']), {
+    let schema = new SimpleSchema([UserSchema.pick(['email', 'name']), {
       current_password: {
         label: "Current Password",
         type: String,
@@ -134,6 +134,36 @@ export const sendReset = new ValidatedMethod({
       }
       Accounts.sendResetPasswordEmail(user._id);
     }
+  }
+});
+
+export const updateOrganization = new ValidatedMethod({
+  name: "users.set_organization",
+  validate: new SimpleSchema({
+    organization: {
+      label: "Organization",
+      type: [String]
+    },
+    user_id: {
+      type: String
+    }
+  }).validator(),
+  run({user_id, organization}) {
+    let currentUserId = Meteor.userId();
+    let user = Meteor.users.findOne({_id: user_id});
+    if(_.isUndefined(user)) {
+      throw new Meteor.Error(404, "Not Found");
+    }
+    if(Roles.userIsInRole(currentUserId, "admin")) {
+      Meteor.users.update(user_id, {
+        $set: {
+          "profile.organization": organization
+        }
+      });
+    } else {
+      throw new Meteor.Error(401, "Unauthorized");
+    }
+    
   }
 });
 

@@ -61,7 +61,7 @@ export const update = new ValidatedMethod({
       }
       // Only users of the same organization can update that organization's
       // harvests
-      if(!user || user.profile.organization != originalHarvest.organization) {
+      if(!user || !_.contains(user.profile.organization, originalHarvest.organization)) {
         throw new Meteor.Error(401, "Unauthorized");
       }
       return Harvests.update({_id}, modifier);
@@ -79,7 +79,7 @@ export const remove = new ValidatedMethod({
       if(!originalHarvest) {
         throw new Meteor.Error(404, "Not Found");
       }
-      if(!isAdmin && (!user || user.profile.organization != originalHarvest.organization)) {
+      if(!isAdmin && (!user || !_.contains(user.profile.organization, originalHarvest.organization))) {
         throw new Meteor.Error(401, "Unauthorized");
       }
 
@@ -99,7 +99,7 @@ export const activate = new ValidatedMethod({
       if(!originalHarvest) {
         throw new Meteor.Error(404, "Not Found");
       }
-      if(!isAdmin && (!user || user.profile.organization != originalHarvest.organization)) {
+      if(!isAdmin && (!user || !_.contains(user.profile.organization, originalHarvest.organization))) {
         throw new Meteor.Error(401, "Unauthorized");
       }
 

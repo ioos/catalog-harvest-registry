@@ -194,3 +194,20 @@ FlowRouter.route('/about', {
 });
 
 
+
+FlowRouter.route('/users/org/edit/:userId', {
+  name: 'usersOrgEdit',
+  action() {
+    Meteor.call("userIsInRole", Meteor.userId(), "admin", (error, isAdmin) => {
+      if(error) {
+        return FlowRouter.go('login');
+      }
+      if(isAdmin) {
+        BlazeLayout.render('MasterLayout', {yield: "usersOrgEdit"});
+      } else {
+        FlashMessages.sendError("You are not authorized to view this page.");
+        return FlowRouter.go('harvests');
+      }
+    });
+  }
+});

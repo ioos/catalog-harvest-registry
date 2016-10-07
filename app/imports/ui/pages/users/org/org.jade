@@ -1,0 +1,15 @@
+template(name='usersOrgEdit')
+  .title-crumbs
+    .page-title
+      h2 
+        a(href='{{pathTo "users"}}')
+          i.fa.fa-caret-left
+        | Edit User Organization
+    .page-breadcrumbs
+      | / Users / Organization
+
+  .users-org-edit
+    .container
+      .row
+        .col-md-offset-3.col-md-6.col-sm-12
+          +quickForm id="editUserOrganization" schema=formSchema type="normal" doc=currentUser

@@ -25,25 +25,29 @@ template(name='users')
                 th Delete Account
             tbody
               +each users
-                tr
-                  td= profile.name
-                  td= profile.email
-                  td= profile.organization
-                  td
-                    if hasRole roles "admin"
-                      .disable-admin
-                        i.fa.fa-check-square-o
-                    else
-                      .enable-admin
-                        i.fa.fa-square-o
-                  td
-                    if hasRole roles "approved"
-                      .disable-approved
-                        i.fa.fa-check-square-o
-                    else
-                      .enable-approved
-                        i.fa.fa-square-o
+                +userRow
 
-                  td.remove-account
-                    a(href="#" onclick="return false;")
-                      i.fa.fa-times
+template(name='userRow')
+  tr
+    td= profile.name
+    td= profile.email
+    td
+      a(href=editUserOrgPath)= organization
+    td
+      if hasRole roles "admin"
+        .disable-admin
+          i.fa.fa-check-square-o
+      else
+        .enable-admin
+          i.fa.fa-square-o
+    td
+      if hasRole roles "approved"
+        .disable-approved
+          i.fa.fa-check-square-o
+      else
+        .enable-approved
+          i.fa.fa-square-o
+
+    td.remove-account
+      a(href="#" onclick="return false;")
+        i.fa.fa-times
