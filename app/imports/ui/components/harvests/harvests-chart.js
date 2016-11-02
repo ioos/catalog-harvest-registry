@@ -57,6 +57,9 @@ Template.harvestsChart.events({
   'click #view-records-btn'(event, instance) {
     FlowRouter.go('records', {harvestId: this._id});
   },
+  'click #view-jobs-btn'(event, instance) {
+    FlowRouter.go('showJobs', {organization: this.organization});
+  },
   'click #delete-harvest-btn'(event, instance) {
     bootbox.confirm(
       "This action can not be reversed, the <b class='warning'>harvest will be permanently removed</b>.<br>Are you sure?",

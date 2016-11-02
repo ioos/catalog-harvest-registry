@@ -28,3 +28,6 @@ import '/imports/ui/pages/users/edit/edit.js';
 
 
 import '/imports/ui/pages/users/org/org.js';
+
+
+import '/imports/ui/pages/jobs/show/show.js';

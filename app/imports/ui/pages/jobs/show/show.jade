@@ -1,0 +1,65 @@
+template(name='showJobs')
+  .title-crumbs
+    .page-title
+      h2
+        a(href='{{pathTo "harvests"}}')
+          i.fa.fa-caret-left
+        | CKAN Job Status
+    .page-breadcrumbs
+      | / Harvests / Jobs / Status
+
+  .jobs.resource
+    .container
+      .row
+        .box.col-xs-12
+          if loadingError
+            +ckanError error=error
+          else if loading
+            +jobLoading
+          else
+            +jobReport report=report
+
+template(name="jobLoading")
+  h2 Job Loading
+  i.loading-spinner.fa.fa-spinner.fa-spin.fa-fw
+
+template(name="ckanError")
+  h2 Error finding job
+  .alert.alert-danger
+    =error
+
+template(name="jobReport")
+  h2 Job Report for {{organization.name}} WAF
+  span.label.label-danger 
+    = report.stats.errored
+    | errors
+  span.label.label-success 
+    = report.stats.added
+    | added
+  span.label.label-info 
+    = report.stats.updated
+    | updated
+  p.status
+    b Status:
+    = report.status
+    br
+    b Finished:
+    = finished
+  h3 Document Errors
+  each jobErrors
+    +documentError
+
+template(name="documentError")
+  .document-error
+    p
+      b Source:
+      a(href=original_url)
+        = original_url
+    ul.error-list
+      each errors
+        li
+          = errorMessage
+
+
+
+
