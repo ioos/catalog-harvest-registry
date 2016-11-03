@@ -46,6 +46,8 @@ Template.showJobs.onCreated(function() {
         this.state.set("report", response);
       } else if(error.error == 404) {
         this.state.set("error", "No CKAN Harvest Located");
+      } else if(error.message) {
+        this.state.set("error", error.message);
       } else {
         console.error(error);
       }
