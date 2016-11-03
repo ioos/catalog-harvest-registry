@@ -211,3 +211,13 @@ FlowRouter.route('/users/org/edit/:userId', {
     });
   }
 });
+
+
+FlowRouter.route('/jobs/show/:organization', {
+  name: 'showJobs',
+  action() {
+    validatedRender((error, response) => {
+      BlazeLayout.render('MasterLayout', {yield: "showJobs"});
+    });
+  }
+});
