@@ -84,7 +84,6 @@ const HarvestSchema = new SimpleSchema({
   url: {
     type: String,
     unique: true,
-    regEx: SimpleSchema.RegEx.Url,
     label: "URL"
   },
   organization: {
