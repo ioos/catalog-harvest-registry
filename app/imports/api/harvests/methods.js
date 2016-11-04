@@ -1,5 +1,8 @@
 /**
- * Methods are highly app specific and as such Maka doesn't try
+ * @module /imports/api/harvests/methods
+ */
+
+/* Methods are highly app specific and as such Maka doesn't try
  * to implement any logic out of the box.  This file is simply to
  * provide a friendly reminder that you MAY need to have Methods.
  *
@@ -14,25 +17,33 @@
  *
  * $ maka add mdg:validated-method aldeed:simple-schema
  */
-
-
-
-
 import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import { Roles } from 'meteor/alanning:roles';
-import { Attempts } from '/imports/api/attempts/attempts.js';
 import { _ } from 'meteor/underscore';
 import { HTTP } from 'meteor/http';
-
 import { Harvests } from './harvests.js';
+import { Attempts } from '/imports/api/attempts/attempts.js';
+
 import urljoin from 'url-join';
 
+/**
+ * Inserts a new Harvest.
+ *
+ * Example:
+ * ```
+ * Meteor.call("harvests.insert", harvest, (error, harvestId) => {
+ *   ...
+ * });
+ * ```
+ * @function insert
+ * @param {object} harvest A Harvest object
+ */
 export const insert = new ValidatedMethod({
     name: 'harvests.insert',
-    validate: Harvests.simpleSchema().pick(['name', 'organization', 'url', 'harvest_type', 'harvest_interval', 'publish', 'ckan_harvest_url']).validator({clean: true, filter: false}),
+    validate: Harvests.simpleSchema().pick(['name', 'organization', 'url', 'harvest_type', 'harvest_interval', 'publish']).validator({clean: true, filter: false}),
     run(harvest) {
       let userId = Meteor.userId();
       if(!userId) {
@@ -43,10 +54,25 @@ export const insert = new ValidatedMethod({
 });
 
 
+/**
+ * Updates an existing Harvest.
+ *
+ * Example:
+ * ```
+ * Meteor.call("harvests.update", {_id: harvestId, modifier: {$set:  harvest}}, (error, harvestId) => {
+ *    ...
+ * });
+ * ```
+ *
+ * @function update
+ * @param {object} update The update object
+ * @param {string} update._id The Harvest identifier
+ * @param {object} update.modifier The MongoDB update object
+ */
 export const update = new ValidatedMethod({
     name: 'harvests.update',
     validate({_id, modifier}){
-      Harvests.schema.pick(["name", "url", "harvest_interval", "harvest_type", "organization", "publish", "ckan_harvest_url"]).validator()(modifier.$set);
+      Harvests.schema.pick(["name", "url", "harvest_interval", "harvest_type", "organization", "publish"]).validator()(modifier.$set);
     },
     run({_id, modifier}) {
       let user = Meteor.user();
@@ -69,6 +95,19 @@ export const update = new ValidatedMethod({
 });
 
 
+/**
+ * Removes a Harvest.
+ *
+ * Example:
+ * ```
+ * Meteor.call("harvests.remove", harvestId, (error, harvestId) => {
+ *    ...
+ * });
+ * ```
+ *
+ * @function remove
+ * @param {string} harvestId The Harvest identifier
+ */
 export const remove = new ValidatedMethod({
   name: 'harvests.remove',
   validate: null,
@@ -89,6 +128,19 @@ export const remove = new ValidatedMethod({
 });
 
 
+/**
+ * Queues a job for this Harvest
+ *
+ * Example:
+ * ```
+ * Meteor.call("harvests.activate", harvestId, (error, harvestId) => {
+ *    ...
+ * });
+ * ```
+ *
+ * @function activate
+ * @param {string} harvestId The Harvest identifier
+ */
 export const activate = new ValidatedMethod({
   name: 'harvests.activate',
   validate: null,
@@ -134,6 +186,18 @@ export const activate = new ValidatedMethod({
 });
 
 
+/**
+ * Returns the number of Harvests in the collection
+ *
+ * Example:
+ * ```
+ * Meteor.call("harvests.count", (error, harvestCount) => {
+ *    ...
+ * });
+ * ```
+ *
+ * @function count
+ */
 Meteor.methods({
   'harvests.count'() {
     return Harvests.find({}).count();

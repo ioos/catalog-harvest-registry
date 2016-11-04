@@ -1,33 +1,30 @@
+/**
+ * @module /imports/api/harvests/harvests
+ */
 import { Mongo } from 'meteor/mongo';
 import { Tabular } from 'meteor/aldeed:tabular';
 import { moment } from 'meteor/momentjs:moment';
 import { Template } from 'meteor/templating';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-// ✅ import { SimpleSchema } from 'meteor/aldeed:simple-schema
 
-class HarvestsCollection extends Mongo.Collection {
-    // If you need to perform any custom actions on the data
-    // before it's actually inserted, i.e. add a 'createdAt'
-    // this -> HarvestsCollection
-    // super -> Mongo.Collection
-    //
-    //  i.e.:
-    //  this.find(selector);
-    //  super.insert(doc);
-    //
-    insert(doc, callback) {
-        return doc;
-    }
-
-    update(selector, callback) {
-        return selector;
-    }
-
-    remove(selector) {
-        return selector;
-    }
-}
-
+/**
+ * Harvests represent a regularly scheduled job to download XML documents from
+ * a data provider. Each harvest has information about the organization it
+ * belongs to, the location of the XML documents and metadata about the last
+ * job that was run.
+ *
+ * This collection is published on `harvests.public`
+ *
+ * @public
+ *
+ * @property {string} name Name of the harvest
+ * @property {string} url URL Location of the WAF where the XML documents exist
+ * @property {string} organization Name of the organization. This should be an EXACT match to the name of an existing Organization's name attribute.
+ * @property {Date} last_harvest_dt The date for when the last job ran.
+ * @property {Number} harvest_interval The period in days for when to run the jobs.
+ * @property {string} harvest_type The type of harvest
+ * @property {Boolean} publish True if the harvest should be published to CKAN
+ */
 export const Harvests = new Mongo.Collection('Harvests');
 
 export const HarvestsTable = new Tabular.Table({

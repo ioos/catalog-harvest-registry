@@ -1,7 +1,24 @@
+/**
+ * @module /imports/api/organizations/organizations
+ */
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 
+/**
+ * Organizations represent an institution or group that acts as a data provider
+ * for submitting ISO-19115 Documents to the IOOS Catalog.
+ *
+ * This collection is published on `organizations`
+ *
+ * @public
+ *
+ * @property {string} name Name of the Organization
+ * @property {string} description A brief summary or description of the Organization
+ * @property {string} url The URL to the homepage of the Organization
+ * @property {string} logo_url The URL to the Organization's logo
+ * @property {string} ckan_harvest_url The URL to the CKAN Harvest page.
+ */
 export const Organizations = new Mongo.Collection('Organizations');
 
 Organizations.schema = new SimpleSchema({
