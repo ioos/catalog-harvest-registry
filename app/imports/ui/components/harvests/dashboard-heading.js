@@ -53,6 +53,7 @@ Template.dashboardHeading.helpers({
 Template.dashboardHeading.onCreated(function() {
   this.state = new ReactiveDict();
   this.state.set('harvests.count', null);
+  this.state.set('harvests.total_datasets', null);
   Meteor.call('harvests.count', (err, res) => {
     if(err) {
       console.error(err);
@@ -67,6 +68,26 @@ Template.expandedDashboard.onRendered(function() {
   this.$('.showtip').tooltip();
 });
 
+Template.normalDashboard.helpers({
+  totalDatasets() {
+    let retval = Template.instance().state.get('harvests.total_datasets');
+    return retval;
+  }
+});
+
 Template.normalDashboard.onRendered(function() {
   this.$('.showtip').tooltip();
 });
+
+Template.normalDashboard.onCreated(function() {
+  this.state = new ReactiveDict();
+  this.state.set('harvests.total_datasets', null);
+  Meteor.call('harvests.total_datasets', (err, res) => {
+    if(err) {
+      console.error(err);
+    } else {
+      this.state.set('harvests.total_datasets', res);
+    }
+  });
+});
+
