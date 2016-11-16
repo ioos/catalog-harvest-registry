@@ -24,10 +24,16 @@ template(name="expandedDashboard")
       span.badge= errors
 
 template(name="normalDashboard")
-  .box.col-md-12#sources-box
+  .box.col-md-6#sources-box
     h3.blue
       i.fa.fa-database
       span.showtip(title="Number of registered data sources") Data Sources 
       span.badge= dataSources
 
       button.btn.btn-info Add Harvest
+  .box.col-md-6#datasets-box
+    h3.green
+      i.fa.fa-database
+      span.showtip(title="Total datasets harvested by the registry") Total Datasets
+      span.badge= totalDatasets
+        

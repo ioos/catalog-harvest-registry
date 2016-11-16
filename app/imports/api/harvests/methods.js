@@ -140,6 +140,13 @@ Meteor.methods({
   }
 });
 
+Meteor.methods({
+  'harvests.total_datasets'() {
+    let count = Harvests.aggregate([{$group: { _id: null, sum: { $sum: "$last_record_count" } }} ]);
+    return count[0].sum;
+  }
+});
+
 /*
 const RATE_LIMITED_METHODS = _.pluck([insert, update], 'name');
 if (Meteor.isServer) {
