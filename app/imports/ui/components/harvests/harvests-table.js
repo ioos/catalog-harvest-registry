@@ -16,14 +16,12 @@ Template.harvestsTable.events({
     let rowData = dataTable.row(event.currentTarget).data();
     if (!rowData) {
       $('#harvests-table-box').removeClass('col-md-6').addClass('col-md-12');
-      $('#sources-box').removeClass('col-md-6').addClass('box-12');
       Meteor.setTimeout(() => {
         instance.state.set('harvestId', null);
       }, 500);
     } else {
       $(event.target).closest('tr').addClass('active');
       $('#harvests-table-box').removeClass('col-md-12').addClass('col-md-6');
-      $('#sources-box').removeClass('col-md-12').addClass('col-md-6');
       Meteor.setTimeout(() => {
         instance.state.set('harvestId', rowData._id);
       }, 500);
