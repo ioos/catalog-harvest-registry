@@ -103,7 +103,7 @@ const HarvestSchema = new SimpleSchema({
   },
   harvest_type: {
     type: String,
-    allowedValues: ['WAF', 'CSW'],
+    allowedValues: ['WAF', 'ERDDAP-WAF', 'CSW'],
     defaultValue: 'WAF'
   },
   publish: {
