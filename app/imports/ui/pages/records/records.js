@@ -12,6 +12,10 @@ import { _ } from 'meteor/underscore';
 /* records: Event Handlers */
 /*****************************************************************************/
 Template.records.events({
+  'click #job'() {
+    let harvest = Harvests.findOne({_id: FlowRouter.getParam('harvestId')});
+    FlowRouter.go('showJobs', {organization: harvest.organization});
+  }
 });
 
 /*****************************************************************************/

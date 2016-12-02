@@ -29,8 +29,12 @@ template(name='records')
             i.fa.fa-warning
             span Errors
             span.badge= errorCount
+        .box.col-md-3.col-xs-12#job
+          h3.blue
+            i.fa.fa-exchange
+            span Job Status
       .row
-        .box.box-tabular.col-xs-12
+        .box.box-tabular.col-md-12.col-xs-12
           +tabular id="records-table" selector=selector table=recordsTable class="table table-striped"
 
 template(name="recordsServicesCell")
