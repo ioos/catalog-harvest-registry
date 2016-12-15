@@ -1,0 +1,17 @@
+{
+    "plugins": ["plugins/markdown"],
+    "source": {
+        "includePattern": ".+\\.js(doc)?$",
+        "excludePattern": "(^|\\/|\\\\)_",
+        "exclude": [
+            "app/packages",
+            "app/node_modules",
+            "app/public",
+            "app/private"
+        ]
+    },
+    "opts": {
+        "recurse": "true",
+        "encoding": "utf8"
+    }
+}

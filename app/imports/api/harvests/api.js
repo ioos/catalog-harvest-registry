@@ -3,7 +3,6 @@
 // https://github.com/kahmali/meteor-restivus/
 
 import { Restivus } from 'meteor/nimble:restivus';
-
 import { Harvests } from './harvests.js';
 
 if (Meteor.isServer) {
