@@ -17,6 +17,9 @@ Template.showJobs.events({
 /* showJobs: Helpers */
 /*****************************************************************************/
 Template.showJobs.helpers({
+  back() {
+    return FlowRouter.path('harvests', {harvestId: FlowRouter.getQueryParam('harvest')});
+  },
   report() {
     return Template.instance().state.get('report');
   },
