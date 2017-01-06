@@ -58,7 +58,7 @@ Template.harvestsChart.events({
     FlowRouter.go('records', {harvestId: this._id});
   },
   'click #view-jobs-btn'(event, instance) {
-    FlowRouter.go('showJobs', {organization: this.organization});
+    FlowRouter.go('showJobs', {organization: this.organization}, {"harvest": this._id});
   },
   'click #delete-harvest-btn'(event, instance) {
     bootbox.confirm(
