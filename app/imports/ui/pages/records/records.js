@@ -14,7 +14,7 @@ import { _ } from 'meteor/underscore';
 Template.records.events({
   'click #job'() {
     let harvest = Harvests.findOne({_id: FlowRouter.getParam('harvestId')});
-    FlowRouter.go('showJobs', {organization: harvest.organization});
+    FlowRouter.go('showJobs', {organization: harvest.organization}, {harvest: harvest._id});
   }
 });
 
