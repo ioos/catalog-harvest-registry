@@ -4,6 +4,7 @@ import '../../components/harvests/dashboard-heading.js';
 import '../../components/harvests/harvests-table.js';
 import '../../components/harvests/harvests-chart.js';
 import '../../components/harvests/harvests-edit.js';
+import { HarvestObserver } from '../../components/harvests/harvest-observer.js';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Template } from 'meteor/templating';
 import { _ } from 'meteor/underscore';
@@ -58,6 +59,9 @@ Template.harvests.helpers({
                             !_.isEmpty(Harvests.findOne({_id: harvestId}));
     let editMode = Template.instance().state.get('editMode');
     return somethingSelected || editMode;
+  },
+  harvestObserver() {
+    return Template.instance().harvestObserver;
   }
 });
 
@@ -75,6 +79,7 @@ Template.harvests.onCreated(function() {
   this.state.set('editMode', false);
   // This list contains the documents that are actively being harvested
   this.state.set('harvesting', []);
+  this.harvestObserver = new HarvestObserver();
 });
 
 Template.harvests.onRendered(() => {

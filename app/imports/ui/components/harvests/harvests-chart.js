@@ -22,7 +22,7 @@ import { _ } from 'meteor/underscore';
  *                                  asking the user to confirm that he/she
  *                                  wants to harvest.
  */
-let activateHarvest = function(harvest, ignorePublish=false) {
+let activateHarvest = function(harvest, observer, ignorePublish=false) {
   if(ignorePublish || harvest.publish) {
     Meteor.call('harvests.activate', harvest._id, (error, response) => {
       if(error) {
@@ -30,6 +30,16 @@ let activateHarvest = function(harvest, ignorePublish=false) {
         return;
       }
       FlashMessages.sendSuccess("Harvest Job Queued");
+      observer.addListener(harvest, (newDoc, oldDoc) => {
+        if(newDoc.last_harvest_dt != oldDoc.last_harvest_dt && (newDoc.last_harvest_dt instanceof Date)) {
+          if(newDoc.last_harvest_status == "ok") {
+            FlashMessages.sendSuccess(`Harvest for ${newDoc.name} suceeded`);
+          } else if(newDoc.last_harvest_status == "fail") {
+            FlashMessages.sendError(`Harvest for ${newDoc.name} failed`);
+          }
+          observer.removeListener(harvest);
+        }
+      });
     });
   } else {
     bootbox.confirm(
@@ -38,7 +48,7 @@ let activateHarvest = function(harvest, ignorePublish=false) {
         if(response === false) {
           return;
         }
-        activateHarvest(harvest, true);
+        activateHarvest(harvest, observer, true);
       }
     );
   }
@@ -52,13 +62,13 @@ Template.harvestsChart.events({
   },
   'click #activate-harvest-btn'(event, instance) {
     event.preventDefault();
-    activateHarvest.call(instance, this);
+    activateHarvest.call(instance, this.harvest, this.observer);
   },
   'click #view-records-btn'(event, instance) {
-    FlowRouter.go('records', {harvestId: this._id});
+    FlowRouter.go('records', {harvestId: this.harvest._id});
   },
   'click #view-jobs-btn'(event, instance) {
-    FlowRouter.go('showJobs', {organization: this.organization}, {"harvest": this._id});
+    FlowRouter.go('showJobs', {organization: this.harvest.organization}, {"harvest": this.harvest._id});
   },
   'click #delete-harvest-btn'(event, instance) {
     bootbox.confirm(
@@ -83,12 +93,9 @@ Template.harvestsChart.events({
     instance.state.set('editMode', true);
   },
   'click #harvest-now'(event, instance) {
-    activateHarvest.call(instance, this);
+    activateHarvest.call(instance, this.harvest, this.observer);
   }
 });
-
-Template.harvestsChart.activateHarvest = function() {
-};
 
 /*****************************************************************************/
 /* harvestsChart: Helpers */
@@ -139,9 +146,9 @@ Template.harvestsChart.onCreated(function() {
 
 
 Template.harvestsChart.renderChart = function() {
-  let harvest = this.data;
-  let good = this.data.last_good_count;
-  let bad = this.data.last_bad_count;
+  let harvest = this.data.harvest;
+  let good = this.data.harvest.last_good_count;
+  let bad = this.data.harvest.last_bad_count;
   addDonutChart("#chart svg", () => {
     return  [
         { 
@@ -164,20 +171,20 @@ Template.harvestsChart.onDestroyed(function() {
 
 Template.harvestSummary.helpers({
   isHarvesting() {
-    return this.last_harvest_dt == "harvesting";
+    return this.harvest.last_harvest_dt == "harvesting";
   },
   harvestDate() {
-    if(_.isNull(this.last_harvest_dt) || _.isUndefined(this.last_harvest_dt)) {
+    if(_.isNull(this.harvest.last_harvest_dt) || _.isUndefined(this.harvest.last_harvest_dt)) {
       return "Never";
     }
-    if(this.last_harvest_dt instanceof Date) {
-      return moment(this.last_harvest_dt).fromNow();
+    if(this.harvest.last_harvest_dt instanceof Date) {
+      return moment(this.harvest.last_harvest_dt).fromNow();
     }
-    return this.last_harvest_dt;
+    return this.harvest.last_harvest_dt;
   },
   harvesting() {
     let harvesting = Template.instance().state.get('harvesting');
-    return _.contains(harvesting, this._id);
+    return _.contains(harvesting, this.harvest._id);
   }
 });
 
