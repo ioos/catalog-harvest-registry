@@ -18,7 +18,7 @@ template(name='harvests')
             if editMode
               +harvestsEdit
             else
-              +Template.dynamic template="harvestsChart" data=activeHarvest
+              +harvestsChart harvest=activeHarvest observer=harvestObserver
         else
           .box.box-table.col-md-12.col-xs-12#harvests-table-box
             +harvestsTable
