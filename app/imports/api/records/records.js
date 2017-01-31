@@ -46,6 +46,10 @@ export const RecordsTable = new Tabular.Table({
       tmpl: Meteor.isClient && Template.recordsWAFLink
     },
     {
+      title: "<span title='Identifies when the resource was issued and made publicly available.'>Metadata Date</span>",
+      data: "metadata_date"
+    },
+    {
       title: "<span title='There was an error processing this record'>CKAN</span>",
       tmpl: Meteor.isClient && Template.recordsCKANLink
     }
