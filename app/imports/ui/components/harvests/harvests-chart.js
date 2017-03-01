@@ -81,7 +81,7 @@ Template.harvestsChart.events({
           if(error) {
             FlashMessages.sendError(error.message);
           } else {
-            FlashMessages.sendSuccess("Harvest deleted");
+            FlashMessages.sendSuccess("Harvest scheduled for deletion");
             instance.state.set('harvestId', null);
             instance.state.set('editMode', false);
           }

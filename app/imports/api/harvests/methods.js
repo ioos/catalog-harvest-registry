@@ -112,18 +112,45 @@ export const remove = new ValidatedMethod({
   name: 'harvests.remove',
   validate: null,
   run(harvestId) {
-      let user = Meteor.user();
-      let originalHarvest = Harvests.findOne({_id: harvestId});
-      let isAdmin = Roles.userIsInRole(user._id, ["admin"]);
-      if(!originalHarvest) {
-        throw new Meteor.Error(404, "Not Found");
-      }
-      if(!isAdmin && (!user || !_.contains(user.profile.organization, originalHarvest.organization))) {
-        throw new Meteor.Error(401, "Unauthorized");
+    let user = Meteor.user();
+    let originalHarvest = Harvests.findOne({_id: harvestId});
+    let isAdmin = Roles.userIsInRole(user._id, ["admin"]);
+    if(!originalHarvest) {
+      throw new Meteor.Error(404, "Not Found");
+    }
+    if(!isAdmin && (!user || !_.contains(user.profile.organization, originalHarvest.organization))) {
+      throw new Meteor.Error(401, "Unauthorized");
+    }
+
+    let apiURL = urljoin(Meteor.settings.services.harvestAPI, harvestId);
+    Harvests.update({_id: harvestId}, {$set: {
+      last_harvest_dt: "deleting",
+      last_record_count: 0,
+      last_good_count: 0,
+      last_bad_count: 0
+    }});
+
+    let response = Meteor.wrapAsync((apiURL, callback) => {
+      let errorCode;
+      let errorMessage;
+      let myError;
+      try {
+        let response = HTTP.del(apiURL);
+        callback(null, response);
+      } catch (error) {
+        if(error.response) {
+          errorCode = error.response.data.code;
+          errorMessage = error.response.data.message;
+        } else {
+          errorCode = 500;
+          errorMessage = "Cannot Access API";
+        }
+        myError = new Meteor.Error(errorCode, errorMessage);
+        callback(myError, null);
       }
 
-      Attempts.remove({parent_harvest: harvestId});
-      return Harvests.remove({_id: harvestId});
+    })(apiURL);
+    return response;
   }
 });
 

@@ -28,3 +28,14 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+
+Release Instructions
+====================
+1. Identify the next version
+2. Update `app/package.json` `Dockerfile` and `build/build.sh` with the new
+   version.
+   [Example](https://github.com/ioos/catalog-harvest-registry/commit/c6e0760eb9a533d0739491fd3f4c8b060a909f3a)
+3. Build the project with `build/build.sh`
+4. Push the changes so that dockerhub picks them up and builds an image
+5. Publish a release
