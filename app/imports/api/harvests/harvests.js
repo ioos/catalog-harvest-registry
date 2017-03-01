@@ -90,7 +90,7 @@ const HarvestSchema = new SimpleSchema({
   /* harvest interval in seconds.  Initialize to null to indicate no harvest
    * made */
   last_harvest_dt: {
-    type: Date,
+    type: null,
     optional: true
   },
   harvest_interval: {
