@@ -1,6 +1,6 @@
 {
   "name": "catalog-harvest-registry",
-  "version": "1.0.7",
+  "version": "1.0.7p1",
   "description": "Web based User Interface for registering and managing metadata harvest endpoints.",
   "main": "index.js",
   "scripts": {
