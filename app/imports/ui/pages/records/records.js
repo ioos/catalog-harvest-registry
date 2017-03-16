@@ -154,9 +154,9 @@ Template.recordsCKANLink.helpers({
   },
   getCatalogURL: function() {
     if(!_.isEmpty(this.file_id)) {
-      return "http://dev-catalog.ioos.us/dataset?" + $.param({q: 'guid:"' + this.file_id + '"'});
+      return "https://data.ioos.us/dataset?" + $.param({q: 'guid:"' + this.file_id + '"'});
     }
-    return "http://dev-catalog.ioos.us/dataset?" + $.param({q: '"' + this.title + '"'});
+    return "https://data.ioos.us/dataset?" + $.param({q: '"' + this.title + '"'});
   }
 });
 
