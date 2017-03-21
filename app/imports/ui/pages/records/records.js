@@ -93,6 +93,46 @@ Template.records.onDestroyed(function() {
 });
 
 /*****************************************************************************/
+/* recordsTitle: Event Handlers */
+/*****************************************************************************/
+
+Template.recordsTitle.events({
+  'click a'(event, instance) {
+    Template.instance().state.set('expanded', true);
+  }
+});
+
+/*****************************************************************************/
+/* recordsTitle: Helpers */
+/*****************************************************************************/
+
+Template.recordsTitle.helpers({
+  expanded() {
+    return Template.instance().state.get('expanded');
+  },
+  shortTitle() {
+    let title = this.title || "No Title Available";
+    if(title.length > 40) {
+      title = title.substr(0, 40);
+    }
+    return title;
+  },
+  needsExpand() {
+    return this.title && this.title.length > 40;
+  }
+});
+
+/*****************************************************************************/
+/* recordsTitle: Life Cycle */
+/*****************************************************************************/
+
+
+Template.recordsTitle.onCreated(function() {
+  this.state = new ReactiveDict();
+  this.state.set('expanded', false);
+});
+
+/*****************************************************************************/
 /* recordsServicesCell: Events */
 /*****************************************************************************/
 
