@@ -37,6 +37,14 @@ template(name='records')
         .box.box-tabular.col-md-12.col-xs-12
           +tabular id="records-table" selector=selector table=recordsTable class="table table-striped"
 
+template(name="recordsTitle")
+  if expanded
+    = title
+  else
+    = shortTitle
+    if needsExpand
+        a(href="#" onclick="return null;") ...
+
 template(name="recordsServicesCell")
   a.collapse-services(href='#')
     = recordServices

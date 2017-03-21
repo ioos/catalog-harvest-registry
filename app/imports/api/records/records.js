@@ -12,13 +12,7 @@ export const RecordsTable = new Tabular.Table({
     {
       title: "Title",
       data: "title",
-      render: function(val, type, doc) {
-        val = val || "No title provided";
-        if(val && val.length > 40) {
-          val = val.substr(0, 40) + "...";
-        }
-        return val;
-      }
+      tmpl: Meteor.isClient && Template.recordsTitle
     },
     {
       title: "Description",
@@ -54,5 +48,8 @@ export const RecordsTable = new Tabular.Table({
       tmpl: Meteor.isClient && Template.recordsCKANLink
     }
   ],
-  extraFields: ['file_id']
+  extraFields: ['file_id'],
+  search: {
+    onEnterOnly: true
+  }
 });
