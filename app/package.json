@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ioos/catalog-harvest-registry#readme",
   "dependencies": {
+    "babel-runtime": "^6.23.0",
     "bcrypt": "^0.8.7",
     "jquery": "^2.2.4",
     "url-join": "^1.1.0"
