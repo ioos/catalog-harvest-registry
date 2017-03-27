@@ -4,6 +4,7 @@
 
 import { Restivus } from 'meteor/nimble:restivus';
 import { Harvests } from './harvests.js';
+import { callHarvestAPI } from './methods.js';
 
 if (Meteor.isServer) {
 
@@ -23,6 +24,53 @@ if (Meteor.isServer) {
       authRequired: false
     }
   });
+
+  let ApiV2 = new Restivus({
+    version: 'v2',
+    useDefaultAuth: true,
+    prettyJson: (Meteor.isDevelopment) ? true : false
+  });
+
+  ApiV2.addRoute('harvests/:id/harvest', {
+    authRequired: true
+  },{
+    get() {
+      let user = Meteor.users.findOne({_id: this.request.headers['x-user-id']});
+      let harvest = Harvests.findOne({_id: this.urlParams.id});
+      let isAdmin = Roles.userIsInRole(user._id, ["admin"]);
+      if(!harvest) {
+        return {
+          statusCode: 404,
+          headers: {
+            "Content-Type": "application/json;charset=utf-8"
+          },
+          body: {status: "Not Found"}
+        };
+      }
+      if(!isAdmin && (!user || !_.contains(user.profile.organization, harvest.organization))) {
+        return {
+          statusCode: 401,
+          headers: {
+            "Content-Type": "application/json;charset=utf-8"
+          },
+          body: {status: "Unauthorized"}
+        };
+      }
+      let response = callHarvestAPI(this.urlParams.id);
+      return {"status": "harvesting"};
+    }
+  });
+  /*
+   * To Authenticate
+   * curl -i -d 'email=lcampbell@ioos.us&password=da7655b5bf67039c3e76a99d8e6fb6969370bbc0fa440cae699cf1a3e2f1e0a1&hashed=true' -XPOST localhost:3000/api/v2/login
+   */
+
+  /*
+   * To execute:
+   * curl -H "X-Auth-Token: 11RNttydywkBJj5Qwj-PiREawMRr0wQkmPvu6fHPbVF" -H "X-User-Id: urgkbrjoussWi55M2" -i localhost:3000/api/v2/harvests/abc123/harvest
+   */
+
+
 
 }
 
