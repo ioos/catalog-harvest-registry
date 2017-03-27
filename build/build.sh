@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-VERSION=1.0.8
+VERSION=1.1.0
 
 maka build --architecture os.linux.x86_64
 cd build
