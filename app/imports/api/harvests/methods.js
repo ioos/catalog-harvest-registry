@@ -212,6 +212,43 @@ export const activate = new ValidatedMethod({
   }
 });
 
+/**
+ * Queues a job for this Harvest
+ *
+ * Example:
+ * ```
+ * callHarvestAPI(harvestId);
+ * ```
+ *
+ * @param {string} harvestId The Harvest identifier
+ */
+export const callHarvestAPI = function(harvestId) {
+    let apiURL = urljoin(Meteor.settings.services.harvestAPI, harvestId);
+
+    let response = Meteor.wrapAsync((apiURL, callback) => {
+      let errorCode;
+      let errorMessage;
+      let myError;
+      try {
+        let response = HTTP.get(apiURL);
+        callback(null, response);
+      } catch (error) {
+        if(error.response) {
+          errorCode = error.response.data.code;
+          errorMessage = error.response.data.message;
+        } else {
+          console.log(error);
+          errorCode = 500;
+          errorMessage = "Cannot Access API";
+        }
+        myError = new Meteor.Error(errorCode, errorMessage);
+        callback(myError, null);
+      }
+
+    })(apiURL);
+    return response;
+};
+
 
 /**
  * Returns the number of Harvests in the collection

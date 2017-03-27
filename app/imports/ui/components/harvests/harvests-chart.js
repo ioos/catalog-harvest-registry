@@ -104,6 +104,15 @@ Template.harvestsChart.helpers({
   drawChart() {
     Template.harvestsChart.renderChart.call(Template.instance());
     return null;
+  },
+  ownsHarvest() {
+    let user = Meteor.user();
+    let harvest = this.harvest;
+    let isAdmin = Roles.userIsInRole(user._id, ["admin"]);
+    if(!isAdmin && (!user || !_.contains(user.profile.organization, harvest.organization))) {
+      return false;
+    }
+    return true;
   }
 });
 

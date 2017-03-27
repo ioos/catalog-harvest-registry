@@ -4,6 +4,7 @@
 
 import { Restivus } from 'meteor/nimble:restivus';
 import { Harvests } from './harvests.js';
+import { callHarvestAPI } from './methods.js';
 
 if (Meteor.isServer) {
 
@@ -34,8 +35,29 @@ if (Meteor.isServer) {
     authRequired: true
   },{
     get() {
-      console.log(this.urlParams.id);
-      return {"test":"success"};
+      let user = Meteor.users.findOne({_id: this.request.headers['x-user-id']});
+      let harvest = Harvests.findOne({_id: this.urlParams.id});
+      let isAdmin = Roles.userIsInRole(user._id, ["admin"]);
+      if(!harvest) {
+        return {
+          statusCode: 404,
+          headers: {
+            "Content-Type": "application/json;charset=utf-8"
+          },
+          body: {status: "Not Found"}
+        };
+      }
+      if(!isAdmin && (!user || !_.contains(user.profile.organization, harvest.organization))) {
+        return {
+          statusCode: 401,
+          headers: {
+            "Content-Type": "application/json;charset=utf-8"
+          },
+          body: {status: "Unauthorized"}
+        };
+      }
+      let response = callHarvestAPI(this.urlParams.id);
+      return {"status": "harvesting"};
     }
   });
   /*
