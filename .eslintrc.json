@@ -1,0 +1,21 @@
+{
+    "extends": "@meteorjs/eslint-config-meteor",
+    "rules": {
+        "id-length": ["error", {"min": 3, "exceptions": ["i", "j", "k", "id"]}],
+        "max-len": ["error", 120],
+        "require-jsdoc": ["error", {
+            "require": {
+                "FunctionDeclaration": true,
+                "MethodDefinition": false,
+                "ClassDeclaration": false,
+                "ArrowFunctionExpression": false
+            }
+        }],
+        "no-undef": ["error"],
+        "keyword-spacing": ["error"],
+        "object-curly-spacing": "off"
+    },
+    "globals": {
+        "Meteor": true
+    }
+}
