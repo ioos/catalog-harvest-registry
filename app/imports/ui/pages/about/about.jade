@@ -31,6 +31,9 @@ template(name='about')
                 = recordCount
                 | Total Records
 
+              p.smaller
+                i ({{badRecordCount}}) Records with errors
+
               +currentHarvestsTable data=harvests
 
 template(name='currentHarvestsTable')
@@ -40,6 +43,8 @@ template(name='currentHarvestsTable')
         th Organization
         th URL
         th Records
+        th Records with Errors
+        th Harvest Type
     tbody
       each data
         tr
@@ -48,5 +53,7 @@ template(name='currentHarvestsTable')
             a(href=url)
               = url
           td= last_record_count
+          td= last_bad_count
+          td {{parseHarvestType harvest_type}}
 
 
