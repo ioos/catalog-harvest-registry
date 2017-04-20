@@ -1,7 +1,7 @@
 FROM debian:jessie
 MAINTAINER Luke Campbell <luke.campbell@rpsgroup.com>
 
-ENV REGISTRY_VERSION 1.1.0
+ENV REGISTRY_VERSION 1.1.1
 
 ENV NODE_VERSION 4.6.1
 ENV GOSU_VERSION 1.9
