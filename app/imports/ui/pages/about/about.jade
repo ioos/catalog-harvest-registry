@@ -27,12 +27,7 @@ template(name='about')
                   | API
                 | for all of our harvests.
 
-              h3
-                = recordCount
-                | Total Records
-
-              p.smaller
-                i ({{badRecordCount}}) Records with errors
+              +aboutCounts recordCount=recordCount ckanCount=ckanCount badRecordCount=badRecordCount
 
               +currentHarvestsTable data=harvests
 
@@ -57,3 +52,18 @@ template(name='currentHarvestsTable')
           td {{parseHarvestType harvest_type}}
 
 
+
+template(name='aboutCounts')
+  .row
+    .col-md-6.col-xs-12
+      h3
+        = recordCount
+        | Total Records
+      p.smaller
+        i ({{badRecordCount}}) Records with errors
+
+    .col-md-6.col-xs-12
+      if ckanCount
+        h3
+          = ckanCount
+          | CKAN Records

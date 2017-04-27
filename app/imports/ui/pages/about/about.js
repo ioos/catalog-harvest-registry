@@ -1,7 +1,26 @@
 import { Template } from 'meteor/templating';
+import { ReactiveDict } from 'meteor/reactive-dict';
+import { HTTP } from 'meteor/http';
 import { Harvests } from '/imports/api/harvests/harvests.js';
 import './about.jade';
 import './about.less';
+
+/**
+ * Fetches the CKAN Dataset Count and updates the state of the calling
+ * template. Note: this function needs to be called using `call` or bound using
+ * `bind`.
+ */
+const fetchCkanCount = function() {
+  const ckanAPI = Meteor.settings.public.ckan_api_url;
+  const ckanURL = `${ckanAPI}action/package_search?rows=0`;
+  HTTP.get(ckanURL, {}, (error, result) => {
+    if (!error) {
+      if (result && result.data && result.data.result) {
+        this.state.set('ckan_count', result.data.result.count);
+      }
+    }
+  });
+};
 
 /*
  * about: Event Handlers
@@ -56,16 +75,29 @@ Template.about.helpers({
     });
     return count;
   },
+  /**
+   * Returns the total number of records in CKAN. The count is null if the
+   * value hasn't been fetched from CKAN yet.
+   *
+   * @return {?number}
+   */
+  ckanCount() {
+    return Template.instance().state.get('ckan_count');
+  },
 });
 
 /**
- * Subscribes to harvests.public
+ * Subscribes to harvests.public and fetches the CKAN count
  */
 Template.about.onCreated(function() {
+  this.state = new ReactiveDict();
+  this.state.set('ckan_count', null);
   this.autorun(() => {
     this.subscribe('harvests.public');
   });
+  fetchCkanCount.call(this);
 });
+
 
 /*
  * currentHarvestsTable: helpers
