@@ -60,16 +60,6 @@ if (Meteor.isServer) {
       return {"status": "harvesting"};
     }
   });
-  /*
-   * To Authenticate
-   * curl -i -d 'email=lcampbell@ioos.us&password=da7655b5bf67039c3e76a99d8e6fb6969370bbc0fa440cae699cf1a3e2f1e0a1&hashed=true' -XPOST localhost:3000/api/v2/login
-   */
-
-  /*
-   * To execute:
-   * curl -H "X-Auth-Token: 11RNttydywkBJj5Qwj-PiREawMRr0wQkmPvu6fHPbVF" -H "X-User-Id: urgkbrjoussWi55M2" -i localhost:3000/api/v2/harvests/abc123/harvest
-   */
-
 
 
 }
