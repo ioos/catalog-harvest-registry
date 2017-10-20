@@ -45,6 +45,10 @@ export const HarvestsTable = new Tabular.Table({
       tmpl: Meteor.isClient && Template.harvestLink
     },
     {
+      title: "Harvest Type",
+      data: "harvest_type"
+    },
+    {
       title: "Online",
       data: "publish",
       tmpl: Meteor.isClient && Template.harvestPublished
