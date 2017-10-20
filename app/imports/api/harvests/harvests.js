@@ -72,7 +72,7 @@ export const HarvestsTable = new Tabular.Table({
       }
     }
   ],
-  extraFields: ['harvest_type', 'harvest_interval', 'last_good_count', 'last_bad_count'],
+  extraFields: ['harvest_interval', 'last_good_count', 'last_bad_count'],
   search: {
     onEnterOnly: true
   }
