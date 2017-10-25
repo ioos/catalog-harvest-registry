@@ -17,7 +17,7 @@ let formSchema = function() {
     });
   }
 
-  return new SimpleSchema([Harvests.schema.pick(["name", "url", "ckan_harvest_url", "harvest_type", "publish"]), {
+  return new SimpleSchema([Harvests.schema.pick(["name", "url", "harvest_contact", "ckan_harvest_url", "harvest_type", "publish"]), {
     organization: {
       type: String,
       allowedValues: organizations,
