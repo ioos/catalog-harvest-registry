@@ -45,6 +45,10 @@ export const HarvestsTable = new Tabular.Table({
       tmpl: Meteor.isClient && Template.harvestLink
     },
     {
+      title: "Contact",
+      data: "harvest_contact",
+    },
+    {
       title: "Harvest Type",
       data: "harvest_type"
     },
@@ -114,6 +118,11 @@ const HarvestSchema = new SimpleSchema({
     type: Boolean,
     defaultValue: false,
     label: "Publish this source?"
+  },
+  harvest_contact: {
+    type: String,
+    optional: true,
+    label: "Contact"
   }
 });
 Harvests.schema = HarvestSchema;
@@ -127,7 +136,8 @@ Harvests.publicFields = {
   last_harvest_dt: 1,
   harvest_interval: 1,
   harvest_type: 1,
-  publish: 1
+  publish: 1,
+  harvest_contact: 1
 };
 
 Harvests.attachSchema(HarvestSchema);

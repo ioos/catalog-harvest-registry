@@ -10,7 +10,8 @@ function insertHarvests() {
                    url: 'http://sos.maracoos.org/maracoos-iso/',
                    organization: 'MARACOOS',
                    harvest_interval: 1,
-                   harvest_type: 'WAF'});
+                   harvest_type: 'WAF',
+                   harvest_contact: 'test@test.com'});
 }
 
 
