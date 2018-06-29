@@ -102,8 +102,9 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer && !schemaLoaded) {
   var curHarvestUsr = Meteor.users.findOne({ _id: Meteor.userId });  
-  harvestUserEmail = curHarvestUsr.emails[0].address;
+  harvestUserEmail = curHarvestUsr.emails[0].address || '';
   loadHarvestSchema();
+
 }
 
 function loadHarvestSchema() {

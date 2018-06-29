@@ -56,6 +56,15 @@ Installation
    maka npm install
    ```
 
+Linux/Ubuntu
+============
+You may need to run:
+
+```
+curl https://install.meteor.com/ | sh
+```
+
+to install meteor if issues with the above steps. 
 
 Running
 =======
