@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-VERSION=1.2.0
+VERSION=1.2.1
 
 maka build --architecture os.linux.x86_64
 
