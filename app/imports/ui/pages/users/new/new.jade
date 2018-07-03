@@ -8,6 +8,12 @@ template(name='usersNew')
   .users-new
     .container
       .row
+        .reg-message
+          p The IOOS Catalog Harvest Registry site is intended as the user interface for users affiliated with one of the <a href="https://data.ioos.us/organization">IOOS data provider organizations</a> to publish web accessible folders or CS-W services with metadata records for the Catalog to harvest.
+      .row
+        .reg-message
+          p If you are affiliated with an IOOS organization and need access to this functionality for dataset publishing, please fill out the information below and we will verify your request. We will not approve requests for general users who do not require access to this tool.
+      .row
         .col-md-offset-3.col-md-6.col-sm-12
           +quickForm id="newUser" schema=formSchema type="normal"
         .col-md-3
