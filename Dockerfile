@@ -21,9 +21,10 @@ RUN $SCRIPTS_DIR/install-node.sh
 
 # Production
 RUN $SCRIPTS_DIR/install-app.sh
+WORKDIR $APP_DIR/catalog-harvest-registry
 
 # Dev
 #RUN $SCRIPTS_DIR/install-app-dev.sh
+#WORKDIR $APP_DIR/bundle
 
-WORKDIR $APP_DIR/bundle
 CMD ["/usr/local/bin/gosu", "node", "node", "main.js"]
