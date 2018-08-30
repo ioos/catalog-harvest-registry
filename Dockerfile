@@ -19,12 +19,14 @@ COPY contrib/scripts/ $SCRIPTS_DIR/
 RUN $SCRIPTS_DIR/install-deps.sh
 RUN $SCRIPTS_DIR/install-node.sh
 
+# Uncomment for Production or Dev based on if want
+# to use a local tar file for dev vs. tar file on aws for prod.
 # Production
-RUN $SCRIPTS_DIR/install-app.sh
-WORKDIR $APP_DIR/catalog-harvest-registry
+#RUN $SCRIPTS_DIR/install-app.sh
+#WORKDIR $APP_DIR/catalog-harvest-registry
 
 # Dev
-#RUN $SCRIPTS_DIR/install-app-dev.sh
-#WORKDIR $APP_DIR/bundle
+RUN $SCRIPTS_DIR/install-app-dev.sh
+WORKDIR $APP_DIR/bundle
 
 CMD ["/usr/local/bin/gosu", "node", "node", "main.js"]
