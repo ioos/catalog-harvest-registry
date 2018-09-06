@@ -213,3 +213,34 @@ WAF_URL_ROOT=http://192.168.99.100:3001/
 ```
 
 Where `192.168.99.100` is the IP-Address of the docker-machine's VM.
+
+Deployment and Building
+=======================
+
+Meteor Building
+---------------
+To create the app.tar.gz file you can build it by using:
+```
+maka build
+```
+You must build the tar file before you build the docker image to see any changes you've made to the code.
+
+Bulding Docker image for dev vs. production
+-------------------------------------------
+There are two scripts that can be modified when building for
+development vs. production. 
+They are:
+**install-app-dev.sh** (Dev)
+and
+**install-app.sh** (Production)
+
+### Modifying Dockerfile
+You can modify this area of dockerfile for dev vs. production by commenting/uncommenting relevant code:
+```
+RUN $SCRIPTS_DIR/install-app.sh
+WORKDIR $APP_DIR/catalog-harvest-registry
+
+RUN $SCRIPTS_DIR/install-app-dev.sh
+WORKDIR $APP_DIR/bundle
+```
+This enabled you to be able to make changes and build/run the tar file locally instead of using aws s3.

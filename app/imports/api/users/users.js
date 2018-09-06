@@ -25,6 +25,15 @@ export const UserSchema = new SimpleSchema({
     label: "Organization",
     type: [String]
   },
+  poc_name: {
+    label: "IOOS Organization POC",
+    type: String
+  },
+  poc_email: {
+    label: "IOOS Organization POC Email",
+    type: String,
+    regEx: SimpleSchema.RegEx.Email
+  },
   password: {
     label: "Password",
     type: String,
