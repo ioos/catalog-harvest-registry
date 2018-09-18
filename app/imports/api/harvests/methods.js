@@ -270,7 +270,7 @@ Meteor.methods({
 
 Meteor.methods({
   'harvests.total_datasets'() {
-    let count = Harvests.aggregate([{$group: { _id: null, sum: { $sum: "$last_record_count" } }} ]);
+    let count = Harvests.aggregate([{$group: { _id: null, sum: { $sum: "$last_record_count" } }} ], {explain: true});
     return count[0].sum;
   }
 });
