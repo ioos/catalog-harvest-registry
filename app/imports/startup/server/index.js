@@ -14,7 +14,6 @@ import { Inject } from 'meteor/meteorhacks:inject-initial';
 
 let gaInit = '';
 if (Meteor.settings.public.mode !== 'test') {
-    process.env.googleAnalyticsID = 'UA-78530076-8';
     gaInit = `
     <!-- Start Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=${process.env.googleAnalyticsID}"></script>
