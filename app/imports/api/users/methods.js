@@ -10,35 +10,52 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 
 const sendNotificationEmail = function(user) {
+  // find the emails of any admin users
+  let base_admin_users = Meteor.users.aggregate([{$match: {roles: 'admin'}},
+                                                 {'$group':
+                                                     {_id: null, admin_emails:
+                                                         { $addToSet:
+                                                          "$profile.email"}}}])[0].admin_emails;
+
+  // get the email notification list
+  let notification_list;
   if(_.isEmpty(Meteor.settings.email) || _.isEmpty(Meteor.settings.email.notification_list)) {
     console.error("Notification list is not configured");
-    return;
+    //return;
+    notification_list = [];
+  } else {
+    notification_list = Meteor.settings.email.notification_list;
   }
-  let template = "A new user has registered for an account:\n" +
-    "\n" +
-    "Email: " + user.email + "\n" +
-    "Name: " + user.name + "\n" +
-    "Organization(s): " + user.organization.join(", ") + "\n" +
-    "\n" + 
-    "You can approve the account by logging in and visiting " + 
-    Meteor.absoluteUrl("users") +
-    "\n" +
-    "Thanks!\n" +
-    "IOOS Registry";
+  // combine the addresses of the two, ignoring any duplicates
+  const admin_and_notification_list = new Set([...base_admin_users,
+                                               ...notification_list]);
+
+  let template = `A new user has registered for an account
+
+Email: ${user.email}
+Name: ${user.name}
+Organization(s): ${user.organization.join(", ")}
+
+You can approve the account by logging in and visiting
+    ${Meteor.absoluteUrl("users")}
+
+   Thanks!
+  IOOS Registry`;
+
   Email.send({
     from: "ioos.us Administrator <admin@ioos.us>",
-    to: Meteor.settings.email.notification_list,
+    to: Array.from(admin_and_notification_list),
     subject: "IOOS Registry New Registered User",
     text: template
   });
 };
 
 const sendAccountApprovedEmail = function(user) {
-  let template = "Your user account has been approved by an administrator and you can now start using your account!\n" +
-    Meteor.absoluteUrl() + 
-    "\n" +
-    "Thanks!\n" + 
-    "IOOS Registry";
+  let template = `Your user account has been approved by an administrator and you can now start using your account!
+${Meteor.absoluteUrl()}
+
+   Thanks!
+  IOOS Registry`;
 
   Email.send({
     from: "ioos.us Administrator <admin@ioos.us>",
