@@ -81,6 +81,26 @@ Template.records.onCreated(function() {
 });
 
 Template.records.onRendered(function() {
+  var eventPressUp = $.Event("keyup");
+  eventPressUp.which = 13;
+  $("#cancel-filter-records").on("click", function(e) {
+    $('#cancel-filter-records').hide();
+    $('#records-table_filter input').val("");
+    $('#records-table_filter input').focus();
+    $("#records-table_filter input").trigger(eventPressUp);
+  });
+
+  $('#records-table_filter input').keypress(function(e) {
+    var keycode = (e.keyCode ? e.keyCode : e.which);
+    if (keycode == '13') {
+      if ($('#records-table_filter input').val()) {
+        $('#cancel-filter-records').show();
+      } else {
+        $('#cancel-filter-records').hide();
+      }
+    }
+  });
+
   let sorting = FlowRouter.getQueryParam("sort");
   let dt = this.$('#records-table').DataTable();
   if (sorting == "errors") {
