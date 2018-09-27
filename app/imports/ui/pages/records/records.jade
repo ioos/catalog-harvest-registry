@@ -35,6 +35,8 @@ template(name='records')
             span Job Status
       .row
         .box.box-tabular.col-md-12.col-xs-12
+          span#cancel-filter-records
+            i.fa.fa-close
           +tabular id="records-table" selector=selector table=recordsTable class="table table-striped"
 
 template(name="recordsTitle")
