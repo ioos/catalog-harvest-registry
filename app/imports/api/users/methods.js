@@ -35,6 +35,8 @@ const sendNotificationEmail = function(user) {
 Email: ${user.email}
 Name: ${user.name}
 Organization(s): ${user.organization.join(", ")}
+POC Name: ${user.poc_name}
+POC Email: ${user.poc_email}
 
 You can approve the account by logging in and visiting
     ${Meteor.absoluteUrl("users")}
