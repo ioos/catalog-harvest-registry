@@ -69,6 +69,15 @@ Template.usersEdit.helpers({
         autoform: {
           type: "password"
         }
+      },
+      poc_name: {
+        label: "IOOS Point of Contact Name",
+        type: String,
+      },
+      poc_email: {
+        label: "IOOS Point of Contact Email",
+        type: String,
+        regEx: SimpleSchema.RegEx.Email
       }
     }]);
     return modifiedSchema;
