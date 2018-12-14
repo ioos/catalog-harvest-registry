@@ -30,7 +30,9 @@ Template.usersEdit.helpers({
     let user = Meteor.user();
     return {
       email: user.profile.email,
-      name: user.profile.name
+      name: user.profile.name,
+      poc_name: user.profile.poc_name,
+      poc_email: user.profile.poc_email
     };
   },
   /**
