@@ -35,6 +35,8 @@ const sendNotificationEmail = function(user) {
 Email: ${user.email}
 Name: ${user.name}
 Organization(s): ${user.organization.join(", ")}
+POC Name: ${user.poc_name}
+POC Email: ${user.poc_email}
 
 You can approve the account by logging in and visiting
     ${Meteor.absoluteUrl("users")}
@@ -77,7 +79,9 @@ export const registerAccount = new ValidatedMethod({
       profile: {
         name: user.name,
         email: user.email,
-        organization: user.organization
+        organization: user.organization,
+        poc_name: user.poc_name,
+        poc_email: user.poc_email
       }
     };
     Accounts.createUser(insertDoc);  
@@ -91,7 +95,7 @@ export const registerAccount = new ValidatedMethod({
 export const updateAccount = new ValidatedMethod({
   name: "users.update",
   validate(user) {
-    let schema = new SimpleSchema([UserSchema.pick(['email', 'name']), {
+    let schema = new SimpleSchema([UserSchema.pick(['email', 'name', 'poc_name', 'poc_email']), {
       current_password: {
         label: "Current Password",
         type: String,
@@ -122,7 +126,9 @@ export const updateAccount = new ValidatedMethod({
         username: user.email,
         email: user.email,
         "profile.name": user.name,
-        "profile.email": user.email
+        "profile.email": user.email,
+        "profile.poc_name": user.poc_name,
+        "profile.poc_email": user.poc_email
       }
     });
     if(!_.isUndefined(user.password)) {

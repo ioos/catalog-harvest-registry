@@ -30,7 +30,9 @@ Template.usersEdit.helpers({
     let user = Meteor.user();
     return {
       email: user.profile.email,
-      name: user.profile.name
+      name: user.profile.name,
+      poc_name: user.profile.poc_name,
+      poc_email: user.profile.poc_email
     };
   },
   /**
@@ -69,6 +71,15 @@ Template.usersEdit.helpers({
         autoform: {
           type: "password"
         }
+      },
+      poc_name: {
+        label: "IOOS Point of Contact Name",
+        type: String,
+      },
+      poc_email: {
+        label: "IOOS Point of Contact Email",
+        type: String,
+        regEx: SimpleSchema.RegEx.Email
       }
     }]);
     return modifiedSchema;
